@@ -32,9 +32,35 @@ class Carrera(ABC):
     
     @abstractmethod
     def finalizar_carrera(self) -> None: pass
+    
+    @abstractmethod
+    def ganador_carrera(self) -> None: pass
 
 class CarreraCarretera(Carrera):
-    ...
+    def __init__(self) -> None:
+        super().__init__()  # Llama al constructor de la clase base para inicializar la lista de bicicletas
+
+    def iniciar_carrera(self) -> None:
+        print("La carrera de carretera ha comenzado.")
+
+    def finalizar_carrera(self) -> None:
+        print("La carrera de carretera ha terminado.")
+        
+    def ganador_carrera(self) -> None:
+        bicicleta_max_puntuacion = max(self._bicicletas, key=lambda x: x.puntuacion)
+        return bicicleta_max_puntuacion.id
+        
     
-class CarreraCarretera(Carrera):
-    ...
+class CarreraMontana(Carrera):
+    def __init__(self) -> None:
+        super().__init__()  # Llama al constructor de la clase base para inicializar la lista de bicicletas
+
+    def iniciar_carrera(self) -> None:
+        print("La carrera de montaña ha comenzado.")
+
+    def finalizar_carrera(self) -> None:
+        print("La carrera de montaña ha terminado.")
+        
+    def ganador_carrera(self) -> None:
+        bicicleta_max_puntuacion = max(self._bicicletas, key=lambda x: x.puntuacion)
+        return bicicleta_max_puntuacion.id

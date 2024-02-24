@@ -1,29 +1,56 @@
 from abc import ABC, abstractmethod
-from random import randint
+import random
 
 class Bicicleta(ABC):
     
-    def __init__(self) -> None:
+    def __init__(self , id, puntuacion):
         """
         Constructor
         """
-        self._id = randint(0,1000)
+        self._id = id
+        self._puntuacion = 0
     
+class Bicicleta(ABC):
+    def __init__(self, id_bicicleta, puntuacion):
+        self._id = id_bicicleta
+        self._puntuacion = puntuacion
+
     @property
-    def id(self) -> int:
+    def id(self):
         return self._id
+
+    @id.setter
+    def id(self, value):
+        self._id = value
+
+    @property
+    def puntuacion(self):
+        return self._puntuacion
+
+    @puntuacion.setter
+    def puntuacion(self, value):
+        self._puntuacion = value
     
     @abstractmethod
     def avanzar(self) -> None: pass
 
 class BicicletaCarretera(Bicicleta):
     
-    def avanzar(self) -> None:
-        print(f"La bicicleta de carretera con identificador \'{self.id}\' está avanzando")
+    def __init__(self, id, puntuacion) -> None:
+        super().__init__(id, puntuacion)  # Llama al constructor de la clase base para inicializar la lista de bicicletas
+        
+    def avanzar(self):
+       print(f"Bicicleta de carretera {self.id} avanzando.")
+       self._puntuacion = random.randint(1, 10)
+       print(f"Su puntuacion es de {self.puntuacion}")
 
 class BicicletaMontana(Bicicleta):
     
-    def avanzar(self) -> None:
-        print(f"La bicicleta de montaña con identificador \'{self.id}\' está avanzando")
-
+    def __init__(self, id, puntuacion) -> None:
+        super().__init__(id, puntuacion)  # Llama al constructor de la clase base para inicializar la lista de bicicletas
+        
+    def avanzar(self):
+       print(f"Bicicleta de montaña {self.id} avanzando.")
+       self._puntuacion = random.randint(1, 10)
+       print(f"Su puntuacion es de {self.puntuacion}")
     
