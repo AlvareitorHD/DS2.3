@@ -2,7 +2,7 @@ package bicicleta;
 
 public class BicicletaMontana extends Bicicleta{
 
-    public BicicletaMontana() { }
+    public BicicletaMontana(int id) {super(id);}
 
     @Override
     public void avanzar() {
