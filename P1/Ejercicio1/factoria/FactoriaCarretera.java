@@ -4,8 +4,6 @@ import bicicleta.BicicletaCarretera;
 import carrera.Carrera;
 import carrera.CarreraCarretera;
 
-import java.util.ArrayList;
-
 public class FactoriaCarretera implements FactoriaCarreraYBicicleta {
     public FactoriaCarretera() { }
     @Override
