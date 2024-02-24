@@ -5,6 +5,8 @@ import java.util.Random;
 public abstract class Bicicleta {
 
     protected int id;
+    public int metros = 0;
+
     public Bicicleta(int id) {
         //Random random = new Random();
         //id = random.nextInt(1000);
@@ -14,4 +16,5 @@ public abstract class Bicicleta {
         return (id);
     }
     public abstract void avanzar();
+
 }

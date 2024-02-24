@@ -14,7 +14,7 @@ public abstract class Carrera {
     public void aniadirBicicleta(Bicicleta bicicleta) {
         bicicletas.add(bicicleta);
     }
-    public void retirarBicicletaAleatoria(String tipo) {
+    public void retirarBicicletaAleatoria(int tipo) {
         // Verificar si la lista no está vacía
         if (!bicicletas.isEmpty()) {
             // Crear un objeto Random:
@@ -27,7 +27,7 @@ public abstract class Carrera {
             // Eliminar el elemento en el índice aleatorio:
             bicicletas.remove(indiceAleatorio);
 
-            System.out.println("Se ha retirado la bicicleta con identificador '" + idBicicleta + "' de la carrera "+tipo);
+            System.out.println("Se ha retirado la bicicleta con identificador '" + idBicicleta + "' de la carrera "+((tipo%2==0)?"Montaña":"Carretera"));
         } else {
             System.out.println("No hay bicicletas en la carrera");
         }
@@ -37,4 +37,8 @@ public abstract class Carrera {
     }
     public abstract void iniciarCarrera();
     public abstract void finalizarCarrera();
+
+    public ArrayList<Bicicleta> getBicicletas(){
+        return bicicletas;
+    }
 }

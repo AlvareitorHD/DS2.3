@@ -9,11 +9,10 @@ import java.util.Random;
 public class PruebaEjercicio1 {
 
     public static void main(String[] args) {
-
-        // Obtener un número aleatorio de bicicletas para la carrera:
+        //Obtener un número aleatorio de bicicletas para la carrera:
         Random rand = new Random();
         int numBicicletas = 0;
-        while (numBicicletas <= 0){
+        while (numBicicletas <= 1){
             numBicicletas = rand.nextInt(25);
         }
 
@@ -25,5 +24,6 @@ public class PruebaEjercicio1 {
 
         carMon.start();
         carCar.start();
+
     }
 }

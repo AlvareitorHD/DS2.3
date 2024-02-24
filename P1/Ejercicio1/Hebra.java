@@ -1,65 +1,74 @@
 import carrera.Carrera;
+import carrera.CarreraMontana;
 import factoria.FactoriaCarreraYBicicleta;
 import factoria.FactoriaMontana;
 import factoria.FactoriaCarretera;
-
-public class Hebra extends Thread{
+import java.util.Collections;
+import java.util.Comparator;
+public class Hebra extends Thread {
     public int num;
     public int porcentaje;
     private int id = 0;
-    public Hebra(int num, int id){
+
+    public Hebra(int num, int id) {
         super();
         this.num = num;
         this.id = id;
-        if(id % 2 == 0){
+        if (id % 2 == 0) {
             porcentaje = (num * 20) / 100;
-            System.out.println("Porcentaje Montaña: "+porcentaje+" (20%)");
+            System.out.println("Porcentaje Montaña: " + porcentaje + " (20%)");
         } else {
             porcentaje = (num * 10) / 100;
-            System.out.println("Porcentaje Carretera: "+porcentaje+" (10%)");
+            System.out.println("Porcentaje Carretera: " + porcentaje + " (10%)");
         }
-
     }
     @Override
-    public void run(){
-        if(id % 2 == 0){
-            FactoriaCarreraYBicicleta factoriaMontana   = new FactoriaMontana();
-            Carrera carreraMontana   = factoriaMontana.crearCarrera();
+    public void run() {
+        FactoriaCarreraYBicicleta factoria;
+        Carrera carrera;
 
-            for (int i = 0; i < num; i++)
-            {
-                carreraMontana.aniadirBicicleta(factoriaMontana.crearBicicleta(i));
-            }
-            carreraMontana.iniciarCarrera();
-
-            for(int i = 0; i < porcentaje; i++){
-                carreraMontana.retirarBicicletaAleatoria("Montaña");
-                num--;
-            }
-
-            for (int i = 0; i < num; i++)
-                System.out.println("Carrera de montaña: "+ carreraMontana.consultarIdBicicleta(i));
-            carreraMontana.finalizarCarrera();
+        if (id % 2 == 0) {
+            factoria = new FactoriaMontana();
+            carrera = factoria.crearCarrera();
         } else {
-            FactoriaCarreraYBicicleta factoriaCarretera   = new FactoriaCarretera();
-            Carrera carreraCarretera   = factoriaCarretera.crearCarrera();
-
-            for (int i = 0; i < num; i++)
-            {
-                carreraCarretera.aniadirBicicleta(factoriaCarretera.crearBicicleta(i));
-            }
-            carreraCarretera.iniciarCarrera();
-
-            for(int i = 0; i < porcentaje; i++){
-                carreraCarretera.retirarBicicletaAleatoria("Carretera");
-                num--;
-            }
-
-            for (int i = 0; i < num; i++)
-                System.out.println("Carrera de carretera: "+ carreraCarretera.consultarIdBicicleta(i));
-
-            carreraCarretera.finalizarCarrera();
+            factoria = new FactoriaCarretera();
+            carrera = factoria.crearCarrera();
         }
 
+        // Añadir bicicletas a la carrera
+        for (int i = 0; i < num; i++) {
+            carrera.aniadirBicicleta(factoria.crearBicicleta(i));
+        }
+
+        long tiempo = 10000; //10 segundos (cambiar a 60)
+
+        carrera.iniciarCarrera();
+        long startTime = System.currentTimeMillis();
+
+        // Imprimir bicicletas iniciales
+        for (int i = 0; i < num; i++) {
+            System.out.println("Carrera de " + ((id%2==0)?"Montaña":"Carretera") + ": " + carrera.consultarIdBicicleta(i));
+        }
+        while (System.currentTimeMillis() - startTime < tiempo) {
+            // Avanza cada bicicleta 0-10 metros aleatorios
+            for (int i = 0; i < num; i++) {
+                carrera.getBicicletas().get(i).avanzar();
+            }
+            try {
+                // Pausa la ejecución del hilo durante 1 segundo
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+
+        }
+
+        // Retirar bicicletas aleatorias
+        for (int i = 0; i < porcentaje; i++) {
+            carrera.retirarBicicletaAleatoria(id);
+            num--;
+        }
+
+        carrera.finalizarCarrera();
     }
 }
