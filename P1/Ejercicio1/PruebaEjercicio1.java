@@ -1,11 +1,11 @@
 
-import carrera.Carrera;
-import factoria.FactoriaCarreraYBicicleta;
-import factoria.FactoriaCarretera;
-import factoria.FactoriaMontana;
+import concurrencia.Hebra;
 
 import java.util.Random;
 
+/**
+ * Clase que contiene el 'main', donde se lanzan las carreras de bicicletas
+ */
 public class PruebaEjercicio1 {
 
     public static void main(String[] args) {
