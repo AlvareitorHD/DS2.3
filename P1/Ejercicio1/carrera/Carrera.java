@@ -3,6 +3,7 @@ package carrera;
 import bicicleta.Bicicleta;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Random;
 
 public abstract class Carrera {
@@ -27,7 +28,8 @@ public abstract class Carrera {
             // Eliminar el elemento en el índice aleatorio:
             bicicletas.remove(indiceAleatorio);
 
-            System.out.println("Se ha retirado la bicicleta con identificador '" + idBicicleta + "' de la carrera "+((tipo%2==0)?"Montaña":"Carretera"));
+            System.out.println("Se ha retirado la bicicleta con identificador '" + idBicicleta +
+                    "' de la carrera " + ((tipo%2==0) ? "Montaña" : "Carretera"));
         } else {
             System.out.println("No hay bicicletas en la carrera");
         }
@@ -35,6 +37,17 @@ public abstract class Carrera {
     public int consultarIdBicicleta(int indice) {
         return (bicicletas.get(indice).obtenerId());
     }
+    public int obtenerIdGanador() {
+        this.bicicletas.sort(new Comparator<Bicicleta>() {
+            @Override
+            public int compare(Bicicleta o1, Bicicleta o2) {
+                return Integer.compare(o1.metros, o2.metros);
+            }
+        });
+
+        return (this.bicicletas.getLast().obtenerId());
+    }
+
     public abstract void iniciarCarrera();
     public abstract void finalizarCarrera();
 

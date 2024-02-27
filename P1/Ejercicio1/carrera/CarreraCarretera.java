@@ -14,6 +14,7 @@ public class CarreraCarretera extends Carrera {
 
     @Override
     public void finalizarCarrera() {
-        System.out.println("Se ha finalizado la carrera de carretera");
+        System.out.println("Se ha finalizado la carrera de carretera y el ganador es la bicicleta " +
+                obtenerIdGanador());
     }
 }

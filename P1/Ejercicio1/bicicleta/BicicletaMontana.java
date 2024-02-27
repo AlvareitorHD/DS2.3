@@ -11,11 +11,11 @@ public class BicicletaMontana extends Bicicleta{
     @Override
     public void avanzar() {
         Random rand = new Random();
-        int distancia = 0;
+        /*int distancia = 0;
         while (distancia <= 1){
             distancia = rand.nextInt(11);
-        }
-        this.metros += distancia;
-        System.out.println("La bicicleta de montaña con identificador '" + super.obtenerId() + "' está avanzando ("+distancia+" metros, total: "+metros+"m)");
+        }*/
+
+        System.out.println("La bicicleta de montaña con identificador '" + super.obtenerId() + "' está avanzando");
     }
 }

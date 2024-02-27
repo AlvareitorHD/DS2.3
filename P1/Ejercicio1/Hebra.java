@@ -1,10 +1,8 @@
 import carrera.Carrera;
-import carrera.CarreraMontana;
 import factoria.FactoriaCarreraYBicicleta;
 import factoria.FactoriaMontana;
 import factoria.FactoriaCarretera;
-import java.util.Collections;
-import java.util.Comparator;
+
 public class Hebra extends Thread {
     public int num;
     public int porcentaje;
@@ -16,10 +14,10 @@ public class Hebra extends Thread {
         this.id = id;
         if (id % 2 == 0) {
             porcentaje = (num * 20) / 100;
-            System.out.println("Porcentaje Montaña: " + porcentaje + " (20%)");
+            System.out.println("Porcentaje de retirada en Montaña: " + porcentaje + " (20%)");
         } else {
             porcentaje = (num * 10) / 100;
-            System.out.println("Porcentaje Carretera: " + porcentaje + " (10%)");
+            System.out.println("Porcentaje de retirada en Carretera: " + porcentaje + " (10%)");
         }
     }
     @Override
@@ -35,22 +33,25 @@ public class Hebra extends Thread {
             carrera = factoria.crearCarrera();
         }
 
-        // Añadir bicicletas a la carrera
+        // Añadir bicicletas a la carrera:
         for (int i = 0; i < num; i++) {
             carrera.aniadirBicicleta(factoria.crearBicicleta(i));
         }
 
-        long tiempo = 10000; //10 segundos (cambiar a 60)
+        long tiempo = 10000; // 10 segundos (cambiar a 60)
 
+        // Iniciar carrera:
         carrera.iniciarCarrera();
         long startTime = System.currentTimeMillis();
 
-        // Imprimir bicicletas iniciales
+        // Imprimir bicicletas iniciales:
         for (int i = 0; i < num; i++) {
-            System.out.println("Carrera de " + ((id%2==0)?"Montaña":"Carretera") + ": " + carrera.consultarIdBicicleta(i));
+            System.out.println("Carrera de " + ((id%2==0) ? "Montaña" : "Carretera") + ": " + " bicicleta " +
+                    carrera.consultarIdBicicleta(i));
         }
+
         while (System.currentTimeMillis() - startTime < tiempo) {
-            // Avanza cada bicicleta 0-10 metros aleatorios
+            // Avanza cada bicicleta 0-10 metros aleatorios:
             for (int i = 0; i < num; i++) {
                 carrera.getBicicletas().get(i).avanzar();
             }
@@ -60,15 +61,15 @@ public class Hebra extends Thread {
             } catch (InterruptedException e) {
                 e.printStackTrace();
             }
-
         }
 
-        // Retirar bicicletas aleatorias
+        // Retirar bicicletas aleatorias:
         for (int i = 0; i < porcentaje; i++) {
             carrera.retirarBicicletaAleatoria(id);
             num--;
         }
 
+        // Finalizar carrera:
         carrera.finalizarCarrera();
     }
 }
