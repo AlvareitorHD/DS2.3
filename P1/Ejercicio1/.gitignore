@@ -1,8 +1,2 @@
 # Ignorar el directorio con los archivos de salida:
 out/production
-
-# Ignorar el directorio propio del proyecto del IDE:
-.idea/
-
-# Ignorar los ficheros IML:
-*.iml
