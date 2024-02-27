@@ -1,15 +1,6 @@
-import time
 from factoria import FactoriaCarretera, FactoriaMontana
-
-def retirar_bicicletas(carrera, porcentaje, tipo_carrera):
-    numero_a_retirar = int(len(carrera._bicicletas) * porcentaje)
-    print(f"Bicicletas retiradas de la carrera de {tipo_carrera}:")
-    for _ in range(numero_a_retirar):
-        carrera.retirar_bicicleta_aleatoria()
-        
-def comentar_ganador(carrera, tipo_carrera):
-    print(f"Bicicleta ganadora en {tipo_carrera} es {carrera.ganador_carrera()}")
-    
+from threading import Thread
+import time
 
 def main(N):
     factoria_carretera = FactoriaCarretera()
@@ -27,25 +18,22 @@ def main(N):
         carrera_montana.aniadir_bicicleta(bicicleta_montana)
         id_secuencial += 1
 
-    carrera_carretera.iniciar_carrera()
-    carrera_montana.iniciar_carrera()
+    hilo_carretera = Thread(target=carrera_carretera.iniciar_carrera)
+    hilo_montana = Thread(target=carrera_montana.iniciar_carrera)
     
-    time.sleep(10)  # Duración de la carrera
+    hilo_carretera.start()
+    hilo_montana.start()
     
-    for bicicleta in carrera_carretera._bicicletas:
-      bicicleta.avanzar()
+    time.sleep(60)
     
-    for bicicleta in carrera_montana._bicicletas:
-      bicicleta.avanzar()
-    
-    retirar_bicicletas(carrera_montana, 0.20, 'montaña')  # Retirar bicicletas
-    retirar_bicicletas(carrera_carretera, 0.10, 'carretera')  # Retirar bicicletas
+    hilo_carretera.join()
+    hilo_montana.join()
     
     carrera_montana.finalizar_carrera()
     carrera_carretera.finalizar_carrera()
     
-    comentar_ganador(carrera_montana, 'montaña')
-    comentar_ganador(carrera_carretera, 'carretera')
+    print(f"Bicicleta ganadora en montaña es {carrera_montana.ganador_carrera()}")
+    print(f"Bicicleta ganadora en carretera es {carrera_carretera.ganador_carrera()}")
 
 if __name__ == '__main__':
     N = 10

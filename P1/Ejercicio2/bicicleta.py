@@ -40,9 +40,8 @@ class BicicletaCarretera(Bicicleta):
         super().__init__(id, puntuacion)  # Llama al constructor de la clase base para inicializar la lista de bicicletas
         
     def avanzar(self):
-       print(f"Bicicleta de carretera {self.id} avanzando.")
        self._puntuacion = random.randint(1, 10)
-       print(f"Su puntuacion es de {self.puntuacion}")
+       print(f"Bicicleta de carretera {self.id} ha avanzado {self.puntuacion}.")
 
 class BicicletaMontana(Bicicleta):
     
@@ -50,7 +49,6 @@ class BicicletaMontana(Bicicleta):
         super().__init__(id, puntuacion)  # Llama al constructor de la clase base para inicializar la lista de bicicletas
         
     def avanzar(self):
-       print(f"Bicicleta de montaña {self.id} avanzando.")
        self._puntuacion = random.randint(1, 10)
-       print(f"Su puntuacion es de {self.puntuacion}")
+       print(f"Bicicleta de montaña {self.id} ha avanzado {self.puntuacion}.")
     
