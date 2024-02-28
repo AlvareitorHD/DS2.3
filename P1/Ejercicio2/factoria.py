@@ -11,7 +11,7 @@ class FactoriaCarreraYBicicleta(ABC):
     @abstractmethod
     def crear_bicicleta(self, id) -> Bicicleta: pass
 
-class FactoriaCarretera:
+class FactoriaCarretera(FactoriaCarreraYBicicleta):
     def __init__(self):
         self.prototipo_bicicleta = BicicletaCarretera(0, 0)  # Prototipo específico para FactoriaCarretera
 
@@ -24,7 +24,7 @@ class FactoriaCarretera:
         bicicleta_clonada.puntuacion = puntuacion
         return bicicleta_clonada
 
-class FactoriaMontana:
+class FactoriaMontana(FactoriaCarreraYBicicleta):
     def __init__(self):
         self.prototipo_bicicleta = BicicletaMontana(0, 0)  # Prototipo específico para FactoriaMontana
 
