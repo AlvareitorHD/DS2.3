@@ -1,7 +1,8 @@
 from abc import ABC, abstractmethod
 from secrets import choice
 from typing import List
-from threading import Thread
+from threading import *
+import threading
 from bicicleta import *
 
 class Carrera(ABC):
@@ -10,6 +11,7 @@ class Carrera(ABC):
     Atributos:
         _bicicletas (List[Bicicleta]): Lista de bicicletas participantes en la carrera.
         _hilos (List[Thread]): Lista de hilos para simular el avance de cada bicicleta.
+        _continuar (Event): Evento que permite a las bicicletas avanzar.
     """
     
     def __init__(self) -> None:
@@ -18,6 +20,8 @@ class Carrera(ABC):
         """
         self._bicicletas : List[Bicicleta] = []
         self._hilos = []
+        self._continuar = Event()
+        self._continuar.set()  # Inicialmente permitimos que las bicicletas avancen
         
     def aniadir_bicicleta(self, bicicleta: Bicicleta) -> None:
         """
@@ -27,8 +31,19 @@ class Carrera(ABC):
             bicicleta (Bicicleta): La bicicleta a añadir a la carrera.
         """
         self._bicicletas.append(bicicleta)
-        hilo = Thread(target=bicicleta.avanzar)
+        hilo = Thread(target=bicicleta.avanzar, args=(self._continuar,))
         self._hilos.append(hilo)
+        
+    def detener_bicicletas(self, tipo) -> None:
+        """
+        Detiene las bicicletas.
+        Retira las bicicletas.
+        """
+        self._continuar.clear()  # Indica a las bicicletas que deben detenerse
+        if tipo == 'carretera':
+            self.retirar_bicicletas(0.10, tipo) # Una vez detenidas, proceder a retirar bicicletas
+        else:
+            self.retirar_bicicletas(0.20, tipo)
         
     def retirar_bicicleta_aleatoria(self) -> None:
         """
@@ -98,6 +113,9 @@ class CarreraCarretera(Carrera):
         Intenta iniciar todos los hilos de las bicicletas participantes y captura excepciones si ocurren.
         """
         try:
+          # Iniciar un temporizador para detener las bicicletas después de 60 segundos
+          temporizador = threading.Timer(60.0, lambda : self.detener_bicicletas('carretera'))
+          temporizador.start()
           print("La carrera  de carretera ha comenzado.")
           for hilo in self._hilos:
             hilo.start()
@@ -151,6 +169,9 @@ class CarreraMontana(Carrera):
         Intenta iniciar todos los hilos de las bicicletas participantes y captura excepciones si ocurren.
         """
         try:
+          # Iniciar un temporizador para detener las bicicletas después de 60 segundos
+          temporizador = threading.Timer(60.0, lambda: self.detener_bicicletas('montaña'))
+          temporizador.start()
           print("La carrera de montaña ha comenzado.")
           for hilo in self._hilos:
             hilo.start()

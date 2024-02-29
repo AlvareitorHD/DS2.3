@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+import time    
     
 class Bicicleta(ABC):
     """
@@ -48,7 +49,7 @@ class Bicicleta(ABC):
         self._puntuacion = value
     
     @abstractmethod
-    def avanzar(self) -> None: 
+    def avanzar(self, continuar) -> None: 
         """
         Método abstracto que debe ser implementado por clases derivadas.
         Define cómo avanza la bicicleta.
@@ -77,15 +78,21 @@ class BicicletaCarretera(Bicicleta):
         """
         super().__init__(id, puntuacion)
         
-    def avanzar(self):
+    def avanzar(self, continuar):
         """
-        Implementación del método avanzar para la bicicleta de carretera.
+        Implementación del método avanzar para la bicicleta.
         Intenta avanzar y captura cualquier excepción, mostrando un mensaje de error si ocurre.
+        El avance se detiene cuando el evento 'continuar' es limpiado.
         """
-        try:
-            print(f"Bicicleta de carretera {self.id} ha avanzado {self.puntuacion}.")
-        except Exception as e:
-          print(f"Excepción capturada en el hilo de bicicleta carretera {self._id}: {e}")
+        while continuar.is_set():
+          try:
+            # Lógica de avance, como incrementar la puntuación
+            self._puntuacion += 1
+            #print(f"Bicicleta {self.id} ha avanzado en carretera, distancia recorrida: {self.puntuacion}.")
+            time.sleep(1)  # Simula el tiempo de avance
+          except Exception as e:
+            print(f"Excepción capturada en el hilo de bicicleta {self.id}: {e}")
+            break
        
 
 class BicicletaMontana(Bicicleta):
@@ -110,14 +117,20 @@ class BicicletaMontana(Bicicleta):
         """
         super().__init__(id, puntuacion)  # Llama al constructor de la clase base para inicializar la lista de bicicletas
         
-    def avanzar(self):
+    def avanzar(self, continuar):
         """
-        Implementación del método avanzar para la bicicleta de montaña.
+        Implementación del método avanzar para la bicicleta.
         Intenta avanzar y captura cualquier excepción, mostrando un mensaje de error si ocurre.
+        El avance se detiene cuando el evento 'continuar' es limpiado.
         """
-        try:
-            print(f"Bicicleta de montaña {self.id} ha avanzado {self.puntuacion}.")
-        except Exception as e:
-          print(f"Excepción capturada en el hilo de bicicleta montaña {self._id}: {e}")
+        while continuar.is_set():
+          try:
+            # Lógica de avance, como incrementar la puntuación
+            self._puntuacion += 1
+            #print(f"Bicicleta {self.id} ha avanzado montaña, distancia recorrida:: {self.puntuacion}.")
+            time.sleep(1)  # Simula el tiempo de avance
+          except Exception as e:
+            print(f"Excepción capturada en el hilo de bicicleta {self.id}: {e}")
+            break
        
     

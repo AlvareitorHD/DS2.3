@@ -34,14 +34,6 @@ def main(N):
     hilo_carretera.start()
     hilo_montana.start()
     
-    # Pausa de 60 segundos para dejar que las carreras se desarrollen
-    time.sleep(60)
-    
-    # Retirar un porcentaje de bicicletas de cada carrera antes de finalizar
-    # Por ejemplo, retiramos el 20% de las bicicletas en la carrera de montaña y el 10% en la de carretera
-    carrera_montana.retirar_bicicletas(0.20, 'montaña')
-    carrera_carretera.retirar_bicicletas(0.10, 'carretera')
-    
     # Esperar a que ambos hilos terminen
     hilo_carretera.join()
     hilo_montana.join()
