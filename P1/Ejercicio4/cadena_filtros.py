@@ -1,6 +1,7 @@
-from filtros import Filtro
+from filtros import Filtro, ContextoFiltro
 from objetivo import Objetivo
-from estado_motor import EstadoMotor
+
+class ObjetivoDesconocido(Exception): ...
 
 class CadenaFiltros():
     """
@@ -13,31 +14,42 @@ class CadenaFiltros():
     Al ejecutar la cadena, empezaran a trabajar los filtros, y al final, la instancia objetivo
     """
     
-    def __init__(self, filtros: list[Filtro] = [], objetivo: Objetivo = Objetivo()):
+    def __init__(self, filtros: list[Filtro] = None, objetivo: Objetivo = None):
         """Constructor
 
         Parametros:
             filtros (list[Filtro], optional): Lista de filtros. Por defecto esta vacia
             objetivo (Objetivo, optional): Instancia objetivo. Si no se le proporciona uno, se crea automaticamente
         """
-        self.__filtros : list[Filtro] = filtros
-        self.__objetivo : Objetivo = objetivo
+        self.__filtros : list[Filtro] = [] if filtros is None else filtros
+        self.objetivo : Objetivo = objetivo
         
-    def ejecutar(self, revoluciones: float, estado_motor: EstadoMotor, verbose: bool = False):
+    def ejecutar(self, ctx: ContextoFiltro, verbose: bool = False) -> None:
         """Ejecuta la cadena de filtros
         
         Primero ejecuta la tarea de los filtros de la cadena de forma secuencial y finalmente la tarea del objetivo
+        
+        Para ejecutarse correctamente, la cadena debe de tener un objetivo establecido
 
         Argumentos:
-            revoluciones (float): Velocidad angular
-            estado_motor (EstadoMotor): Estado del motor
+            ctx: (ContextoFiltro): Contexto sobre el que tendra su ejecucion
             verbose (bool, optional): Muestra el proceso por consola. Por defecto es False
         """
+        if self.objetivo is None:
+            raise ObjetivoDesconocido("La cadena de filtros no tiene un objetivo establecido")
+        
+        if hasattr(self.objetivo, 'velocidad_angular'):
+            self.objetivo.velocidad_angular = ctx.revoluciones
+            
+        if hasattr(self.objetivo, 'estado_motor'):
+            self.objetivo.estado_motor = ctx.estado_motor
+        
+        # TODO: Determinar como se actualizan los valores en el objetivo
         for filtro in self.__filtros:
-            filtro.ejecutar(revoluciones, estado_motor, verbose)
-        self.__objetivo.ejecutar(revoluciones, estado_motor, verbose)
+            result = filtro.ejecutar(ctx, verbose)
+        self.objetivo.velocidad_lineal = self.objetivo.ejecutar(ctx, verbose)
     
-    def aniadir_filtro(self, filtro: Filtro) -> bool:
+    def aniadir_filtro(self, filtro: Filtro) -> None:
         """Agrega un filtro al final de la cadena
 
         Args:
@@ -50,14 +62,4 @@ class CadenaFiltros():
         if puede_aniadirse:
             self.__filtros.append(filtro)
         else:
-            print('No se puede agregar el objeto proporcionado porque no es un filtro')
-        return puede_aniadirse
-    
-    # Propiedad: objetivo 
-    @property
-    def objetivo(self):
-        return self.__objetivo
-    @objetivo.setter
-    def objetivo(self, s: Objetivo):
-        if isinstance(s, Objetivo):
-            self.__objetivo = s
+            raise TypeError('El objeto proporcionado porque no es un filtro')

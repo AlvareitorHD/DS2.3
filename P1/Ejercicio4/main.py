@@ -1,16 +1,41 @@
 from gestor_filtros import GestorFiltros
-from filtros import CalcularVelocidad, RepercutirRozamiento
+from objetivo import Objetivo
+from estado_motor import EstadoMotor
+from filtros import ContextoFiltro, CalcularVelocidad, RepercutirRozamiento
+from cliente import Cliente
 
-def main():
+"""
+Mi mayor pesadilla:
+Rehacer todo el trabajo por querer hacerlo antes de la explicacion 🤯
+"""
+
+def main(iu: bool):
     """
     Funcion principal
-    
-    Actua como cliente de nuestro programa
     """
+    objetivo = Objetivo()
+    
     gestor = GestorFiltros()
     gestor.aniadir_filtro(CalcularVelocidad())
     gestor.aniadir_filtro(RepercutirRozamiento())
-    # ...
+    gestor.objetivo = objetivo
+    
+    cliente = Cliente()
+    cliente.gestor = gestor
 
+    if iu:
+        cliente.iniciar_iu() # No se donde poner la IU xd
+    else:
+        # Una prueba
+        contexto = ContextoFiltro(0, EstadoMotor.ENCENDIDO)
+        cliente.solicitar(contexto, True)
+        contexto.estado_motor = EstadoMotor.ACELERANDO
+        cliente.solicitar(contexto, True)
+        cliente.solicitar(contexto, True)
+        cliente.solicitar(contexto, True)
+        contexto.estado_motor = EstadoMotor.FRENANDO
+        cliente.solicitar(contexto, True)
+        
 if __name__ == "__main__":
-    main()
+    iu: bool = True
+    main(iu)

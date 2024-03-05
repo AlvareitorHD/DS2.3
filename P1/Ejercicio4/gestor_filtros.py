@@ -1,7 +1,6 @@
 from objetivo import Objetivo
 from cadena_filtros import CadenaFiltros
-from filtros import Filtro
-from estado_motor import EstadoMotor
+from filtros import Filtro, ContextoFiltro
 
 class GestorFiltros:
     """
@@ -10,14 +9,14 @@ class GestorFiltros:
     Podremos agregar mas filtros, establecer la instancia objetivo y solicitar la ejecucion de la cadena
     """
     
-    def __init__(self, objetivo: Objetivo = Objetivo()):
+    def __init__(self, objetivo: Objetivo = None):
         """Constructor
 
         Args:
             objetivo (Objetivo, optional): Instancia objetivo del gestor. Si no se proporciona una, se
             construye por defecto
         """
-        self.__cadena = CadenaFiltros(objetivo)
+        self.__cadena = CadenaFiltros(None, objetivo)
         
     def aniadir_filtro(self, filtro: Filtro) -> bool:
         """Agrega un filtro a la cadena de filtros del gestor
@@ -30,20 +29,21 @@ class GestorFiltros:
         """
         return self.__cadena.aniadir_filtro(filtro)
     
-    def solicitar(self, revoluciones: float, estado_motor: EstadoMotor, verbose: bool = False):
+    def solicitar(self, ctx: ContextoFiltro, verbose: bool = False):
         """Solicita que se ejecute la cadena de filtros
 
         Args:
-            revoluciones (float): RPM
-            estado_motor (EstadoMotor): Estado del motor
+            ctx: (ContextoFiltro): Contexto sobre el que tendra su ejecucion
             verbose (bool, optional): Muestra el proceso por consola. Por defecto es False.
         """
-        self.__cadena.ejecutar(revoluciones, estado_motor, verbose)
+        self.__cadena.ejecutar(ctx, verbose)
        
     # Propiedad: objetivo (propiedad de CadenaFiltros)
+    # Es decir, referencia al atributo 'objetivo' de CadenaFiltros
     @property
     def objetivo(self):
         return self.__cadena.objetivo
     @objetivo.setter
     def objetivo(self, other: Objetivo):
-        self.__cadena.objetivo = other
+        if isinstance(other, Objetivo):
+            self.__cadena.objetivo = other
