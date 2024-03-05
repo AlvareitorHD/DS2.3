@@ -89,7 +89,7 @@ public abstract class Carrera implements Runnable {
      * @return Identificador de la bicicleta que ha ganado la carrera
      */
     public int obtenerIdGanador() {
-        this.bicicletas.sort(Comparator.comparingInt(o -> o.distanciaTotal));
+        this.bicicletas.sort(Comparator.comparingInt(o -> o.obtenerDistanciaTotal()));
 
         return (this.bicicletas.getLast().obtenerId());
     }

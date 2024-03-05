@@ -15,7 +15,7 @@ public abstract class Bicicleta {
     /**
      * Distancia recorrida en total en un momento dado (en metros)
      */
-    public int distanciaTotal;
+    protected int distanciaTotal;
 
 
     // Métodos NO abstractos:
@@ -38,6 +38,14 @@ public abstract class Bicicleta {
     }
 
     /**
+     * Consultor del atributo 'distanciaTotal'
+     * @return Distancia total recorrida por la bicicleta hasta el momento
+     */
+    public int obtenerDistanciaTotal() {
+        return (distanciaTotal);
+    }
+
+    /**
      * Calcula aleatoriamente la distancia que recorre la bicicleta en un momento del tiempo (en un rango de 50 a 100
      * metros)
      * @return Distancia avanzada en ese momento
@@ -48,7 +56,6 @@ public abstract class Bicicleta {
 
         return (distanciaAvanzada);
     }
-
 
     // Métodos abstractos:
 
