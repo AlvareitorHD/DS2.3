@@ -7,23 +7,31 @@ import java.util.Comparator;
 import java.util.Random;
 
 /**
- * Clase abstracta para representar la carrera de bicicletas
+ * Clase abstracta para representar la carrera de bicicletas. Esta implementa la interfaz Runnable para poder ejecutar
+ * carreras de manera concurrente
  */
-public abstract class Carrera {
+public abstract class Carrera implements Runnable {
     /**
      * Contendrá todas las bicicletas que participarán en la carrera
      */
     protected ArrayList<Bicicleta> bicicletas;
 
+    /**
+     * Número de bicicletas retiradas de la carrera
+     */
+    protected int bicicletasRetiradas;
+
 
     // Métodos NO abstractos:
 
     /**
-     * Constructor sin parámetros que inicializa el array de las bicicletas para poder utilizarlo sin problemas a partir
-     * del momento en el que se cree la instancia
+     * Constructor por parámetro que inicializa tanto el número de bicicletas retiradas como el array de las bicicletas
+     * para poder utilizarlo sin problemas a partir del momento en el que se cree la instancia
+     * @param numBicicletas Número de bicicletas que participarán en la carrera
      */
-    public Carrera() {
-        bicicletas = new ArrayList<>();
+    public Carrera(int numBicicletas) {
+        bicicletas          = new ArrayList<>(numBicicletas);
+        bicicletasRetiradas = 0;
     }
 
     /**
@@ -36,9 +44,8 @@ public abstract class Carrera {
 
     /**
      * Retira una bicicleta escogida al azar de la carrera
-     * @param tipo Tipo de carrera
      */
-    public void retirarBicicletaAleatoria(int tipo) {
+    public void retirarBicicletaAleatoria() {
         // Verificar si la lista no está vacía:
         if (!bicicletas.isEmpty()) {
             // Crear un objeto Random:
@@ -51,8 +58,8 @@ public abstract class Carrera {
             // Eliminar el elemento en el índice aleatorio:
             bicicletas.remove(indiceAleatorio);
 
-            System.out.println("Se ha retirado la bicicleta con identificador '" + idBicicleta +
-                    "' de la carrera " + ((tipo%2==0) ? "Montaña" : "Carretera"));
+            // Informar de la retirada de la bicicleta en cuestión:
+            System.out.println("Retirada bicicleta '" + idBicicleta + "'");
         } else {
             // En este punto, no hay bicicletas en la carrera:
             System.out.println("No hay bicicletas en la carrera");
@@ -60,12 +67,21 @@ public abstract class Carrera {
     }
 
     /**
-     * Consultor del identificador de la bicicleta que ocupa el lugar pasado por parámetro en el array
-     * @param indice Índice de la bicicleta en el array de bicicletas
-     * @return identificador interno de la bicicleta especificada
+     * Retira un número de bicicletas pasado de la carrera
+     * @param numBicicletas Número de bicicletas a retirar de la carrera
      */
-    public int consultarIdBicicleta(int indice) {
-        return (bicicletas.get(indice).obtenerId());
+    private void retirarBicicletas(int numBicicletas) {
+        for (int i = 0; i < numBicicletas; i++) {
+            retirarBicicletaAleatoria();
+        }
+    }
+
+    /**
+     * Calcula y almacena el número de bicicletas que serán retiradas de la carrera antes de que esta finalice
+     * @param porcentaje Porcentaje de bicicletas que se retirarán de la carrera
+     */
+    public void computarRetiradas(int porcentaje) {
+        bicicletasRetiradas = (bicicletas.size() * porcentaje) / 100;
     }
 
     /**
@@ -73,23 +89,45 @@ public abstract class Carrera {
      * @return Identificador de la bicicleta que ha ganado la carrera
      */
     public int obtenerIdGanador() {
-        this.bicicletas.sort(new Comparator<Bicicleta>() {
-            @Override
-            public int compare(Bicicleta o1, Bicicleta o2) {
-                return Integer.compare(o1.metros, o2.metros);
-            }
-        });
+        this.bicicletas.sort(Comparator.comparingInt(o -> o.distanciaTotal));
 
         return (this.bicicletas.getLast().obtenerId());
     }
 
     /**
-     * Consultor del array de bicicletas de la carrera
-     * @return Array con las bicicletas de la carrera
+     * Simula la carrera. Para ello, la inicia y hace que las bicicletas avancen mientras dura la carrera, haciendo que
+     * se retiren algunas, finalizando la carrera al final
      */
-    public ArrayList<Bicicleta> obtenerBicicletas(){
-        return (bicicletas);
+    public void simular() {
+        final long tiempoCarrera = 60000; // 60 segundos
+
+        // Iniciar carrera:
+        iniciarCarrera();
+        long inicioTiempo = System.currentTimeMillis();
+
+        // Mientras no se agote el tiempo de carrera estipulado, las bicicletas permanecerán avanzando:
+        while (System.currentTimeMillis() - inicioTiempo < tiempoCarrera) {
+            // Avanza cada bicicleta n metros aleatorios:
+            for (Bicicleta bici : bicicletas) {
+                bici.avanzar();
+            }
+
+            try {
+                // Pausa la ejecución del hilo durante 1 segundo (esto facilita el seguimiento de la simulación):
+                Thread.sleep(1000);
+            } catch (InterruptedException e) {
+                e.printStackTrace();
+            }
+        }
+
+        // Retirar bicicletas aleatorias antes de finalizar la carrera:
+        retirarBicicletas(bicicletasRetiradas);
+
+        // Finalizar carrera y retirada del resto de bicicletas:
+        finalizarCarrera();
+        retirarBicicletas(bicicletas.size());
     }
+
 
     // Métodos abstractos:
 

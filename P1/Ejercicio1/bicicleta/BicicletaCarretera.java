@@ -1,10 +1,13 @@
 package bicicleta;
 
+/**
+ * Clase que representa a una bicicleta de carretera y que deriva de Bicicleta
+ */
 public class BicicletaCarretera extends Bicicleta {
 
     /**
      * Constructor por parámetro, el cual se encarga de llamar al constructor de Bicicleta
-     * @param id Identificar interno de la bicicleta
+     * @param id Identificador interno de la bicicleta
      */
     public BicicletaCarretera(int id) { super(id); }
 
@@ -13,6 +16,7 @@ public class BicicletaCarretera extends Bicicleta {
      */
     @Override
     public void avanzar() {
-        System.out.println("La bicicleta de carretera con identificador '" + super.obtenerId() + "' está avanzando");
+        System.out.println("BICICLETA DE CARRETERA '" + obtenerId() + "': ha avanzado " + computarDistancia() +
+                " metros");
     }
 }

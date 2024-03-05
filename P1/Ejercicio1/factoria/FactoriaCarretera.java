@@ -10,17 +10,13 @@ import carrera.CarreraCarretera;
  */
 public class FactoriaCarretera implements FactoriaCarreraYBicicleta {
     /**
-     * Constructor sin parámetros
-     */
-    public FactoriaCarretera() { }
-
-    /**
      * Crea una carrera de bicicletas de carretera
+     * @param numBicicletas Número de bicicletas de carretera que contendrá la carrera
      * @return Objeto Carrera con la carrera de carretera
      */
     @Override
-    public Carrera crearCarrera() {
-        return new CarreraCarretera();
+    public Carrera crearCarrera(int numBicicletas) {
+        return new CarreraCarretera(numBicicletas);
     }
 
     /**

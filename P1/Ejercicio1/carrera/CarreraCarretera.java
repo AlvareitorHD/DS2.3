@@ -1,29 +1,56 @@
 package carrera;
 
+import bicicleta.BicicletaCarretera;
+
 /**
  * Clase que extiende de Carrera, la cual representa la carrera de bicicletas de carretera
  */
 public class CarreraCarretera extends Carrera {
 
     /**
-     * Constructor sin parámetros
+     * Constructor por parámetro, que llama al constructor de Carrera y añade a la carrera el número de bicicletas de
+     * carretera indicado
+     * @param numBicicletas Número de bicicletas a añadir a la carrera
      */
-    public CarreraCarretera() { }
+    public CarreraCarretera(int numBicicletas) {
+        super(numBicicletas);
+
+        for (int i = 0; i < numBicicletas; i++) {
+            bicicletas.add(new BicicletaCarretera(i));
+        }
+    }
+
 
     /**
-     * Método abstracto que inicia la carrera de carretera
+     * Inicia la carrera de carretera
      */
     @Override
     public void iniciarCarrera() {
-        System.out.println("Se ha iniciado la carrera de carretera");
+        System.out.println("\nIniciada CARRERA DE CARRETERA\n");
+        /*System.out.println("Bicicletas participantes en la carrera de carretera:\n");
+        obtenerInfoBicicletas();*/
     }
 
     /**
-     * Método abstracto que finaliza la carrera de carretera, anunciando el ganador
+     * Finaliza la carrera de carretera, anunciando el ganador
      */
     @Override
     public void finalizarCarrera() {
-        System.out.println("Se ha finalizado la carrera de carretera y el ganador es la bicicleta " +
-                obtenerIdGanador());
+        System.out.println("\nFinalizada CARRERA DE CARRETERA. Ganador: bicicleta '" + obtenerIdGanador() + "'\n");
+    }
+
+    /**
+     * Ejecuta inicialmente la carrera
+     */
+    @Override
+    public void run() {
+        final int PORCENTAJE_RETIRADA = 20;
+
+        // Computar porcentaje de retirada antes de finalizar la carrera:
+        computarRetiradas(10);
+        System.out.println("Bicicletas retiradas en CARRERA DE CARRETERA: " + bicicletasRetiradas + " (" +
+                PORCENTAJE_RETIRADA + "%)\n");
+
+        simular(); // Simular la carrera
     }
 }

@@ -11,17 +11,13 @@ import carrera.CarreraMontana;
  */
 public class FactoriaMontana implements FactoriaCarreraYBicicleta {
     /**
-     * Constructor sin parámetros
-     */
-    public FactoriaMontana() { }
-
-    /**
      * Crea una carrera de bicicletas de montaña
+     * @param numBicicletas Número de bicicletas que contendrá la carrera
      * @return Objeto Carrera con la carrera de montaña
      */
     @Override
-    public Carrera crearCarrera() {
-        return new CarreraMontana();
+    public Carrera crearCarrera(int numBicicletas) {
+        return new CarreraMontana(numBicicletas);
     }
 
     /**

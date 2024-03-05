@@ -1,4 +1,5 @@
 package factoria;
+
 import bicicleta.Bicicleta;
 import carrera.Carrera;
 
@@ -8,14 +9,15 @@ import carrera.Carrera;
 public interface FactoriaCarreraYBicicleta {
     /**
      * Crea una carrera de bicicletas
+     * @param numBicicletas Número de bicicletas que contendrá la carrera
      * @return Objeto Carrera con el tipo de carrera de bicicletas creada
      */
-    public Carrera crearCarrera();
+    Carrera crearCarrera(int numBicicletas);
 
     /**
      * Crea una bicicleta
      * @param id Identificador que tendrá la bicicleta
      * @return Objeto Bicicleta con el tipo de bicicleta creada
      */
-    public Bicicleta crearBicicleta(int id);
+    Bicicleta crearBicicleta(int id);
 }

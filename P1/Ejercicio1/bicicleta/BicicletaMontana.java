@@ -1,12 +1,13 @@
 package bicicleta;
 
-import java.util.Random;
-
-public class BicicletaMontana extends Bicicleta{
+/**
+ * Clase que representa a una bicicleta de montaña y que deriva de Bicicleta
+ */
+public class BicicletaMontana extends Bicicleta {
 
     /**
      * Constructor por parámetro, el cual se encarga de llamar al constructor de Bicicleta
-     * @param id Identificar interno de la bicicleta
+     * @param id Identificador interno de la bicicleta
      */
     public BicicletaMontana(int id) {super(id);
 
@@ -17,12 +18,7 @@ public class BicicletaMontana extends Bicicleta{
      */
     @Override
     public void avanzar() {
-        Random rand = new Random();
-        /*int distancia = 0;
-        while (distancia <= 1){
-            distancia = rand.nextInt(11);
-        }*/
-
-        System.out.println("La bicicleta de montaña con identificador '" + super.obtenerId() + "' está avanzando");
+        System.out.println("BICICLETA DE MONTAÑA '" + obtenerId() + "': ha avanzado " + computarDistancia() +
+                " metros");
     }
 }

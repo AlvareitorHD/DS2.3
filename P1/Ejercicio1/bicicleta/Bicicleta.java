@@ -1,5 +1,7 @@
 package bicicleta;
 
+import java.util.concurrent.ThreadLocalRandom;
+
 /**
  * Clase abstracta para representar a una bicicleta
  */
@@ -11,9 +13,10 @@ public abstract class Bicicleta {
     protected int id;
 
     /**
-     * Metros recorridos
+     * Distancia recorrida en total en un momento dado (en metros)
      */
-    public int metros;
+    public int distanciaTotal;
+
 
     // Métodos NO abstractos:
 
@@ -22,10 +25,8 @@ public abstract class Bicicleta {
      * @param id Identificador de la bicicleta
      */
     public Bicicleta(int id) {
-        //Random random = new Random();
-        //id = random.nextInt(1000);
-        this.id = id;
-        this.metros = 0;
+        this.id             = id;
+        this.distanciaTotal = 0;
     }
 
     /**
@@ -36,11 +37,23 @@ public abstract class Bicicleta {
         return (id);
     }
 
+    /**
+     * Calcula aleatoriamente la distancia que recorre la bicicleta en un momento del tiempo (en un rango de 50 a 100
+     * metros)
+     * @return Distancia avanzada en ese momento
+     */
+    public int computarDistancia() {
+        int distanciaAvanzada = ThreadLocalRandom.current().nextInt(50, 101); // Avanza entre 50 y 100 metros
+        distanciaTotal += distanciaAvanzada;
+
+        return (distanciaAvanzada);
+    }
+
+
     // Métodos abstractos:
 
     /**
-     * Hace que la bicicleta avance
+     * Método abstracto que hará que una bicicleta avance
      */
     public abstract void avanzar();
-
 }
