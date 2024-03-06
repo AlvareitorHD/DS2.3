@@ -45,7 +45,7 @@ class Carrera(ABC):
         else:
             self.retirar_bicicletas(0.20, tipo)
         
-    def retirar_bicicleta_aleatoria(self) -> None:
+    def retirar_bicicleta_aleatoria(self, tipo_carrera) -> None:
         """
         Retira una bicicleta aleatoria de la carrera.
         """
@@ -54,7 +54,7 @@ class Carrera(ABC):
             # Escoge una bicicleta aleatoria y la elimina
             bicicleta : Bicicleta = choice(self._bicicletas)
             self._bicicletas.remove(bicicleta)
-            print(f"Se ha retirado la bicicleta con identificador \'{bicicleta.id}\'")
+            print(f"Se ha retirado la bicicleta con identificador \'{bicicleta.id}\' de la carrera de {tipo_carrera}")
         else:
             print("No hay bicicletas en la carretera")
     
@@ -67,9 +67,9 @@ class Carrera(ABC):
             tipo_carrera (str): Tipo de carrera para mostrar en el mensaje.
         """
         numero_a_retirar = int(len(self._bicicletas) * porcentaje)
-        print(f"Bicicletas retiradas de la carrera de {tipo_carrera}:")
+        print(f"Bicicletas retiradas de la carrera de {tipo_carrera}:\n")
         for _ in range(numero_a_retirar):
-          self.retirar_bicicleta_aleatoria()
+          self.retirar_bicicleta_aleatoria(tipo_carrera)
     
     @abstractmethod
     def iniciar_carrera(self) -> None: 
@@ -170,13 +170,13 @@ class CarreraMontana(Carrera):
         """
         try:
           # Iniciar un temporizador para detener las bicicletas después de 60 segundos
-          temporizador = threading.Timer(60.0, lambda: self.detener_bicicletas('montaña'))
+          temporizador = threading.Timer(60.0, lambda: self.detener_bicicletas('montana'))
           temporizador.start()
-          print("La carrera de montaña ha comenzado.")
+          print("La carrera de montana ha comenzado.")
           for hilo in self._hilos:
             hilo.start()
         except Exception as e:
-          print(f"Excepción capturada en el hilo de iniciar carrera montaña: {e}")
+          print(f"Excepción capturada en el hilo de iniciar carrera montana: {e}")
     
     def finalizar_carrera(self) -> None:
         """
@@ -186,7 +186,7 @@ class CarreraMontana(Carrera):
         """
         for hilo in self._hilos:
             hilo.join()  # Esperamos a que todos los hilos finalicen
-        print("La carrera de montaña ha terminado.")
+        print("La carrera de montana ha terminado.")
         
     def ganador_carrera(self) -> None:
         """

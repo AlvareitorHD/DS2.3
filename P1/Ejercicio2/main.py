@@ -1,6 +1,5 @@
 from factoria import FactoriaCarretera, FactoriaMontana
 from threading import Thread
-import time
 import random
 
 def main(N):
@@ -9,22 +8,18 @@ def main(N):
     factoria_montana = FactoriaMontana()
 
     # Crear carreras para bicicletas de carretera y montaña
-    carrera_carretera = factoria_carretera.crear_carrera()
-    carrera_montana = factoria_montana.crear_carrera()
-
-    # Inicializamos un identificador secuencial para las bicicletas
-    id_secuencial = 1
+    carrera_carretera = factoria_carretera.crear_item('carrera')
+    carrera_montana = factoria_montana.crear_item('carrera')
 
     # Crear bicicletas y añadirlas a sus respectivas carreras
     for _ in range(N):
         # Crear bicicleta de carretera con ID único y velocidad aleatoria entre 1 y 20
-        bicicleta_carretera = factoria_carretera.crear_bicicleta(id_secuencial, random.randint(1, 20))
+        bicicleta_carretera = factoria_carretera.crear_item('bicicleta')
         # Crear bicicleta de montaña con ID único y velocidad aleatoria entre 1 y 20
-        bicicleta_montana = factoria_montana.crear_bicicleta(id_secuencial, random.randint(1, 20))
+        bicicleta_montana = factoria_montana.crear_item('bicicleta')
         # Añadir las bicicletas creadas a sus respectivas carreras
         carrera_carretera.aniadir_bicicleta(bicicleta_carretera)
         carrera_montana.aniadir_bicicleta(bicicleta_montana)
-        id_secuencial += 1  # Incrementar el ID secuencial para la próxima bicicleta
 
     # Crear hilos para iniciar las carreras en paralelo
     hilo_carretera = Thread(target=carrera_carretera.iniciar_carrera)

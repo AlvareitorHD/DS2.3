@@ -1,104 +1,104 @@
 from abc import ABC, abstractmethod
-from carrera import Carrera, CarreraCarretera, CarreraMontana
+from carrera import CarreraCarretera, CarreraMontana
 from bicicleta import Bicicleta, BicicletaCarretera, BicicletaMontana
-import copy
+import random
 
 class FactoriaCarreraYBicicleta(ABC):
     """
     Clase abstracta que define la interfaz para las fábricas de carreras y bicicletas.
     Establece los métodos para crear carreras y bicicletas específicas según el tipo.
+    
+    Atributos:
+      id: el identificador de las bicicletas de la carrera.
+      prototipo_bicicleta: la bicicleta prototipo que se copiará y se crearán el resto de bicicletas.
     """
     
-    @abstractmethod
-    def crear_carrera(self) -> Carrera: 
+    def __init__(self, bicicleta: Bicicleta):
         """
-        Método abstracto para crear una carrera específica.
+        Inicialización del id (identificador de cada bicicleta) y del prototipo de bicicleta para clonación.
         """
-        pass
+        self._id = 0 # Se toma la decisión que se empezará a identificar las bicicletas desde el 0.
+        self._prototipo_bicicleta = bicicleta
     
-    @abstractmethod
-    def crear_bicicleta(self, id, puntuacion) -> Bicicleta: 
-        """
-        Método abstracto para crear una bicicleta específica.
+    def obtener_nuevo_id(self):
+        # Incrementa el id_actual y lo devuelve para asignarlo a una nueva bicicleta
+        self._id += 1
+        return self._id
         
-        Parámetros:
-            id_bicicleta (int): Identificador único de la bicicleta.
-            puntuacion (int): Distancia recorrida inicial de la bicicleta.
+    @abstractmethod
+    def crear_item(self, item):
+        """
+        Método abstracto para crear un item específico, ya sea una carrera o una bicicleta de montaña o carretera.
+        
+        Parametros:
+            item: cadena de texto que describe el objeto a crear ('carrera' o 'bicicleta').
         """
         pass
 
 class FactoriaCarretera(FactoriaCarreraYBicicleta):
     """
     Implementa la fábrica concreta para crear carreras y bicicletas de carretera.
-    Utiliza el patrón de diseño de fábrica y prototipo para generar objetos de bicicleta de carretera clonados.
+    Sigue el patrón de fábrica abstracta, método abstracto y prototipo.
     
     Atributos:
+        id: el identificador de las bicicletas de la carrera.
         prototipo_bicicleta (BicicletaCarretera): Un prototipo de bicicleta de carretera para clonar nuevas bicicletas.
         
     Métodos:
-        crear_carrera: Crea y retorna una nueva instancia de CarreraCarretera.
-        crear_bicicleta(id_secuencial, puntuacion): Clona el prototipo de bicicleta de carretera y ajusta su id y distacion recorrida.
+        crear_item: Se crean carreras de carretera y bicicletas de carretera, estas última por clonación.
     """
     
     def __init__(self):
         """
         Inicialización del prototipo de bicicleta para clonación.
         """
-        self.prototipo_bicicleta = BicicletaCarretera(0, 0)  # Prototipo específico para FactoriaCarretera
+        super().__init__(BicicletaCarretera(0, 0))   # Prototipo específico para FactoriaCarretera  
 
-    def crear_carrera(self):
+    def crear_item (self, item):
         """
-        Crea y retorna una nueva instancia de CarreraCarretera.
+        Se crean carreras de carretera y bicicletas de carretera, estas última por clonación y ajustando su id y puntuacion.
+                
+        Parametros:
+            item: cadea de texto que describe el objeto a crear, una carrera o una bicicleta.
         """
-        return CarreraCarretera()
-
-    def crear_bicicleta(self, id_secuencial, puntuacion):
-        """
-        Clona y personaliza una bicicleta de carretera.
-        
-        Parámetros:
-            id_secuencial (int): Identificador único de la bicicleta de montaña.
-            puntuacion (int): Distancia recorrida inicial de la bicicleta de montaña.
-        """
-        bicicleta_clonada = copy.deepcopy(self.prototipo_bicicleta)
-        bicicleta_clonada.id = id_secuencial
-        bicicleta_clonada.puntuacion = puntuacion
-        return bicicleta_clonada
+        if item == 'carrera':
+            return CarreraCarretera()
+        elif item == 'bicicleta':
+            bicicleta_clonada = self._prototipo_bicicleta.clone()
+            bicicleta_clonada._id = self.obtener_nuevo_id()  # Usa el nuevo id
+            bicicleta_clonada._puntuacion = random.randint(1, 20)
+            return bicicleta_clonada
 
 class FactoriaMontana(FactoriaCarreraYBicicleta):
     """
     Implementa la fábrica concreta para crear carreras y bicicletas de montaña.
-    Similar a FactoriaCarretera, pero para objetos de montaña, siguiendo el patrón de fábrica y prototipo.
+    Similar a FactoriaCarretera, pero para objetos de montaña, siguiendo el patrón de fábrica abstracta, método abstracto y prototipo.
     
     Atributos:
+        id: el identificador de las bicicletas de la carrera.
         prototipo_bicicleta (BicicletaMontana): Un prototipo de bicicleta de montaña para clonar nuevas bicicletas.
         
     Métodos:
-        crear_carrera: Crea y retorna una nueva instancia de CarreraMontana.
-        crear_bicicleta(id_secuencial, puntuacion): Clona el prototipo de bicicleta de montaña y ajusta su id y puntuación.
+        crear_item: Se crean carreras de montaña y bicicletas de montaña, estas última por clonación.
     """
     
     def __init__(self):
         """
         Inicialización del prototipo de bicicleta para clonación.
         """
-        self.prototipo_bicicleta = BicicletaMontana(0, 0)  # Prototipo específico para FactoriaMontana
+        super().__init__(BicicletaMontana(0, 0))   # Prototipo específico para FactoriaMontana
 
-    def crear_carrera(self):
+    def crear_item (self, item):
         """
-        Crea y retorna una nueva instancia de CarreraMontana.
+        Se crean carreras de montaña y bicicletas de montaña, estas última por clonación y ajustando su id y puntuacion.
+                
+        Parametros:
+            item: cadea de texto que describe el objeto a crear, una carrera o una bicicleta.
         """
-        return CarreraMontana()
-
-    def crear_bicicleta(self, id_secuencial, puntuacion):
-        """
-        Clona y personaliza una bicicleta de montaña.
-        
-        Parámetros:
-            id_secuencial (int): Identificador único de la bicicleta de montaña.
-            puntuacion (int): Distancia recorrida inicial de la bicicleta de montaña.
-        """
-        bicicleta_clonada = copy.deepcopy(self.prototipo_bicicleta)
-        bicicleta_clonada.id = id_secuencial
-        bicicleta_clonada.puntuacion = puntuacion
-        return bicicleta_clonada
+        if item == 'carrera':
+            return CarreraMontana()
+        elif item == 'bicicleta':
+            bicicleta_clonada = self._prototipo_bicicleta.clone()
+            bicicleta_clonada._id = self.obtener_nuevo_id()  # Usa el nuevo id
+            bicicleta_clonada._puntuacion = random.randint(1, 20)
+            return bicicleta_clonada
