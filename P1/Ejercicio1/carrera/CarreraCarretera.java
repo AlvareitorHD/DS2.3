@@ -14,10 +14,6 @@ public class CarreraCarretera extends Carrera {
      */
     public CarreraCarretera(int numBicicletas) {
         super(numBicicletas);
-
-        for (int i = 0; i < numBicicletas; i++) {
-            bicicletas.add(new BicicletaCarretera(i));
-        }
     }
 
 
@@ -44,10 +40,10 @@ public class CarreraCarretera extends Carrera {
      */
     @Override
     public void run() {
-        final int PORCENTAJE_RETIRADA = 20;
+        final int PORCENTAJE_RETIRADA = 10;
 
         // Computar porcentaje de retirada antes de finalizar la carrera:
-        computarRetiradas(10);
+        computarRetiradas(PORCENTAJE_RETIRADA);
         System.out.println("Bicicletas retiradas en CARRERA DE CARRETERA: " + bicicletasRetiradas + " (" +
                 PORCENTAJE_RETIRADA + "%)\n");
 
