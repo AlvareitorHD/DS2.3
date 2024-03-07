@@ -1,7 +1,9 @@
 from abc import ABC, abstractmethod
 import time    
-    
-class Bicicleta(ABC):
+from copy import deepcopy
+from prototipo import Prototipo
+
+class Bicicleta(Prototipo, ABC):
     """
     Clase abstracta Bicicleta que define la estructura básica de una bicicleta.
     Atributos:
@@ -19,34 +21,12 @@ class Bicicleta(ABC):
         """
         self._id = id_bicicleta
         self._puntuacion = puntuacion
-
-    @property
-    def id(self):
+    
+    def clone(self):
         """
-        Propiedad que devuelve el identificador único de la bicicleta.
+        Realiza una copia profunda del Bicicleta actual y la retorna.
         """
-        return self._id
-
-    @id.setter
-    def id(self, value):
-        """
-        Setter para el identificador único de la bicicleta.
-        """
-        self._id = value
-
-    @property
-    def puntuacion(self):
-        """
-        Propiedad que devuelve la distancia recorrida de la bicicleta.
-        """
-        return self._puntuacion
-
-    @puntuacion.setter
-    def puntuacion(self, value):
-        """
-        Setter para la puntuación de la bicicleta.
-        """
-        self._puntuacion = value
+        return deepcopy(self)
     
     @abstractmethod
     def avanzar(self, continuar) -> None: 
@@ -88,10 +68,10 @@ class BicicletaCarretera(Bicicleta):
           try:
             # Lógica de avance, como incrementar la puntuación
             self._puntuacion += 1
-            #print(f"Bicicleta {self.id} ha avanzado en carretera, distancia recorrida: {self.puntuacion}.")
-            time.sleep(1)  # Simula el tiempo de avance
+            print(f"Bicicleta {self._id} ha avanzado en carretera, distancia recorrida: {self._puntuacion}.")
+            time.sleep(2)  # Simula el tiempo de avance
           except Exception as e:
-            print(f"Excepción capturada en el hilo de bicicleta {self.id}: {e}")
+            print(f"Excepción capturada en el hilo de bicicleta {self._id}: {e}")
             break
        
 
@@ -127,10 +107,10 @@ class BicicletaMontana(Bicicleta):
           try:
             # Lógica de avance, como incrementar la puntuación
             self._puntuacion += 1
-            #print(f"Bicicleta {self.id} ha avanzado montaña, distancia recorrida:: {self.puntuacion}.")
-            time.sleep(1)  # Simula el tiempo de avance
+            print(f"Bicicleta {self._id} ha avanzado montana, distancia recorrida: {self._puntuacion}.")
+            time.sleep(2)  # Simula el tiempo de avance
           except Exception as e:
-            print(f"Excepción capturada en el hilo de bicicleta {self.id}: {e}")
+            print(f"Excepción capturada en el hilo de bicicleta {self._id}: {e}")
             break
        
     
