@@ -1,7 +1,7 @@
 from gestor_filtros import GestorFiltros
 from objetivo import Objetivo
 from estado_motor import EstadoMotor
-from filtros import ContextoFiltro, CalcularVelocidad, RepercutirRozamiento
+from filtros import Contexto, CalcularVelocidad, RepercutirRozamiento
 from cliente import Cliente
 
 """
@@ -24,10 +24,10 @@ def main(iu: bool):
     cliente.gestor = gestor
 
     if iu:
-        cliente.iniciar_iu() # No se donde poner la IU xd
+        cliente.iniciar_iu()
     else:
         # Una prueba
-        contexto = ContextoFiltro(0, EstadoMotor.ENCENDIDO)
+        contexto = Contexto(0, EstadoMotor.ENCENDIDO)
         cliente.solicitar(contexto, True)
         contexto.estado_motor = EstadoMotor.ACELERANDO
         cliente.solicitar(contexto, True)

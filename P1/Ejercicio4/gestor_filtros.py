@@ -1,6 +1,6 @@
 from objetivo import Objetivo
 from cadena_filtros import CadenaFiltros
-from filtros import Filtro, ContextoFiltro
+from filtros import Filtro, Contexto
 
 class GestorFiltros:
     """
@@ -12,28 +12,25 @@ class GestorFiltros:
     def __init__(self, objetivo: Objetivo = None):
         """Constructor
 
-        Args:
+        Parametros:
             objetivo (Objetivo, optional): Instancia objetivo del gestor. Si no se proporciona una, se
             construye por defecto
         """
-        self.__cadena = CadenaFiltros(None, objetivo)
+        self.__cadena = CadenaFiltros(objetivo=objetivo)
         
-    def aniadir_filtro(self, filtro: Filtro) -> bool:
+    def aniadir_filtro(self, filtro: Filtro) -> None:
         """Agrega un filtro a la cadena de filtros del gestor
 
-        Args:
+        Parametros:
             filtro (Filtro): Filtro a agregar
-
-        Returns:
-            bool: Si el filtro se ha agregado correctamente
         """
-        return self.__cadena.aniadir_filtro(filtro)
+        self.__cadena.aniadir_filtro(filtro)
     
-    def solicitar(self, ctx: ContextoFiltro, verbose: bool = False):
+    def solicitar(self, ctx: Contexto, verbose: bool = False) -> None:
         """Solicita que se ejecute la cadena de filtros
 
-        Args:
-            ctx: (ContextoFiltro): Contexto sobre el que tendra su ejecucion
+        Parametros:
+            ctx: (Contexto): Contexto sobre el que tendra su ejecucion
             verbose (bool, optional): Muestra el proceso por consola. Por defecto es False.
         """
         self.__cadena.ejecutar(ctx, verbose)
