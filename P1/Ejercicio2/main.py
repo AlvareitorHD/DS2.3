@@ -1,6 +1,6 @@
-from factoria import FactoriaCarretera, FactoriaMontana
+from Factorias.factoria_Carretera import FactoriaCarretera
+from Factorias.factoria_Montana import FactoriaMontana
 from threading import Thread
-import random
 
 def main(N):
     # Crear instancias de las factorías de bicicletas de carretera y montaña
@@ -38,7 +38,7 @@ def main(N):
     carrera_carretera.finalizar_carrera()
     
     # Imprimir los ganadores de cada carrera
-    print(f"Bicicleta ganadora en montaña es {carrera_montana.ganador_carrera()}")
+    print(f"Bicicleta ganadora en montana es {carrera_montana.ganador_carrera()}")
     print(f"Bicicleta ganadora en carretera es {carrera_carretera.ganador_carrera()}")
 
 # Punto de entrada del script
