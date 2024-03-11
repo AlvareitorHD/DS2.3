@@ -1,8 +1,13 @@
 from Factorias.factoria_Carretera import FactoriaCarretera
 from Factorias.factoria_Montana import FactoriaMontana
 from threading import Thread
+import random
 
-def main(N):
+def main(min_N, max_N):
+    
+    # Inicializamos el número de bicicletas por carrera
+    N = random.randint (min_N, max_N)
+    
     # Crear instancias de las factorías de bicicletas de carretera y montaña
     factoria_carretera = FactoriaCarretera()
     factoria_montana = FactoriaMontana()
@@ -43,5 +48,6 @@ def main(N):
 
 # Punto de entrada del script
 if __name__ == '__main__':
-    N = 10 # Número de bicicletas por carrera
-    main(N) # Ejecutar la función principal
+    min_N = 5 # Número minimo de bicicletas por carrera
+    max_N = 20 # Número máximo de bicicletas por carrera
+    main(min_N, max_N) # Ejecutar la función principal
