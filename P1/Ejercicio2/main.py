@@ -13,15 +13,15 @@ def main(min_N, max_N):
     factoria_montana = FactoriaMontana()
 
     # Crear carreras para bicicletas de carretera y montaña
-    carrera_carretera = factoria_carretera.crear_item('carrera')
-    carrera_montana = factoria_montana.crear_item('carrera')
+    carrera_carretera = factoria_carretera.crear_item('carrera', -1)
+    carrera_montana = factoria_montana.crear_item('carrera', -1)
 
     # Crear bicicletas y añadirlas a sus respectivas carreras
-    for _ in range(N):
+    for i in range(N):
         # Crear bicicleta de carretera con ID único y velocidad aleatoria entre 1 y 20
-        bicicleta_carretera = factoria_carretera.crear_item('bicicleta')
+        bicicleta_carretera = factoria_carretera.crear_item('bicicleta', i)
         # Crear bicicleta de montaña con ID único y velocidad aleatoria entre 1 y 20
-        bicicleta_montana = factoria_montana.crear_item('bicicleta')
+        bicicleta_montana = factoria_montana.crear_item('bicicleta', i)
         # Añadir las bicicletas creadas a sus respectivas carreras
         carrera_carretera.aniadir_bicicleta(bicicleta_carretera)
         carrera_montana.aniadir_bicicleta(bicicleta_montana)

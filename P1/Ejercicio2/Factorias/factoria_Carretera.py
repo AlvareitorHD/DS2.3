@@ -1,7 +1,7 @@
 from Carreras.carrera_Carretera import CarreraCarretera
 from Bicicletas.bicicleta_Carretera import BicicletaCarretera
 import random
-from Factorias.factoria import FactoriaCarreraYBicicleta
+from Factorias.factoriaCarreraYBicicleta import FactoriaCarreraYBicicleta
 
 class FactoriaCarretera(FactoriaCarreraYBicicleta):
     """
@@ -9,7 +9,6 @@ class FactoriaCarretera(FactoriaCarreraYBicicleta):
     Sigue el patrón de fábrica abstracta, método abstracto y prototipo.
     
     Atributos:
-        id: el identificador de las bicicletas de la carrera.
         prototipo_bicicleta (BicicletaCarretera): Un prototipo de bicicleta de carretera para clonar nuevas bicicletas.
         
     Métodos:
@@ -22,7 +21,7 @@ class FactoriaCarretera(FactoriaCarreraYBicicleta):
         """
         super().__init__(BicicletaCarretera(0, 0))   # Prototipo específico para FactoriaCarretera  
 
-    def crear_item (self, item):
+    def crear_item (self, item, id):
         """
         Se crean carreras de carretera y bicicletas de carretera, estas última por clonación y ajustando su id y puntuacion.
                 
@@ -33,6 +32,6 @@ class FactoriaCarretera(FactoriaCarreraYBicicleta):
             return CarreraCarretera()
         elif item == 'bicicleta':
             bicicleta_clonada = self._prototipo_bicicleta.clone()
-            bicicleta_clonada._id = self.obtener_nuevo_id()  # Usa el nuevo id
+            bicicleta_clonada._id = id  # Usa el nuevo id
             bicicleta_clonada._puntuacion = random.randint(1, 20)
             return bicicleta_clonada
