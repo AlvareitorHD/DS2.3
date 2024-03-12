@@ -8,8 +8,7 @@ import bicicleta.BicicletaCarretera;
 public class CarreraCarretera extends Carrera {
 
     /**
-     * Constructor por parámetro, que llama al constructor de Carrera y añade a la carrera el número de bicicletas de
-     * carretera indicado
+     * Constructor por parámetro, que llama al constructor de Carrera para incializar los atributos
      * @param numBicicletas Número de bicicletas a añadir a la carrera
      */
     public CarreraCarretera(int numBicicletas) {
