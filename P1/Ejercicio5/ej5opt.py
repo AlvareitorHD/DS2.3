@@ -1,11 +1,10 @@
 from selenium import webdriver
 from bs4 import BeautifulSoup
-from selenium.common.exceptions import TimeoutException
+from selenium.common.exceptions import TimeoutException, NoSuchElementException
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
 import requests
-import time
 import json
 
 
@@ -13,7 +12,8 @@ class ScrapeStrategy():
     def scrape(self, url):
         pass
 
-"""
+
+
 class BeautifulSoupStrategy(ScrapeStrategy):
     def scrape(self, url, stock_symbol):
         response = requests.get(url)
@@ -45,44 +45,44 @@ class BeautifulSoupStrategy(ScrapeStrategy):
         else:
             return f'Failed to retrieve the webpage, status code: {response.status_code}'
 
-"""
+
+
 class SeleniumStrategy(ScrapeStrategy):
     def scrape(self, url, stock_symbol):
         options = webdriver.ChromeOptions()
+        #options.add_argument("user-agent=Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/90.0.4430.212 Safari/537.36")
+        options.add_argument('--ignore-ssl-errors=yes')
+        options.add_argument('--ignore-certificate-errors')
         options.add_argument('headless')
         driver = webdriver.Chrome(options=options)
         driver.get(url)
         
         # Espera explícita hasta que el elemento esté presente en la página
-        wait = WebDriverWait(driver, 10)  # Aumentamos el tiempo de espera a 10 segundos
+        wait = WebDriverWait(driver, 10)  # Aumentamos el tiempo de espera a 10 segundos    
+        
+        # Intenta encontrar y hacer clic en uno de los botones de cookies
         try:
-            open_value_elem = wait.until(EC.presence_of_element_located((By.XPATH, "//td[@data-test='OPEN-value']")))
-            close_value_elem = wait.until(EC.presence_of_element_located((By.XPATH, "//td[@data-test='PREV_CLOSE-value']")))
-            volume_elem = wait.until(EC.presence_of_element_located((By.XPATH, "//td[@data-test='TD_VOLUME-value']")))
-            market_cap_elem = wait.until(EC.presence_of_element_located((By.XPATH, "//td[@data-test='MARKET_CAP-value']")))
+          cookies_button = wait.until(EC.element_to_be_clickable((By.CSS_SELECTOR, "button.accept-all[name='agree']")))
+          cookies_button.click()
+          print(f"Se aceptaron las cookies.")
+        except (NoSuchElementException, TimeoutException):
+          # Si no encuentra el botón con ese texto, continúa con el siguiente
+          print(f"No se encontró el botón de cookies.")  
+           
+        # Obtener los datos incluidos 
+        try:
+            data = {}
+            data['stock_symbol'] = stock_symbol
+            data['close'] = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'td[data-test="PREV_CLOSE-value"]'))).text.strip()
+            data['open'] = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'td[data-test="OPEN-value"]'))).text.strip()
+            data['volume'] = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'td[data-test="TD_VOLUME-value"]'))).text.strip()
+            data['market_cap'] = wait.until(EC.visibility_of_element_located((By.CSS_SELECTOR, 'td[data-test="MARKET_CAP-value"]'))).text.strip()
         except TimeoutException:
-            print("Elementos no encontrados dentro del tiempo de espera.")
-            driver.quit()
-            return None
-        
-        # Extrae el texto de los elementos
-        open_value = open_value_elem.text.strip()
-        close_value = close_value_elem.text.strip()
-        volume = volume_elem.text.strip()
-        market_cap = market_cap_elem.text.strip()
-        
-        # Crea un diccionario con los datos y el símbolo de la acción
-        data = {
-            'stock_symbol': stock_symbol,
-            'open': open_value,
-            'close': close_value,
-            'volume': volume,
-            'market_cap': market_cap
-        }
+            print("No se pudieron encontrar todos los elementos dentro del tiempo de espera.")
+            data = None
         
         # Cierra el navegador Selenium
         driver.quit()
-        
         return data
 
 
@@ -97,31 +97,49 @@ class Context:
     def scrape(self, url, stock_symbol):
         return self._strategy.scrape(url, stock_symbol)
 
+
+
 def main():
     stock_symbol = input("Enter the stock symbol (e.g., TSLA for Tesla): ")
     url = f'https://finance.yahoo.com/quote/{stock_symbol}'
+    # Elección de la técnica de screapeo.
+    scrapeTechnique_input = input("Techniques: \nBeautifulSoup Strategy: 0\nSelenium Strategy: 1\nChoose a technique (number): ")
     
-    """
-    #------------------------------------------------------------------Beautiful-----------------------------------------------------------------------
-    context = Context(BeautifulSoupStrategy())
-    values = context.scrape(url, stock_symbol)
-    print('Values BeautifulSoupStrategy:', values)
-
-    datos_requeridos1 = "datos_beautifulSoap.json"
+    try:
+      scrapeTechnique = int(scrapeTechnique_input)
+      
+    except ValueError:
+      scrapeTechnique = -1  # Asigna un valor inicial inválido para entrar al bucle.
     
-    with open(datos_requeridos1, "w") as archivo:
-        json.dump(values, archivo)
-    """
-    #------------------------------Selenium-----------------------------------------------------------------------------------------------------------------
-    context = Context(SeleniumStrategy())
-    values = context.scrape(url,stock_symbol)
-    print('Values SeleniumStrategy:', values)
-
-    datos_requeridos2 = "datos_seleniumStrategy.json"
+    # Repetir la elección si no ha sido válida.
+    while scrapeTechnique > 1 or scrapeTechnique < 0:
+        scrapeTechnique = input("Please choose a chooseable number, 0 or 1.\nTechniques: \nBeautifulSoup Strategy: 0\nSelenium Strategy: 1\nChoose a technique (number): ")
+        try:
+          scrapeTechnique = int(scrapeTechnique_input)
+        except ValueError:
+          continue  # Si la conversión falla, simplemente continua y vuelve a pedir la entrada.
     
-    with open(datos_requeridos2, "w") as archivo:
-        json.dump(values, archivo)
-
-
+    if scrapeTechnique == 0:
+        #------------------------------------------------------------------Beautiful-----------------------------------------------------------------------
+        ##################################################################################################################################################
+        context = Context(BeautifulSoupStrategy())
+        values = context.scrape(url, stock_symbol)
+        print('Values BeautifulSoupStrategy:', values)
+        ##################################################################################################################################################
+    else:
+        #------------------------------Selenium-----------------------------------------------------------------------------------------------------------------
+        ##################################################################################################################################################
+        context = Context(SeleniumStrategy())
+        values = context.scrape(url,stock_symbol)
+        print('Values SeleniumStrategy:', values)
+        ##################################################################################################################################################
+   
+    datos_requeridos_json = "datos_screpear.json"
+    
+    with open(datos_requeridos_json, "w") as archivo:
+            json.dump(values, archivo)
+            
+      
+            
 if __name__ == "__main__":
     main()
