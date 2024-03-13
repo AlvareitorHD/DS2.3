@@ -4,6 +4,18 @@ public class BicicletaMontana extends Bicicleta {
 
     protected String tipoSuspension;
 
+    protected int numSuspensiones;
+
+    public BicicletaMontana() {
+        super();
+        this.tipoSuspension = "";
+        this.numSuspensiones = 0;
+    }
+
+    public void establecerSuspension(String tipo, int num) {
+        tipoSuspension  = tipo;
+        numSuspensiones = num;
+    }
 
     @Override
     public void avanzar() {
@@ -14,6 +26,7 @@ public class BicicletaMontana extends Bicicleta {
     public String toString() {
         return "BicicletaMontana {" +
                 "tipoSuspension='" + tipoSuspension + '\'' +
+                ", numSuspensiones='" + numSuspensiones + '\'' +
                 ", tipoManillar='" + tipoManillar + '\'' +
                 ", tipoFrenos='" + tipoFrenos + '\'' +
                 ", numFrenos=" + numFrenos +

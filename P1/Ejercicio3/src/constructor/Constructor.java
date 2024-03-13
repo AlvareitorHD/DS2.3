@@ -6,7 +6,7 @@ public interface Constructor {
 
     public void recomponer();
 
-    public void construirManillar();
+    public void construirManillar(String tipo);
 
     public void construirFrenos(String tipo, int cantidad);
 
@@ -18,6 +18,6 @@ public interface Constructor {
 
     public void construirRuedas(String tipo, int cantidad);
 
-    public void construirPedales(String tipo);
+    public Bicicleta obtenerResultado();
 
 }
