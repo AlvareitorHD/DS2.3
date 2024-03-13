@@ -27,7 +27,7 @@ def main():
         except ValueError:
           continue  # Si la conversión falla, simplemente continua y vuelve a pedir la entrada.
 
-    context = Context(BeautifulSoupStrategy())  # Crea el contexto para usar BeautifulSoup.
+    context = Context(BeautifulSoupStrategy() if not scrapeTechnique else SeleniumStrategy())  # Crea el contexto en función de la estraategia a utilizar
     values  = context.scrape(url, stock_symbol)  # Transmite la url donde buscar y la empresa a crapear.
 
     print(('Values BeautifulSoupStrategy:' if not scrapeTechnique else 'Values SeleniumStrategy:'), values)
