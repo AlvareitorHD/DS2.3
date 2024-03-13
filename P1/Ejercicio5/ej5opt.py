@@ -26,21 +26,11 @@ def main():
           scrapeTechnique = int(scrapeTechnique_input) # Toma como tipo un entero.
         except ValueError:
           continue  # Si la conversión falla, simplemente continua y vuelve a pedir la entrada.
-    
-    if scrapeTechnique == 0:
-        #------------------------------------------------------------------Beautiful-----------------------------------------------------------------------
-        ##################################################################################################################################################
-        context = Context(BeautifulSoupStrategy()) # Crea el contexto para usar BeautifulSoup.
-        values = context.scrape(url, stock_symbol) # Transmite la url donde buscar y la empresa a crapear.
-        print('Values BeautifulSoupStrategy:', values)
-        ##################################################################################################################################################
-    else:
-        #------------------------------Selenium-----------------------------------------------------------------------------------------------------------------
-        ##################################################################################################################################################
-        context = Context(SeleniumStrategy()) # Crea el contexto para usar Selinium.
-        values = context.scrape(url,stock_symbol) # Transmite la url donde buscar y la empresa a crapear.
-        print('Values SeleniumStrategy:', values)
-        ##################################################################################################################################################
+
+    context = Context(BeautifulSoupStrategy())  # Crea el contexto para usar BeautifulSoup.
+    values  = context.scrape(url, stock_symbol)  # Transmite la url donde buscar y la empresa a crapear.
+
+    print(('Values BeautifulSoupStrategy:' if not scrapeTechnique else 'Values SeleniumStrategy:'), values)
    
     datos_requeridos_json = "datos_screpear.json" # Fichero donde se guardarán los datos.
     
