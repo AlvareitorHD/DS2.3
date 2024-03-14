@@ -7,6 +7,9 @@ public abstract class Constructor {
     protected Bicicleta bicicleta;
 
 
+    public Constructor() {
+        this.bicicleta = null;
+    }
 
     public abstract void recomponer();
 
