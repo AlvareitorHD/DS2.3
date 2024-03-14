@@ -1,8 +1,7 @@
 package director;
 
 import constructor.Constructor;
-import constructor.ConstructorBicicletaCarretera;
-import constructor.ConstructorBicicletaMontana;
+import constructor.*;
 
 public class Director {
 
@@ -30,6 +29,13 @@ public class Director {
             constructor.construirCuadro("FIBRA CARBONO");
             constructor.construirSillin("ESTRECHO");
             constructor.construirRuedas("ESCALADORAS", 2);
+        }
+    }
+
+    public void hacerBicicletaDecorada(Constructor constructor) {
+        if (constructor instanceof ConstructorBicicletaDecorada) {
+            ((ConstructorBicicletaDecorada) constructor).agregarEstampado();
+            ((ConstructorBicicletaDecorada) constructor).agregarFunda();
         }
     }
 }

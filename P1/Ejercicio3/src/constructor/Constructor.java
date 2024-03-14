@@ -2,22 +2,40 @@ package constructor;
 
 import bicicleta.Bicicleta;
 
-public interface Constructor {
+public abstract class Constructor {
 
-    public void recomponer();
+    protected Bicicleta bicicleta;
 
-    public void construirManillar(String tipo);
 
-    public void construirFrenos(String tipo, int cantidad);
 
-    public void construirTransmision(String tipo);
+    public abstract void recomponer();
 
-    public void construirCuadro(String tipo);
+    public void construirManillar(String tipo) {
+        bicicleta.establecerManillar(tipo);
+    }
 
-    public void construirSillin(String tipo);
+    public void construirFrenos(String tipo, int cantidad) {
+        bicicleta.establecerFrenos(tipo, cantidad);
+    }
 
-    public void construirRuedas(String tipo, int cantidad);
+    public void construirTransmision(String tipo) {
+        bicicleta.establecerTransmision(tipo);
+    }
 
-    public Bicicleta obtenerResultado();
+    public void construirCuadro(String tipo) {
+        bicicleta.establecerCuadro(tipo);
+    }
+
+    public void construirSillin(String tipo) {
+        bicicleta.establecerSillin(tipo);
+    }
+
+    public void construirRuedas(String tipo, int cantidad) {
+        bicicleta.establecerRuedas(tipo, cantidad);
+    }
+
+    public Bicicleta obtenerResultado() {
+        return (bicicleta);
+    }
 
 }
