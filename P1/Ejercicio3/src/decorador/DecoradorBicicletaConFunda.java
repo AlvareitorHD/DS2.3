@@ -13,12 +13,4 @@ public class DecoradorBicicletaConFunda extends DecoradorBicicleta {
     public void avanzar() {
         System.out.println("\nLa bicicleta con funda está avanzando...");
     }
-
-    @Override
-    public String toString() {
-        return "DecoradorBicicletaConFunda {" +
-                "bicicletaDecorada = " + bicicletaDecorada.toString() +
-                '}';
-    }
-
 }

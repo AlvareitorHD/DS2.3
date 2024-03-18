@@ -24,17 +24,9 @@ public class BicicletaMontana extends Bicicleta {
 
     @Override
     public String toString() {
-        return "BicicletaMontana {" +
-                "tipoSuspension='" + tipoSuspension + '\'' +
-                ", numSuspensiones='" + numSuspensiones + '\'' +
-                ", tipoManillar='" + tipoManillar + '\'' +
-                ", tipoFrenos='" + tipoFrenos + '\'' +
-                ", numFrenos=" + numFrenos +
-                ", tipoTransmision='" + tipoTransmision + '\'' +
-                ", tipoCuadro='" + tipoCuadro + '\'' +
-                ", tipoSillin='" + tipoSillin + '\'' +
-                ", tipoRuedas='" + tipoRuedas + '\'' +
-                ", numRuedas=" + numRuedas +
-                '}';
+        return (super.toString() +
+                "\tTipo de suspensión: " + tipoSuspension + "\n" +
+                "\tNúmero de suspensiones: " + numSuspensiones + "\n" +
+                "\tTIPO DE BICICLETA: montaña" + "\n");
     }
 }

@@ -25,6 +25,8 @@ public class PruebaEjercicio3 {
         // Finalmente, se imprime la bicicleta:
         System.out.println(biciMontanaDecorada);
 
+
+
         // Para construir una bicicleta de carretera decorada (con estampado y funda), los pasos son los mismos:
         ConstructorBicicletaCarretera constructorBicicletaCarretera = new ConstructorBicicletaCarretera();
         director.hacerBicicletaCarretera(constructorBicicletaCarretera);

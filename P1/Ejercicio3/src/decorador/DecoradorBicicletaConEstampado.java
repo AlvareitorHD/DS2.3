@@ -13,12 +13,4 @@ public class DecoradorBicicletaConEstampado extends DecoradorBicicleta {
     public void avanzar() {
         System.out.println("\nLa bicicleta con estampado está avanzando...");
     }
-
-    @Override
-    public String toString() {
-        return "DecoradorBicicletaConEstampado {" +
-                "bicicletaDecorada = " + bicicletaDecorada.toString() +
-                '}';
-    }
-
 }

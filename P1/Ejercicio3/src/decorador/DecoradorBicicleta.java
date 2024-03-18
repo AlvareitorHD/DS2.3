@@ -11,4 +11,10 @@ public abstract class DecoradorBicicleta extends Bicicleta {
     DecoradorBicicleta(Bicicleta bicicletaADecorar) {
         bicicletaDecorada = bicicletaADecorar;
     }
+
+    @Override
+    public String toString() {
+        return (bicicletaDecorada.toString() +
+                "\tExtra: " + extra + "\n");
+    }
 }

@@ -11,15 +11,7 @@ public class BicicletaCarretera extends Bicicleta {
 
     @Override
     public String toString() {
-        return "BicicletaCarretera {" +
-                "tipoManillar='" + tipoManillar + '\'' +
-                ", tipoFrenos='" + tipoFrenos + '\'' +
-                ", numFrenos=" + numFrenos +
-                ", tipoTransmision='" + tipoTransmision + '\'' +
-                ", tipoCuadro='" + tipoCuadro + '\'' +
-                ", tipoSillin='" + tipoSillin + '\'' +
-                ", tipoRuedas='" + tipoRuedas + '\'' +
-                ", numRuedas=" + numRuedas +
-                '}';
+        return (super.toString() +
+                "\tTIPO DE BICICLETA: carretera" + "\n");
     }
 }

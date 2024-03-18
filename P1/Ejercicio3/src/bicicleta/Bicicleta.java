@@ -57,4 +57,17 @@ public abstract class Bicicleta {
     }
 
     public abstract void avanzar();
+
+    @Override
+    public String toString() {
+        return ("\nBicicleta:\n\n" +
+                "\tTipo de manillar: " + tipoManillar + "\n" +
+                "\tTipo de frenos: " + tipoFrenos + "\n" +
+                "\tNúmero de frenos: " + numFrenos + "\n" +
+                "\tTipo de transmisión: " + tipoTransmision + "\n" +
+                "\tTipo de cuadro: " + tipoCuadro + "\n" +
+                "\tTipo de sillín: " + tipoSillin + "\n" +
+                "\tTipo de ruedas: " + tipoRuedas + "\n" +
+                "\tNúmero de Ruedas: " + numRuedas + "\n");
+    }
 }
