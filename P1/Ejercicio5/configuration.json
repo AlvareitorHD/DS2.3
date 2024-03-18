@@ -1,0 +1,12 @@
+{
+    "selectors": {
+      "previous_close": [
+        {
+            "pattern": "//td[@data-test='PREV_CLOSE-value']"
+        },
+        {
+            "pattern": "//span[contains(text(), 'Cierre anterior')]/following::td[1]"
+        }
+      ]
+    }
+  }
