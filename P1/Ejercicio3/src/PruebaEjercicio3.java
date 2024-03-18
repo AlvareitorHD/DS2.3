@@ -4,8 +4,16 @@ import constructor.ConstructorBicicletaDecorada;
 import constructor.ConstructorBicicletaMontana;
 import director.Director;
 
+/**
+ * Clase que contiene el programa que realiza la prueba del programa
+ */
 public class PruebaEjercicio3 {
-
+    /**
+     * Clase principal con la lógica necesaria para probar el programa. Se crea una bicicleta de montaña y, después,
+     * se le agrega simultáneamente un estampado y una funda. Al final, se crea una bicicleta de carretera con la
+     * misma decoración (estampado y funda)s
+     * @param args Argumentos para la ejecución del programa (en este ejemplo no son necesarios)
+     */
     public static void main(String[] args) {
         // Crear el director para manejar las construcciones:
         Director director = new Director();
@@ -60,5 +68,4 @@ public class PruebaEjercicio3 {
         System.out.println("\nBicicleta de carretera decorada (con estampado y funda):\n" +
                 biciCarreteraDecorada);
     }
-
 }
