@@ -1,11 +1,35 @@
 {
     "selectors": {
-      "previous_close": [
+      "cierre_anterior": [
         {
             "pattern": "//td[@data-test='PREV_CLOSE-value']"
         },
         {
             "pattern": "//span[contains(text(), 'Cierre anterior')]/following::td[1]"
+        }
+      ],
+      "apertura":[
+        {
+          "pattern": "//td[@data-test='OPEN-value']"
+        },
+        {
+          "pattern": "//span[contains(text(), 'Abrir')]/following::td[1]"
+        }
+      ],
+      "volumen":[
+        {
+          "pattern": "//td[@data-test='TD_VOLUME-value']"
+        },
+        {
+          "pattern": "//span[contains(text(), 'Volumen')]/following-sibling::fin-streamer"
+        }
+      ],
+      "market_cap":[
+        {
+          "pattern": "//td[@data-test='MARKET_CAP-value']"
+        },
+        {
+          "pattern": "//span[contains(text(), 'Capitalización de mercado')]/following::td[1]"
         }
       ]
     }
