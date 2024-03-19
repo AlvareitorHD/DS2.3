@@ -31,6 +31,6 @@ class SeleniumStrategy(ScrapeStrategy):
         except Exception: # Fallo a la hora de scrapear.
           data = f'Fallo al scrapear los datos. Revisa la acción elegida.'
         finally:
-          driver.quit() # Se cierra el driver.
+          driver.quit() # Se cierran pestañas y liberan recursos reservados.
         
         return data # Se devuelve los datos extraidos. 

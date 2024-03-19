@@ -30,12 +30,12 @@
       "volumen":{
         "selenium":{
           "atributo": "//td[@data-test='TD_VOLUME-value']",
-          "estructura": "//span[contains(text(), 'Volumen')]/following-sibling::fin-streamer"
+          "estructura": "//span[contains(text(), 'Volumen')]/following-sibling::td[1]"
         },
         "beautiful":{
           "atributo": {"tag": "td", "attributes": {"data-test": "TD_VOLUME-value"}},
           "estructura": [
-            {"tag": "span", "text": "Volumen", "sibling": "td"}
+            {"tag": "span", "text": "Volumen", "sibling": "td[1]"}
           ]
         }
       },
