@@ -1,5 +1,6 @@
-# Clase base para las estrategias de scraping
-class ScrapeStrategy():
+from abc import ABC, abstractmethod
+
+class ScrapeStrategy(ABC):
     """
     Clase que representa la estrategia a usar para escrapear.
     
@@ -7,6 +8,7 @@ class ScrapeStrategy():
       scrape: Función que escrapea una empresa a través de una url.
     """
      # Método de scraping que debe ser implementado por las estrategias concretas
+    @abstractmethod
     def scrape(self, url, stock_symbol):
         """
         Función que escrapea el cierre anterior, precio de apertura, volumen y capitalización de mercado
