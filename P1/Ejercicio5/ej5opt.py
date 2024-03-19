@@ -41,7 +41,7 @@ def main():
   technique_name = "BeautifulSoup" if scrapeTechnique == 0 else "Selenium"
   print(f"\nHas elegido {technique_name} como tu técnica de scraping.\n\nScrapeando...")
   
-   # Crea el contexto en función de la estraategia a utilizar
+   # Crea el contexto en función de la estrategia a utilizar
   context = Context(BeautifulSoupStrategy() if scrapeTechnique == 0 else SeleniumStrategy())
   values  = context.scrape(url, stock_symbol)  # Transmite la url donde buscar y la empresa a crapear.
 
