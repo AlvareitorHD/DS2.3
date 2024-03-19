@@ -47,8 +47,12 @@ class CalcularVelocidad(Filtro):
         resultado = ctx.revoluciones
         if ctx.estado_motor is EstadoMotor.ACELERANDO and ctx.revoluciones < self.revoluciones_maximas:
             resultado += self.incremento_velocidad
+            if resultado > self.revoluciones_maximas:
+                resultado = self.revoluciones_maximas
         elif ctx.estado_motor is EstadoMotor.FRENANDO and ctx.revoluciones > self.revoluciones_minimas:
             resultado -= self.incremento_velocidad
+            if resultado < self.revoluciones_minimas:
+                resultado = self.revoluciones_minimas
         if verbose: print(f"{__class__.__name__}: {ctx.revoluciones} -> {resultado}")
         ctx.revoluciones = resultado
         return ctx.revoluciones

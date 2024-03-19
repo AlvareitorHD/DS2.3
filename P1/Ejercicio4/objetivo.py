@@ -13,10 +13,10 @@ class Objetivo():
         """
         self.__radio_rueda: float = 0.15
         self.estado_motor: EstadoMotor = EstadoMotor.APAGADO
-        self.velocidad_lineal: float = 0
+        self.velocidad_lineal: float = 0.0
         self.velocidad_angular: float = 0
-        self.cuentakilometros_total: float = 0
-        self.cuentakilometros_reciente: float = 0
+        self.cuentakilometros_total: float = 0.0
+        self.cuentakilometros_reciente: float = 0.0
         
     def ejecutar(self, ctx: Contexto, verbose: bool = False) -> None:
         """Ejecuta la tarea del objetivo
