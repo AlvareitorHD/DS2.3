@@ -39,17 +39,20 @@ def main():
 
   # Confirmación de la elección
   technique_name = "BeautifulSoup" if scrapeTechnique == 0 else "Selenium"
-  print(f"\nHas elegido {technique_name} como tu técnica de scraping.")
+  print(f"\nHas elegido {technique_name} como tu técnica de scraping.\n\nScrapeando...")
   context = Context(BeautifulSoupStrategy() if scrapeTechnique == 0 else SeleniumStrategy())  # Crea el contexto en función de la estraategia a utilizar
   values  = context.scrape(url, stock_symbol)  # Transmite la url donde buscar y la empresa a crapear.
 
-  print(('Tus valores scrapeados por BeautifulSoupStrategy:' if not scrapeTechnique else 'Tus valores scrapeados por SeleniumStrategy:'), values)
+  if values == "Fallo al scrapear los datos. Revisa la acción elegida.":
+    print(values)
+  else:
+    print(('Valores scrapeados por BeautifulSoupStrategy. ' if not scrapeTechnique else 'Valores scrapeados por SeleniumStrategy. '),"\nFichero datos_scrapear.json actualizado.")
    
-  datos_requeridos_json = "datos_screpear.json" # Fichero donde se guardarán los datos.
+    datos_requeridos_json = "DatosScrapeados/datos_scrapear.json" # Fichero donde se guardarán los datos.
     
-  # Se sobreescriben los datos en el fichero.
-  with open(datos_requeridos_json, "w") as archivo:
-    json.dump(values, archivo)
+    # Se sobreescriben los datos en el fichero.
+    with open(datos_requeridos_json, "w") as archivo:
+      json.dump(values, archivo)
             
       
             

@@ -29,7 +29,7 @@ class BeautifulSoupStrategy(ScrapeStrategy):
         # Obtiene la ruta al directorio del script principal (ej5opt.py)
         main_dir = os.path.dirname(os.path.dirname(__file__))
         # Construye la ruta al archivo de configuración
-        config_path = os.path.join(main_dir, 'configuration.json')
+        config_path = os.path.join(main_dir, 'Configuracion/configuration.json')
 
         # Cargando la configuración de los selectores
         with open(config_path) as config_file:
@@ -38,7 +38,7 @@ class BeautifulSoupStrategy(ScrapeStrategy):
         response = requests.get(url)
         if response.status_code == 200:
             soup = BeautifulSoup(response.content, 'html.parser')
-            data = {'stock_symbol': stock_symbol}
+            data = {'simbolo_accion': stock_symbol}
             
             for key, value in config['selectors'].items():
                 bs_selector = value['beautiful']['atributo']
@@ -57,4 +57,4 @@ class BeautifulSoupStrategy(ScrapeStrategy):
                         data[key] = f'{key} Value not found'
             return data
         else:
-            return f'Failed to retrieve the webpage, status code: {response.status_code}'
+            return f'Fallo al scrapear los datos. Revisa la acción elegida.'
