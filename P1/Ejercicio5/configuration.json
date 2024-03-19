@@ -1,36 +1,55 @@
 {
     "selectors": {
-      "cierre_anterior": [
+      "cierre_anterior": {
+        "selenium":
         {
-            "pattern": "//td[@data-test='PREV_CLOSE-value']"
+          "atributo": "//td[@data-test='PREV_CLOSE-value']",
+          "estructura": "//span[contains(text(), 'Cierre anterior')]/following::td[1]"
         },
+        "beautiful":
         {
-            "pattern": "//span[contains(text(), 'Cierre anterior')]/following::td[1]"
+          "atributo": {"tag": "td", "attributes": {"data-test": "PREV_CLOSE-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Cierre anterior", "sibling": "td"}
+          ]
         }
-      ],
-      "apertura":[
-        {
-          "pattern": "//td[@data-test='OPEN-value']"
+      },
+      "apertura":{
+        "selenium":{
+          "atributo": "//td[@data-test='OPEN-value']",
+          "estructura": "//span[contains(text(), 'Abrir')]/following::td[1]"
         },
+        "beautiful":
         {
-          "pattern": "//span[contains(text(), 'Abrir')]/following::td[1]"
+          "atributo": {"tag": "td", "attributes": {"data-test": "OPEN-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Abrir", "sibling": "td"}
+          ]
         }
-      ],
-      "volumen":[
-        {
-          "pattern": "//td[@data-test='TD_VOLUME-value']"
+      },
+      "volumen":{
+        "selenium":{
+          "atributo": "//td[@data-test='TD_VOLUME-value']",
+          "estructura": "//span[contains(text(), 'Volumen')]/following-sibling::fin-streamer"
         },
-        {
-          "pattern": "//span[contains(text(), 'Volumen')]/following-sibling::fin-streamer"
+        "beautiful":{
+          "atributo": {"tag": "td", "attributes": {"data-test": "TD_VOLUME-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Volumen", "sibling": "td"}
+          ]
         }
-      ],
-      "market_cap":[
-        {
-          "pattern": "//td[@data-test='MARKET_CAP-value']"
+      },
+      "market_cap":{
+        "selenium":{
+          "atributo": "//td[@data-test='MARKET_CAP-value']",
+          "estructura": "//span[contains(text(), 'Capitalización de mercado')]/following::td[1]"
         },
-        {
-          "pattern": "//span[contains(text(), 'Capitalización de mercado')]/following::td[1]"
+        "beautiful":{
+          "atributo": {"tag": "td", "attributes": {"data-test": "MARKET_CAP-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Capitalización de mercado", "sibling": "td"}
+          ]
         }
-      ]
+      }
     }
   }

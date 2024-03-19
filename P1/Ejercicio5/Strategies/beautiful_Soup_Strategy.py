@@ -1,6 +1,8 @@
 from Strategies.scrape_Strategy import ScrapeStrategy
 import requests
 from bs4 import BeautifulSoup
+import os
+import json
 
 # Estrategia de scraping utilizando BeautifulSoup
 class BeautifulSoupStrategy(ScrapeStrategy):
@@ -24,24 +26,35 @@ class BeautifulSoupStrategy(ScrapeStrategy):
         Returns:
             Devuelve una lista de los datos escrapeados.
         """
-        response = requests.get(url)  # Realiza una solicitud HTTP GET a la URL especificada.
-        if response.status_code == 200:  # Verifica si la solicitud fue exitosa (código de estado HTTP 200).
-            soup = BeautifulSoup(response.content, 'html.parser')  # Parsea el contenido HTML de la respuesta utilizando BeautifulSoup.
-            data = {}  # Crea un diccionario para almacenar los datos recopilados.
+        # Obtiene la ruta al directorio del script principal (ej5opt.py)
+        main_dir = os.path.dirname(os.path.dirname(__file__))
+        # Construye la ruta al archivo de configuración
+        config_path = os.path.join(main_dir, 'configuration.json')
+
+        # Cargando la configuración de los selectores
+        with open(config_path) as config_file:
+            config = json.load(config_file)
+        
+        response = requests.get(url)
+        if response.status_code == 200:
+            soup = BeautifulSoup(response.content, 'html.parser')
+            data = {'stock_symbol': stock_symbol}
             
-            # Búsqueda de los elementos necesarios en el DOM
-            open_value_td = soup.find('td', {'data-test': 'OPEN-value'})  # Busca el elemento td que contiene el valor de apertura.
-            close_value_td = soup.find('td', {'data-test': 'PREV_CLOSE-value'})  # Busca el elemento td que contiene el valor de cierre.
-            volume_td = soup.find('td', {'data-test': 'TD_VOLUME-value'})  # Busca el elemento td que contiene el volumen de transacciones.
-            market_cap_td = soup.find('td', {'data-test': 'MARKET_CAP-value'})  # Busca el elemento td que contiene la capitalización de mercado.
-            data['stock_symbol'] = stock_symbol  # Almacena el símbolo de la acción.
-            
-            # Extracción y asignación de datos
-            data['open'] = open_value_td.text.strip() if open_value_td else 'Open Value not found'  # Extrae el valor de apertura o asigna un mensaje de no encontrado.
-            data['close'] = close_value_td.text.strip() if close_value_td else 'Close Value not found'  # Extrae el valor de cierre o asigna un mensaje de no encontrado.
-            data['volume'] = volume_td.text.strip() if volume_td else 'Volume Value not found'  # Extrae el volumen de transacciones o asigna un mensaje de no encontrado.
-            data['market_cap'] = market_cap_td.text.strip() if market_cap_td else 'Market Cap Value not found'  # Extrae la capitalización de mercado o asigna un mensaje de no encontrado.
-            return data  # Devuelve el diccionario con los datos recopilados.
+            for key, value in config['selectors'].items():
+                bs_selector = value['beautiful']['atributo']
+                found_element = soup.find(bs_selector['tag'], bs_selector['attributes'])
+                if found_element:
+                    data[key] = found_element.text.strip()
+                else:
+                    for fallback_selector in value['beautiful']['estructura']:
+                        span_element = soup.find(fallback_selector['tag'], text=fallback_selector['text'])
+                        if span_element:
+                            sibling = span_element.find_next_sibling(fallback_selector['sibling'])
+                            if sibling:
+                                data[key] = sibling.text.strip()
+                                break
+                    if key not in data:
+                        data[key] = f'{key} Value not found'
+            return data
         else:
-            # Retorna un mensaje de error si no se pudo recuperar la página web correctamente.
             return f'Failed to retrieve the webpage, status code: {response.status_code}'
