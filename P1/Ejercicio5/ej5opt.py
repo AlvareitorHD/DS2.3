@@ -4,39 +4,52 @@ from Strategies.beautiful_Soup_Strategy import BeautifulSoupStrategy
 from Strategies.selenium_Strategy import SeleniumStrategy
 
 def main():
-    """
-    Se escoge una empresa a escrapear para posteriormente usar uns técnica para ello, ya sea 
-    BeautifulSoup o Selenium. Posteriormente se introducen los resultados en un fichero .json.
-    """
-    stock_symbol = input("Enter the stock symbol (e.g., TSLA for Tesla): ")
-    url = f'https://finance.yahoo.com/quote/{stock_symbol}'
-    
-    # Elección de la técnica de screapeo.
-    scrapeTechnique_input = input("Techniques: \nBeautifulSoup Strategy: 0\nSelenium Strategy: 1\nChoose a technique (number): ")
-    
+  """
+  Se escoge una empresa a escrapear para posteriormente usar uns técnica para ello, ya sea 
+  BeautifulSoup o Selenium. Posteriormente se introducen los resultados en un fichero .json.
+  """
+  print("Bienvenido al extractor de información de acciones de Yahoo Finanzas")
+  print("Este script te permitirá obtener datos en tiempo real de cualquier acción listada en Yahoo Finanzas.")
+  print("\nPor favor, sigue las instrucciones para proceder.\n")
+
+  # Solicitud del símbolo de la acción
+  stock_symbol = input("Introduce el símbolo de la acción (por ejemplo, TSLA para Tesla): ")
+  url = f'https://finance.yahoo.com/quote/{stock_symbol}'
+  print(f"\nAccediendo a los datos de la acción: {stock_symbol}...")
+
+  # Elección de la técnica de scraping
+  print("\nPuedes elegir entre dos técnicas de scraping:")
+  print("0 - BeautifulSoup (recomendado para scrapear contenido estático)")
+  print("1 - Selenium (necesario para scrapear contenido dinámico)")
+  scrapeTechnique_input = input("Elige una técnica (número): ")
+
+  try:
+    scrapeTechnique = int(scrapeTechnique_input)
+  except ValueError:
+    scrapeTechnique = -1
+
+  # Validación del input
+  while scrapeTechnique not in [0, 1]:
+    print("\nError: Por favor, elige un número válido.")
+    scrapeTechnique_input = input("Técnicas: \n0 - BeautifulSoup\n1 - Selenium\nElige una técnica (número): ")
     try:
-      scrapeTechnique = int(scrapeTechnique_input)
+        scrapeTechnique = int(scrapeTechnique_input)
     except ValueError:
-      scrapeTechnique = -1  # Asigna un valor inicial inválido para entrar al bucle.
-    
-    # Validación del input para la técnica de scraping.
-    while scrapeTechnique > 1 or scrapeTechnique < 0:
-        scrapeTechnique = input("Please choose a chooseable number, 0 or 1.\nTechniques: \nBeautifulSoup Strategy: 0\nSelenium Strategy: 1\nChoose a technique (number): ")
-        try:
-          scrapeTechnique = int(scrapeTechnique_input) # Toma como tipo un entero.
-        except ValueError:
-          continue  # Si la conversión falla, simplemente continua y vuelve a pedir la entrada.
+        continue
 
-    context = Context(BeautifulSoupStrategy())  # Crea el contexto para usar BeautifulSoup.
-    values  = context.scrape(url, stock_symbol)  # Transmite la url donde buscar y la empresa a crapear.
+  # Confirmación de la elección
+  technique_name = "BeautifulSoup" if scrapeTechnique == 0 else "Selenium"
+  print(f"\nHas elegido {technique_name} como tu técnica de scraping.")
+  context = Context(BeautifulSoupStrategy() if scrapeTechnique == 0 else SeleniumStrategy())  # Crea el contexto en función de la estraategia a utilizar
+  values  = context.scrape(url, stock_symbol)  # Transmite la url donde buscar y la empresa a crapear.
 
-    print(('Values BeautifulSoupStrategy:' if not scrapeTechnique else 'Values SeleniumStrategy:'), values)
+  print(('Tus valores scrapeados por BeautifulSoupStrategy:' if not scrapeTechnique else 'Tus valores scrapeados por SeleniumStrategy:'), values)
    
-    datos_requeridos_json = "datos_screpear.json" # Fichero donde se guardarán los datos.
+  datos_requeridos_json = "datos_screpear.json" # Fichero donde se guardarán los datos.
     
-    # Se sobreescriben los datos en el fichero.
-    with open(datos_requeridos_json, "w") as archivo:
-            json.dump(values, archivo)
+  # Se sobreescriben los datos en el fichero.
+  with open(datos_requeridos_json, "w") as archivo:
+    json.dump(values, archivo)
             
       
             
