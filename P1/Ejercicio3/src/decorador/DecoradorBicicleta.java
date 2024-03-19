@@ -4,7 +4,7 @@ import bicicleta.Bicicleta;
 
 /**
  * Clase abstracta que hereda de Bicicleta, la cual representa un decorador de bicicletas. Esta clase es una bicicleta
- * y, además, tiene una bicicleta, lo cual permitirá agragar capas encima de la bicicleta primaria
+ * y, además, tiene una bicicleta, lo cual permitirá agregar capas encima de la bicicleta primaria
  */
 public abstract class DecoradorBicicleta extends Bicicleta {
     /**
