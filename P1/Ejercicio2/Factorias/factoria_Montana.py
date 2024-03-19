@@ -20,7 +20,7 @@ class FactoriaMontana(FactoriaCarreraYBicicleta):
         Inicialización del prototipo de bicicleta para clonación.
         """
         super().__init__(BicicletaMontana(0, 0))   # Prototipo específico para FactoriaMontana
-
+    
     def crear_item (self, item, id):
         """
         Se crean carreras de montaña y bicicletas de montaña, estas última por clonación y ajustando su id y puntuacion.
