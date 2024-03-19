@@ -1,11 +1,8 @@
+from Strategies.Funciones.config_carga import load_config
+from Strategies.Funciones.driver_opciones import get_driver
+from Strategies.Funciones.cookie_gestion import manage_cookies
+from Strategies.Funciones.data_extractor import extract_data
 from Strategies.scrape_Strategy import ScrapeStrategy
-from selenium import webdriver
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
-from selenium.webdriver.common.by import By
-from selenium.webdriver.support.ui import WebDriverWait
-from selenium.webdriver.support import expected_conditions as EC
-import json
-import os
 
 # Estrategia de scraping utilizando Selenium.
 class SeleniumStrategy(ScrapeStrategy):
@@ -14,79 +11,26 @@ class SeleniumStrategy(ScrapeStrategy):
     Clase que hereda de la clase ScrapeStrategy.
     
     Métodos:
-      scrape: escrapea datos de una empresa a través de una url.
+      scrape: escrapea datos de Yahoo Finanazas a través de la url.
     """
     # Implementación del método scrape para Selenium.
     def scrape(self, url, stock_symbol):
         """
-        Función que escrapea el cierre anterior, precio de apertura, volumen y capitalización de mercado
-        de una empresa a través de una url.
+        Realiza el scraping de datos de una página web basado en la URL y el símbolo de la acción.
         
-        Atributos:
-            url: url de la página web a escrapear.
-            stock_symbol: símbolo de la empresa a escrapear en la bolsa. 
-
-        Returns:
-            Devuelve una lista de los datos escrapeados.
+        :param url: URL de la página a escrapear.
+        :param stock_symbol: Símbolo de la acción a escrapear.
+        :return: Diccionario con los datos escrapeados.
         """
-        
-        # Obtiene la ruta al directorio del script principal (ej5opt.py)
-        main_dir = os.path.dirname(os.path.dirname(__file__))
-        # Construye la ruta al archivo de configuración
-        config_path = os.path.join(main_dir, 'Configuracion/configuration.json')
-
-        # Cargando la configuración de los selectores
-        with open(config_path) as config_file:
-            config = json.load(config_file)
-        
-        options = webdriver.ChromeOptions()  # Crea un objeto para opciones de Chrome.
-        options.add_argument('headless')  # Configura Chrome para ejecutarse en modo sin interfaz gráfica.
-        options.add_argument("--disable-logs")  # Intenta deshabilitar los logs
-        options.add_argument("--log-level=3")  # Establece el nivel de registro para mostrar solo errores
-
-         # Inicializa el navegador Chrome con las opciones definidas
-        driver = webdriver.Chrome(options=options)
+        config = load_config() # Se carga el fichero de configuracion.
         
         try:
-            
-          driver.get(url)  # Navega a la URL especificada.
-  
-          try: 
-            cookies_input = input("¿Quieres aceptar las cookies?(S or N): ")
- 
-            # Validación del input
-            while cookies_input != "S" and cookies_input != "N" and cookies_input != "No" and cookies_input != "Si":
-              print("\nError: Por favor, Responde con el formato S, N, Si, No.\n")
-              cookies_input = input("¿Quieres aceptar las cookies?(S or N): ")
-            
-            if cookies_input == "Y" or cookies_input == "Yes":
-              cookies_selector = config['cookies']['aceptar']
-            else:
-              cookies_selector = config['cookies']['rechazar']
-                
-            cookies_button = WebDriverWait(driver, 10).until(EC.element_to_be_clickable((By.XPATH, cookies_selector)))  # Espera hasta que el botón de aceptar cookies sea clickeable.
-            cookies_button.click()  # Hace clic en el botón de aceptar cookies.
-          except (NoSuchElementException, TimeoutException):
-            print(f"No se encontró el botón de cookies.")  # Imprime un mensaje si no se encuentra el botón de cookies.
-         
-          data = {'simbolo_accion': stock_symbol}
-          for key, value in config['selectors'].items():
-                selenium_selector = value['selenium']['atributo']
-                try:
-                    element = WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.XPATH, selenium_selector))
-                    )
-                    data[key] = element.text.strip()
-                except TimeoutException:
-                    fallback_selector = value['selenium']['estructura']
-                    element = WebDriverWait(driver, 10).until(
-                        EC.presence_of_element_located((By.XPATH, fallback_selector))
-                    )
-                    data[key] = element.text.strip() if element else f'{key} Value not found'
-            
-        except Exception:
-            data = f'Fallo al scrapear los datos. Revisa la acción elegida.'
+          driver = get_driver(url) # Se crea el driver
+          manage_cookies(driver, config) # Gestion de las cookies.
+          data = extract_data(driver, stock_symbol, config) # Datos scrapeados.
+        except Exception: # Fallo a la hora de scrapear.
+          data = f'Fallo al scrapear los datos. Revisa la acción elegida.'
         finally:
-            driver.quit()
+          driver.quit() # Se cierra el driver.
         
-        return data
+        return data # Se devuelve los datos extraidos. 
