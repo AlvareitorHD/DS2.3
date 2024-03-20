@@ -4,8 +4,4 @@
 
 - **Lenguaje**: Python
 - **Patron software**: Intercepting Filters
-- **Framework para la GUI**: tkinter
-
-#### TO-DO:
-- [ ] Implementar cuenta kilometros de acuerdo a la GUI
-- [ ] GUI
+- **Framework para la GUI**: [ttkbootstrap](https://ttkbootstrap.readthedocs.io/en/latest/), basado en tkinter

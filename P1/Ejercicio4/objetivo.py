@@ -47,8 +47,11 @@ class Objetivo():
         if verbose: print(f"KM/H: {self.velocidad_lineal} -> {nueva_velocidad_lineal}")
         self.velocidad_lineal = nueva_velocidad_lineal
         
+        # Milisegundos de retardo entre acciones constantes
+        milisegundos = 100
+        # Tiempo entre estados (en horas)
+        tiempo = (1/3600) * (milisegundos/1000)
         # Actualizamos los cuentakilometros
-        tiempo = 1/3600 # Tiempo entre estados (en horas)
         agregacion_cuentakilometros = self.velocidad_lineal * tiempo
         self.cuentakilometros_total += agregacion_cuentakilometros
         self.cuentakilometros_reciente += agregacion_cuentakilometros

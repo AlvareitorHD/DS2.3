@@ -66,9 +66,8 @@ class RepercutirRozamiento(Filtro):
         
     def ejecutar(self, ctx: Contexto, verbose: bool = False) -> float:
         resultado = ctx.revoluciones
-        if ctx.estado_motor in {EstadoMotor.ACELERANDO, EstadoMotor.FRENANDO}:
+        if ctx.revoluciones > 0:
             resultado -= self.indice_rozamiento
-            if resultado < 0: resultado = 0
             if verbose: print(f"{__class__.__name__}: {ctx.revoluciones} -> {resultado}")
             ctx.revoluciones = resultado
         return ctx.revoluciones
