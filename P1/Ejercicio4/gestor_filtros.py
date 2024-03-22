@@ -10,16 +10,18 @@ class GestorFiltros:
     """
     
     def __init__(self, objetivo: Objetivo = None):
-        """Constructor
+        """
+        Constructor
 
         Parametros:
-            objetivo (Objetivo, optional): Instancia objetivo del gestor. Si no se proporciona una, se
-            construye por defecto
+            objetivo (Objetivo, optional): Instancia objetivo del gestor. 
+                Si no se proporciona una, se construye por defecto
         """
         self.__cadena = CadenaFiltros(objetivo=objetivo)
         
     def aniadir_filtro(self, filtro: Filtro) -> None:
-        """Agrega un filtro a la cadena de filtros del gestor
+        """
+        Agrega un filtro a la cadena de filtros del gestor
 
         Parametros:
             filtro (Filtro): Filtro a agregar
@@ -27,16 +29,22 @@ class GestorFiltros:
         self.__cadena.aniadir_filtro(filtro)
     
     def solicitar(self, ctx: Contexto, verbose: bool = False) -> None:
-        """Solicita que se ejecute la cadena de filtros
+        """
+        Solicita que se ejecute la cadena de filtros
 
         Parametros:
             ctx: (Contexto): Contexto sobre el que tendra su ejecucion
             verbose (bool, optional): Muestra el proceso por consola. Por defecto es False.
         """
         self.__cadena.ejecutar(ctx, verbose)
-       
-    # Propiedad: objetivo (propiedad de CadenaFiltros)
-    # Es decir, referencia al atributo 'objetivo' de CadenaFiltros
+    
+    """
+        IMPORTANTE
+        Propiedad: objetivo (propiedad de CadenaFiltros)
+        Es decir, referencia al atributo 'objetivo' de CadenaFiltros
+        Podemos acceder al objetivo de CadenaFiltros desde el Gestor
+        self.objetivo == self.__cadena.objetivo
+    """
     @property
     def objetivo(self):
         return self.__cadena.objetivo

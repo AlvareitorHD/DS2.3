@@ -6,6 +6,17 @@ class Objetivo():
     """
     Clase para el salpicadero
     (Objetivo == Salpicadero)
+    
+    Esta clase almacena las caracteristicas principales del vehiculo (en realidad solo 1, el radio de las ruedas)
+    
+    Tambien almacena el estado actual del vehiculo:
+    - Estado del motor
+    - Velocidad
+        - Lineal
+        - Angular
+    - Kilometros recorridos
+        - En total
+        - Reciente (desde el ultimo inicio hasta que se apague)
     """
     def __init__(self):
         """
@@ -55,5 +66,3 @@ class Objetivo():
         agregacion_cuentakilometros = self.velocidad_lineal * tiempo
         self.cuentakilometros_total += agregacion_cuentakilometros
         self.cuentakilometros_reciente += agregacion_cuentakilometros
-        
-        return ctx.revoluciones

@@ -42,12 +42,6 @@ class BotonEncendido(ttkbs.Button):
 class BotonAcelerar(ttkbs.Button):
     def __init__(self, master, ventana):
         
-        def button_func():
-            obj = self.ventana.cliente.gestor.objetivo
-            if obj.estado_motor != EstadoMotor.APAGADO:
-                ctx = Contexto(obj.velocidad_angular, EstadoMotor.ACELERANDO)
-                self.ventana.cliente.solicitar(ctx)
-        
         super().__init__(
             master=master,
             text='Acelerar'
@@ -94,8 +88,7 @@ class BotonFrenar(ttkbs.Button):
         
         super().__init__(
             master=master,
-            text='Frenar',
-            command=button_func
+            text='Frenar'
         )
         self.pack(
             expand=True,

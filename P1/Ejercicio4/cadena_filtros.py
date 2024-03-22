@@ -2,6 +2,7 @@ from filtros import Filtro, Contexto
 from objetivo import Objetivo
 from copy import copy
 
+# Excepcion personalizada para cuando se ejecute la cadena de filtros sin un objetivo
 class ObjetivoDesconocido(Exception): ...
 
 class CadenaFiltros():
