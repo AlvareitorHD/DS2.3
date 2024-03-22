@@ -27,3 +27,6 @@ bin/
 
 ### Mac OS ###
 .DS_Store
+
+# Ignorar el directorio con los archivos de salida:
+out/production

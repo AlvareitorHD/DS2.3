@@ -1,0 +1,59 @@
+{
+    "selectors": {
+      "cierre_anterior": {
+        "selenium":
+        {
+          "atributo": "//td[@data-test='PREV_CLOSE-value']",
+          "estructura": "//span[contains(text(), 'Cierre anterior')]/following::td[1]"
+        },
+        "beautiful":
+        {
+          "atributo": {"tag": "td", "attributes": {"data-test": "PREV_CLOSE-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Cierre anterior", "sibling": "td"}
+          ]
+        }
+      },
+      "apertura":{
+        "selenium":{
+          "atributo": "//td[@data-test='OPEN-value']",
+          "estructura": "//span[contains(text(), 'Abrir')]/following::td[1]"
+        },
+        "beautiful":
+        {
+          "atributo": {"tag": "td", "attributes": {"data-test": "OPEN-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Abrir", "sibling": "td"}
+          ]
+        }
+      },
+      "volumen":{
+        "selenium":{
+          "atributo": "//td[@data-test='TD_VOLUME-value']",
+          "estructura": "//span[contains(text(), 'Volumen')]/following-sibling::td[1]"
+        },
+        "beautiful":{
+          "atributo": {"tag": "td", "attributes": {"data-test": "TD_VOLUME-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Volumen", "sibling": "td[1]"}
+          ]
+        }
+      },
+      "capitalizacion":{
+        "selenium":{
+          "atributo": "//td[@data-test='MARKET_CAP-value']",
+          "estructura": "//span[contains(text(), 'Capitalización de mercado')]/following::td[1]"
+        },
+        "beautiful":{
+          "atributo": {"tag": "td", "attributes": {"data-test": "MARKET_CAP-value"}},
+          "estructura": [
+            {"tag": "span", "text": "Capitalización de mercado", "sibling": "td"}
+          ]
+        }
+      }
+    },
+    "cookies":{
+      "aceptar": "//button[contains(@class, 'accept-all') and @name='agree']",
+      "rechazar": "//button[contains(@class, 'reject-all') and @name='reject']"
+    }
+  }
