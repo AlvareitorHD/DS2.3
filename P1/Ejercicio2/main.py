@@ -33,7 +33,7 @@ def main(min_N, max_N):
     # Iniciar los hilos y por lo tanto, las carreras
     hilo_carretera.start()
     hilo_montana.start()
-    
+    print(f"LAS CARRERAS TIENEN {N} bicicletas")
     # Esperar a que ambos hilos terminen
     hilo_carretera.join()
     hilo_montana.join()
