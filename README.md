@@ -26,11 +26,12 @@ componentes independientes, sino como objetos de clases no emparentadas que corr
 En nuestro ejercicio, se crearán dos filtros (clases CalcularVelocidad y RepercutirRozamiento, que implementan la interfaz Filtro) para calcular la velocidad angular (“revoluciones”) y modificar la misma en base al rozamiento.
 
 ### 5.Patrón Strategy para Scraping de datos en la Web (Python)
-Aplicación de WebScraping en Python donde se utilice el Patrón Strategy para scrapear información en vivo de acciones en la página web [FInance de Yahoo]{https://finance.yahoo.com/quote/}, donde se puede añadir el sufijo de la acción para acceder a información en vivo de ésta. Ejemplo con [TESLA]{https://finance.yahoo.com/quote/TSLA}.
+Aplicación de WebScraping en Python donde se utilice el Patrón Strategy para scrapear información en vivo de acciones en la página web [FInance de Yahoo](https://finance.yahoo.com/quote/), donde se puede añadir el sufijo de la acción para acceder a información en vivo de ésta. Ejemplo con [TESLA](https://finance.yahoo.com/quote/TSLA).
 Para el Patrón Strategy se usarán 2 estrategias:
+
 1. BeautifulSoup
 2. Selenium
+
 Se desea scrapear de la página anterior los siguientes elementos:
-Precio de cierre anterior, precio de apertura, volumen, capitalización de mercado.
-Toda esta información se guardará en un fichero .json, de forma que cada vez que se
-ejecute el código se borre el contenido anterior y se mostrará el nuevo.
+- Precio de cierre anterior, precio de apertura, volumen, capitalización de mercado.
+- Toda esta información se guardará en un fichero .json, de forma que cada vez que se ejecute el código se borre el contenido anterior y se mostrará el nuevo.
