@@ -29,7 +29,7 @@ class SeleniumStrategy(ScrapeStrategy):
           manage_cookies(driver, config) # Gestion de las cookies.
           data = extract_data(driver, stock_symbol, config) # Datos scrapeados.
         except Exception: # Fallo a la hora de scrapear.
-          data = f'Fallo al scrapear los datos. Revisa la acción elegida.'
+          data = f'Fallo al scrapear los datos. Revisa la accion elegida.'
         finally:
           driver.quit() # Se cierran pestañas y liberan recursos reservados.
         

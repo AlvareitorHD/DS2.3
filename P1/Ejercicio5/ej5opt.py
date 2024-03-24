@@ -97,7 +97,7 @@ def main():
     valores = crearContexto(f'https://finance.yahoo.com/quote/{datos[0]}', datos[0], datos[1])
 
     # Imprime un valor de salida en función de si ha conseguido scrapear o no:
-    if valores == "Fallo al scrapear los datos. Revisa la acción elegida.":
+    if valores == "Fallo al scrapear los datos. Revisa la accion elegida.":
         print(valores)  # Imprime un fallo.
     else:
         # Imprime que ha sido exitoso.
@@ -105,8 +105,8 @@ def main():
                if not datos[1]
                else 'Valores scrapeados por SeleniumStrategy. '), "\nFichero datos_scrapear.json actualizado.")
 
-    # Guardar los datos obtenidos en un fichero JSON:
-    guardarDatosEnJSON(valores, "DatosScrapeados/datos_scrapear.json", "w")
+        # Guardar los datos obtenidos en un fichero JSON:
+        guardarDatosEnJSON(valores, "DatosScrapeados/datos_scrapear.json", "w")
 
 
 

@@ -29,4 +29,4 @@ class BeautifulSoupStrategy(ScrapeStrategy):
             data = extract_data(html_content, config, stock_symbol)
             return data
         else:
-            return 'Fallo al scrapear los datos. Revisa la acción elegida.'
+            return 'Fallo al scrapear los datos. Revisa la accion elegida.'
