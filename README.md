@@ -19,7 +19,7 @@ Un programa con la misma funcionalidad que el ejercicio anterior, pero que apliq
 Hemos optado en crear un programa que combina el patrón Builder junto al patrón Decorador, donde reusamos la implementación de la clase Bicicleta de los ejercicios anteriores pero agregándoles atributos
 y accesorios nuevos.
 
-### 4. Patrón (estilo) arquitectónico filtros de intercepción en java. Simulación del movimiento de un vehículo con cambio automático
+### 4. Patrón (estilo) arquitectónico filtros de intercepción en Python. Simulación del movimiento de un vehículo con cambio automático
 Programa que representa el salpicadero de un vehículo con parámetros del movimiento del mismo (velocidad lineal en km/h, distancia recorrida en km y velocidad angular -“revoluciones”- en RPM), calculados a partir de las revoluciones del motor. Queremos además que estas revoluciones sean primero modificadas (filtradas) mediante software independiente a nuestro sistema, capaz de calcular el cambio en las revoluciones como consecuencia (1) del
 estado del motor (acelerando, frenando, apagando el motor . . .) y (2) del rozamiento. Usaremos para este ejercicio el patrón arquitectónico Filtros de Intercepción. No vamos a programar los servicios de filtrado como verdaderos
 componentes independientes, sino como objetos de clases no emparentadas que correrán todos bajo una única aplicación java (proyecto en el IDE).
