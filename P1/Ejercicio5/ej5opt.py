@@ -89,8 +89,6 @@ def main():
     # Solicitud del símbolo de la acción y elección de la técnica de scraping:
     datos = obtenerDatos()
 
-    print(len(datos))
-
     # Confirmación de la elección
     technique_name = "BeautifulSoup" if datos[1] == 0 else "Selenium"
     print(f"\nHas elegido {technique_name} como tu técnica de scraping.\n\nScrapeando...")
