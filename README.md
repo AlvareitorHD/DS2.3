@@ -1,6 +1,6 @@
 # Desarrollo de Software UGR
 
-###Integrantes del grupo:
+### Integrantes del grupo:
 - Alvaro Ruiz Luzón
 - Luis Miguel Guirado Bautista
 - Miguel Bravo Campos
