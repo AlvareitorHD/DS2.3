@@ -4,7 +4,7 @@
 - Alvaro Ruiz Luzón
 - Luis Miguel Guirado Bautista
 - Miguel Bravo Campos
-- Miguel  ́Angel Serrano Villena
+- Miguel Ángel Serrano Villena
 - Ginés Torres Almagro
 
 ## Práctica 1: Uso de Patrones de Diseño Creacionales y Estructurales en OO
