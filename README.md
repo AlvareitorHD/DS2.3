@@ -36,4 +36,4 @@ Se desea scrapear de la página anterior los siguientes elementos:
 - Precio de cierre anterior, precio de apertura, volumen, capitalización de mercado.
 - Toda esta información se guardará en un fichero .json, de forma que cada vez que se ejecute el código se borre el contenido anterior y se mostrará el nuevo.
 
-##Práctica 2
+## Práctica 2
