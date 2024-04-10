@@ -1,4 +1,4 @@
-import '../Bicicleta/bicicleta.dart';
+import '../Bicicleta/Bicicleta.dart';
 
 /**
  * Clase abstracta que hereda de Bicicleta, la cual representa un decorador de bicicletas. Esta clase es una bicicleta

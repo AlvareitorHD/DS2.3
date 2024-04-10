@@ -1,4 +1,8 @@
 import 'constructor.dart';
+import '../Bicicleta/Bicicleta.dart';
+import '../Decorador/decoradorBicicletaConEstampado.dart';
+import '../Decorador/decoradorBicicletaConFunda.dart';
+
 
 class ConstructorBicicletaDecorada extends Constructor {
   ConstructorBicicletaDecorada(Bicicleta bicicleta) {

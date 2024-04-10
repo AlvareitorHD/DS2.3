@@ -1,4 +1,4 @@
-import '../Bicicleta/bicicleta.dart';
+import '../Bicicleta/Bicicleta.dart';
 import 'decoradorBicicleta.dart';
 
 /**

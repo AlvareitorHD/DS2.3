@@ -1,3 +1,5 @@
+import '../Bicicleta/Bicicleta.dart';
+
 abstract class Constructor {
 
   // Se usa el operador ? para indicar que bicicleta puede ser null.
