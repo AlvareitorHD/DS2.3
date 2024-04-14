@@ -1,4 +1,4 @@
-import 'Bicicleta.dart';
+import 'bicicleta.dart';
 
 // Clase hija de Bicicleta. Esta representa a una bicicleta de carretera
 class BicicletaCarretera extends Bicicleta {

@@ -1,9 +1,15 @@
 import 'constructor.dart';
-import '../Bicicleta/BicicletaMontana.dart';
+import '../bicicleta/bicicleta_montana.dart';
+import 'package:ejercicio3/models/nombres_imagenes_bicicletas.dart';
 
 class ConstructorBicicletaMontana extends Constructor {
   ConstructorBicicletaMontana() {
     bicicleta = BicicletaMontana();
+  }
+
+  /// Asocia una imagen con la representación interna de la bicicleta de montaña
+  void asociarImagenBicicletaMontana() {
+    bicicleta?.asociarImagen(BICI_MON);
   }
 
   void construirSuspension(String tipo, int cantidad) {

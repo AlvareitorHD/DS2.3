@@ -24,6 +24,9 @@ abstract class Bicicleta {
   // Número de ruedas
   late int numRuedas;
 
+  /// Imagen representativa de la bicicleta, la cual representará su aspecto
+  String? _imagenRepresentativa;
+
   // Constructor de la clase sin parámetros. Inicializa a valores por defecto los componentes de la bicicleta
   Bicicleta() {
     tipoManillar = "";
@@ -34,6 +37,15 @@ abstract class Bicicleta {
     tipoSillin = "";
     tipoRuedas = "";
     numRuedas = 0;
+    _imagenRepresentativa = "";
+  }
+
+  /// Consultor de la imagen representativa
+  String? get imagenRepresentativa => _imagenRepresentativa;
+
+  /// Asocia una imagen con la representación interna de la bicicleta
+  void asociarImagen(String? imagen) {
+    _imagenRepresentativa = imagen;
   }
 
   // Modificador del manillar

@@ -1,4 +1,4 @@
-import '../Bicicleta/Bicicleta.dart';
+import '../bicicleta/bicicleta.dart';
 
 abstract class Constructor {
 

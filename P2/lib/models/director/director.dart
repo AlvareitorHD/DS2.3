@@ -1,12 +1,14 @@
-import '../Constructores/constructor.dart';
-import '../Constructores/constructorBicicletaCarretera.dart';
-import '../Constructores/constructorBicicletaDecorada.dart';
-import '../Constructores/constructorBicicletaMontana.dart';
+import 'package:ejercicio3/models/bicicleta/bicicleta_montana.dart';
+
+import '../constructor/constructor.dart';
+import '../constructor/constructor_bicicleta_carretera.dart';
+import '../constructor/constructor_bicicleta_decorada.dart';
+import '../constructor/constructor_bicicleta_montana.dart';
 
 class Director {
 //Como el constructor es vacío no hace falta ponerlo.
 
-  void hacerBicicletaMontana(Constructor constructor) {
+  void hacerBicicletaMontana(Constructor? constructor) {
     if (constructor is ConstructorBicicletaMontana) {
       constructor.recomponer();
       constructor.construirManillar("RECTO");
@@ -18,10 +20,11 @@ class Director {
       constructor.construirCuadro("ALUMINIO");
       constructor.construirSillin("SEMIRREDONDEADO");
       constructor.construirRuedas("OFF-ROAD", 2);
+      constructor.asociarImagenBicicletaMontana();
     }
   }
 
-  void hacerBicicletaCarretera(Constructor constructor) {
+  void hacerBicicletaCarretera(Constructor? constructor) {
     if (constructor is ConstructorBicicletaCarretera) {
       constructor.recomponer();
       constructor.construirManillar("ERGONÓMICO");
@@ -30,12 +33,18 @@ class Director {
       constructor.construirCuadro("FIBRA CARBONO");
       constructor.construirSillin("ESTRECHO");
       constructor.construirRuedas("ESCALADORAS", 2);
+      constructor.asociarImagenBicicletaCarretera();
     }
   }
 
-  void hacerBicicletaDecorada(Constructor constructor) {
+  void hacerBicicletaDecoradaConEstampado(Constructor? constructor) {
     if (constructor is ConstructorBicicletaDecorada) {
       constructor.agregarEstampado();
+    }
+  }
+
+  void hacerBicicletaDecoradaConFunda(Constructor? constructor) {
+    if (constructor is ConstructorBicicletaDecorada) {
       constructor.agregarFunda();
     }
   }

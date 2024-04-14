@@ -1,5 +1,7 @@
-import 'decoradorBicicleta.dart';
-import '../Bicicleta/Bicicleta.dart';
+import 'decorador_bicicleta.dart';
+import '../bicicleta/bicicleta.dart';
+
+import '../bicicleta/bicicleta_montana.dart';
 
 /**
  * Clase que hereda de DecoradorBicicleta, la cual representa el decorador que añade un estampado a una bicicleta

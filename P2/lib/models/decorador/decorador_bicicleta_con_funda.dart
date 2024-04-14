@@ -1,5 +1,5 @@
-import '../Bicicleta/Bicicleta.dart';
-import 'decoradorBicicleta.dart';
+import '../bicicleta/bicicleta.dart';
+import 'decorador_bicicleta.dart';
 
 /**
  * Clase que hereda de DecoradorBicicleta, la cual representa el decorador que añade una funda a una bicicleta

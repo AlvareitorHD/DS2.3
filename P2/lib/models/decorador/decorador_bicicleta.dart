@@ -1,4 +1,6 @@
-import '../Bicicleta/Bicicleta.dart';
+import '../bicicleta/bicicleta.dart';
+
+import '../bicicleta/bicicleta_montana.dart';
 
 /**
  * Clase abstracta que hereda de Bicicleta, la cual representa un decorador de bicicletas. Esta clase es una bicicleta
@@ -22,7 +24,9 @@ abstract class DecoradorBicicleta extends Bicicleta {
    * 
    * @param bicicletaADecorar Bicicleta de base sobre la que aplicar las decoraciones
   */
-  DecoradorBicicleta(this._bicicletaDecorada);
+  DecoradorBicicleta(Bicicleta? bicicletaDecorada) {
+    _bicicletaDecorada = bicicletaDecorada;
+  }
 
   /**
    * Setter del añadido especial para que las clases que extiendan de esta puedan darle valor a este atributo
