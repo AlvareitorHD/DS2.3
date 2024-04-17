@@ -1,19 +1,15 @@
-import 'package:ejercicio3/models/bicicleta/bicicleta_montana.dart';
-
 import '../constructor/constructor.dart';
 import '../constructor/constructor_bicicleta_carretera.dart';
 import '../constructor/constructor_bicicleta_decorada.dart';
 import '../constructor/constructor_bicicleta_montana.dart';
 
+/// Clase Director que se encarga de construir las bicicletas con los constructores
 class Director {
-//Como el constructor es vacío no hace falta ponerlo.
-
+  /// Método que construye una bicicleta de montaña
   void hacerBicicletaMontana(Constructor? constructor) {
     if (constructor is ConstructorBicicletaMontana) {
       constructor.recomponer();
       constructor.construirManillar("RECTO");
-      //Dart realiza "promoción de tipos" después de una comprobación con is,
-      // permitiendo llamar a métodos específicos de la clase sin casting explícito.
       constructor.construirSuspension("ROSCADA", 1);
       constructor.construirFrenos("DISCO", 2);
       constructor.construirTransmision("SHIMANO");
@@ -24,6 +20,7 @@ class Director {
     }
   }
 
+  /// Método que construye una bicicleta de montaña
   void hacerBicicletaCarretera(Constructor? constructor) {
     if (constructor is ConstructorBicicletaCarretera) {
       constructor.recomponer();
@@ -37,12 +34,14 @@ class Director {
     }
   }
 
+  /// Método que construye una bicicleta decorada con estampado
   void hacerBicicletaDecoradaConEstampado(Constructor? constructor) {
     if (constructor is ConstructorBicicletaDecorada) {
       constructor.agregarEstampado();
     }
   }
 
+  /// Método que construye una bicicleta decorada con funda
   void hacerBicicletaDecoradaConFunda(Constructor? constructor) {
     if (constructor is ConstructorBicicletaDecorada) {
       constructor.agregarFunda();

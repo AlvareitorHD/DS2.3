@@ -1,12 +1,10 @@
 // Importaciones de bibliotecas:
 import 'package:flutter/material.dart';
 
-
-
 /// Clase que representa un widget de una etiqueta de texto
 class EtiquetaTexto extends StatelessWidget {
   /// Texto de la etiqueta
-  String _texto;
+  final String _texto;
 
   /// Tamaño de la fuente
   final double? _tamanioFuente;
@@ -18,7 +16,7 @@ class EtiquetaTexto extends StatelessWidget {
   final Color? _color;
 
   /// Constructor de la clase
-  EtiquetaTexto(this._texto, this._tamanioFuente, this._estiloFuente,
+  const EtiquetaTexto(this._texto, this._tamanioFuente, this._estiloFuente,
       this._color);
 
   /// Método sobreescrito para construir la representación visual del widget

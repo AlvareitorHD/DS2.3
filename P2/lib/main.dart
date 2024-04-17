@@ -6,7 +6,7 @@ import 'screens/pantalla_factoria_bicicletas.dart';
 /// Punto de entrada de la aplicación. La función 'runApp' recibe un widget como
 /// argumento y lo coloca en la jerarquía de widgets de la aplicación
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 /// Clase que representa el widget raiz de la app en sí de la factoría de
@@ -14,9 +14,11 @@ void main() {
 /// widget en Flutter que no mantiene ningún estado mutable y, por lo tanto, no
 /// cambia su apariencia o comportamiento una vez creado
 class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       home: PantallaFactoriaBicicletas(),
     );
   }

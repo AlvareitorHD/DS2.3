@@ -2,9 +2,13 @@ import 'constructor.dart';
 import '../bicicleta/bicicleta_carretera.dart';
 import 'package:ejercicio3/models/nombres_imagenes_bicicletas.dart';
 
+/// Clase que extiende [Constructor] para especializarse en la construcción
+/// de bicicletas de carretera.
 class ConstructorBicicletaCarretera extends Constructor {
-
-  ConstructorBicicletaCarretera() {
+  
+  /// Crea una instancia de [ConstructorBicicletaCarretera] e inicializa
+  /// la bicicleta como una nueva [BicicletaCarretera].
+  ConstructorBicicletaCarretera() : super() {
     bicicleta = BicicletaCarretera();
   }
 
@@ -15,7 +19,8 @@ class ConstructorBicicletaCarretera extends Constructor {
   }
 
   @override
-  void recomponer() {
-    bicicleta = BicicletaCarretera();
-  }
+
+  /// Reconstruye `bicicleta` asignándole una nueva instancia de [BicicletaCarretera],
+  /// permitiendo la reconfiguración de la bicicleta de carretera.
+  void recomponer() => bicicleta = BicicletaCarretera();
 }

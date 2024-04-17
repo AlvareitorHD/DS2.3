@@ -2,27 +2,32 @@ import 'constructor.dart';
 import '../bicicleta/bicicleta_montana.dart';
 import 'package:ejercicio3/models/nombres_imagenes_bicicletas.dart';
 
+/// Clase que extiende [Constructor] para especializarse en la construcción
+/// de bicicletas de montaña.
 class ConstructorBicicletaMontana extends Constructor {
-  ConstructorBicicletaMontana() {
+  /// Crea una instancia de [ConstructorBicicletaMontana] e inicializa
+  /// la bicicleta como una nueva [BicicletaMontana].
+  ConstructorBicicletaMontana() : super() {
     bicicleta = BicicletaMontana();
   }
 
-  /// Asocia una imagen con la representación interna de la bicicleta de montaña
+  /// Asocia una imagen con la representación interna de la bicicleta de montaña.
+  /// Utiliza una constante predefinida `BICI_MON` para esta asociación.
   void asociarImagenBicicletaMontana() {
     bicicleta?.asociarImagen(BICI_MON);
   }
 
+  /// Construye la suspensión de la bicicleta de montaña con el [tipo] y
+  /// [cantidad] especificados. Solo realiza la operación si `bicicleta` es
+  /// efectivamente una instancia de [BicicletaMontana].
   void construirSuspension(String tipo, int cantidad) {
-    // Dart no permite la conversión de tipos como en Java. En su lugar,
-    // puedes usar 'as' para castear, asegurándote primero de que no sea null.
-    // Usa is para el instanceof
     if (bicicleta is BicicletaMontana) {
       (bicicleta as BicicletaMontana).establecerSuspension(tipo, cantidad);
     }
   }
 
   @override
-  void recomponer() {
-    bicicleta = BicicletaMontana();
-  }
+  /// Reconstruye `bicicleta` asignándole una nueva instancia de [BicicletaMontana],
+  /// permitiendo la reconfiguración de la bicicleta de montaña.
+  void recomponer() => bicicleta = BicicletaMontana();
 }

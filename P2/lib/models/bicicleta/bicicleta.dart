@@ -86,14 +86,9 @@ abstract class Bicicleta {
   // Sobreescritura del método 'toString' para representar la información de la bicicleta
   @override
   String toString() {
-    return ("\nBicicleta:\n\n" +
-        "\tTipo de manillar: $tipoManillar\n" +
-        "\tTipo de frenos: $tipoFrenos\n" +
-        "\tNúmero de frenos: $numFrenos\n" +
-        "\tTipo de transmisión: $tipoTransmision\n" +
-        "\tTipo de cuadro: $tipoCuadro\n" +
-        "\tTipo de sillín: $tipoSillin\n" +
-        "\tTipo de ruedas: $tipoRuedas\n" +
-        "\tNúmero de Ruedas: $numRuedas\n");
+    return ("\nBicicleta:\n\n\tTipo de manillar: "
+    "$tipoManillar\n\tTipo de frenos: $tipoFrenos\n\tNúmero de frenos: $numFrenos\n\t"
+    "Tipo de transmisión: $tipoTransmision\n\tTipo de cuadro: $tipoCuadro\n\t"
+    "Tipo de sillín: $tipoSillin\n\tTipo de ruedas: $tipoRuedas\n\tNúmero de Ruedas: $numRuedas\n");
   }
 }

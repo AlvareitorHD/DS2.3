@@ -1,8 +1,6 @@
 // Importaciones de bibliotecas:
 import 'package:flutter/material.dart';
 
-
-
 /// Clase que representa un botón. Al heredar de 'StatelessWidget', se indica
 /// que 'Boton' es un widget en Flutter que no mantiene ningún estado mutable y,
 /// por lo tanto, no cambia su apariencia o comportamiento una vez creado
@@ -14,19 +12,19 @@ class Boton extends StatelessWidget {
   final String _text;
 
   /// Color del texto del botón
-  Color _foregroundColor;
+  final Color _foregroundColor;
 
   /// Color de fondo del botón
-  Color _backgroundColor;
+  final Color _backgroundColor;
 
   /// Dimensión del botón
-  Size _fixedSize;
+  final Size _fixedSize;
 
   /// Función que ejecutará el botón al ser presionado
-  Function _onPressed;
+  final Function _onPressed;
 
   /// Constructor de la clase
-  Boton(this._textCursor, this._text, this._foregroundColor, this._backgroundColor,
+  const Boton(this._textCursor, this._text, this._foregroundColor, this._backgroundColor,
       this._fixedSize, this._onPressed, {super.key});
 
   /// Método sobreescrito para construir la representación visual del widget

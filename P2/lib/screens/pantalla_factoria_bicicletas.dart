@@ -15,6 +15,8 @@ import '../models/director/director.dart';
 /// Esto significa que puede tener variables internas que se modifican en
 /// respuesta a eventos, interacciones del usuario o cambios en los datos
 class PantallaFactoriaBicicletas extends StatefulWidget {
+  const PantallaFactoriaBicicletas({super.key});
+
   @override
   _FactoriaBicicletasEstado createState() => _FactoriaBicicletasEstado();
 }
@@ -43,7 +45,7 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
   Director _director = Director();
 
   /// Constructor para las construcciones
-  Constructor? _constructor = null;
+  Constructor? _constructor;
 
   /// Bicicleta que se irá manejando para las construcciones
   Bicicleta? _bicicleta;
@@ -204,7 +206,7 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
           children: <Widget>[
             Padding(
                 // Añadir margen arriba y a los lados:
-                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
                 child: Column(
                   children: [
                     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
