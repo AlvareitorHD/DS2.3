@@ -443,7 +443,9 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
                       children: [
                         crearBoton("", "Eliminar bicicleta", Colors.black,
                             Colors.white24, Size(160, 50), () {
-                          _mostrarDialogoDeConfirmacion(context);
+                          if (!_imagenesBicicletasConstruidas.isEmpty) {
+                            _mostrarDialogoDeConfirmacion(context);
+                          }
                         }),
                       ],
                     ),
