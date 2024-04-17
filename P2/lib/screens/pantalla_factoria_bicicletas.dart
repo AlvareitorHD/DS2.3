@@ -31,10 +31,10 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
   List<String> _imagenesBicicletasConstruidas = [];
 
   /// Tipo de decoración seleccionada
-  String? _decoracionSeleccionada = null;
+  String? _decoracionSeleccionada = 'Estampado';
 
   /// Tipo de bicicleta seleccionada
-  String? _tipoBicicleta = null;
+  String? _tipoBicicleta = 'Carretera';
 
   /// Bandera para saber si se ha creado una bicicleta en un momento dado
   bool _bicicletaCreada = false;
@@ -47,7 +47,6 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
 
   /// Bicicleta que se irá manejando para las construcciones
   Bicicleta? _bicicleta;
-
 
   /// Crea una bicicleta, actualizando la vista para presentar la bicicleta que
   /// se ha mandado construir
@@ -98,13 +97,45 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
         _aniadirImagenBicicletaConstruida(_bicicleta!.imagenRepresentativa!);
 
         // Reseteo de valores del estado:
-        _tipoBicicleta = null;
-        _decoracionSeleccionada = null;
+        _tipoBicicleta = 'Carretera';
+        _decoracionSeleccionada = 'Estampado';
         _bicicletaCreada = false;
         _bicicleta = null;
         _constructor = null;
       });
     }
+  }
+
+// Dialogo de comfirmación para eliminar una bicicleta del historial de bicicletas construidas
+  void _mostrarDialogoDeConfirmacion(BuildContext context) {
+    showDialog(
+      context: context,
+      barrierDismissible:
+          false, // El usuario debe tocar un botÃ³n para cerrar el diÃ¡logo
+      builder: (BuildContext context) {
+        return AlertDialog(
+          title: const Text('Confirmación de eliminación'),
+          content: const Text(
+              '¿Seguro que quieres eliminar la bicicleta construida?'),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Cancelar'),
+              onPressed: () {
+                Navigator.of(context)
+                    .pop(); // Cierra el diÃ¡logo sin hacer nada mÃ¡s
+              },
+            ),
+            TextButton(
+              child: const Text('Aceptar'),
+              onPressed: () {
+                _eliminarBicicleta(); // Elimina la bicicleta
+                Navigator.of(context).pop(); // Primero cierra el dialogo
+              },
+            ),
+          ],
+        );
+      },
+    );
   }
 
   /// Elimina del historial de bicicletas construidas aquella que se encuentra
@@ -120,7 +151,7 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
 
         // Actualizar el índice actual del contenedor tras el borrado anterior
         if (_indiceImagenContenedor2 > 0) {
-          _indiceImagenContenedor2 --;
+          _indiceImagenContenedor2--;
         } else {
           _indiceImagenContenedor2 = 0;
         }
@@ -138,8 +169,6 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
     });
   }
 
-
-
   /// Método sobreescrito para construir la representación visual del widget
   /// (se define la interfaz de usuario del widget)
   /// @param context Objeto con información sobre la ubicación del widget en el
@@ -147,7 +176,6 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-
       backgroundColor: Colors.blueGrey, // Establecer el color de fondo
 
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
@@ -162,294 +190,263 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
         title: Text('BikeBuilderPlus'),
       ),
 
-
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
       // ++ Cuerpo de la pantalla                                          ++ //
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
-      body: Padding(
-        // Añadir margen arriba y a los lados:
-        padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
-
-        // Columna de la pantalla:
+      body: SingleChildScrollView(
         child: Column(
           // Alinear los widgets a la izquierda:
           crossAxisAlignment: CrossAxisAlignment.start,
 
-          // Elementos de la columna:
-          children: [
+          children: <Widget>[
+            Padding(
+                // Añadir margen arriba y a los lados:
+                padding: EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                child: Column(
+                  children: [
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con la etiqueta de la zona de construcción de       ++ //
+                    // ++ bicicletas                                               ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con la etiqueta de la zona de construcción de       ++ //
-            // ++ bicicletas                                               ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    Divider(), // Línea divisoria horizontal
+                    // Etiqueta del historial de bicicletas construidas:
+                    crearEtiquetaTexto("Construcción de bicicletas:", 16,
+                        FontWeight.bold, Colors.black),
+                    Divider(), // Línea divisoria horizontal
 
-            Divider(), // Línea divisoria horizontal
-            // Etiqueta del historial de bicicletas construidas:
-            crearEtiquetaTexto(
-                "Construcción de bicicletas:",
-                16,
-                FontWeight.bold,
-                Colors.black
-            ),
-            Divider(), // Línea divisoria horizontal
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con los selectores para construir las bicicletas    ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
-
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con los selectores para construir las bicicletas    ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-            Row(
-              children: [
-
-                // Selector para elegir entre los dos tipos de bicicletas:
-                Tooltip(
-                  message: "Seleccionar el tipo de bicicleta",
-                  child: Padding(
-                    // Añadir margen alrededor del botón:
-                    padding: EdgeInsets.all(8.0),
-                    child: DropdownButton<String>(
-                      value: _tipoBicicleta,
-                      items: ['Carretera', 'Montana'].map((String value) {
-                        return DropdownMenuItem<String>(
-                          value: value,
-                          child: Text(value),
-                        );
-                      }).toList(),
-                      // Cuando se produzca un cambio de valor, quiere decir que
-                      // se ha actualizado el tipo de bicicleta:
-                      onChanged: (String? newValue) {
-                        setState(() {
-                          _tipoBicicleta = newValue;
-                        });
-                      },
-                    ),
-                  ),
-                ),
-
-                SizedBox(width: 20), // Separación
-
-                // Botón para crear una bicicleta:
-                crearBoton(
-                    "",
-                    "Crear bicicleta",
-                    Colors.black,
-                    Colors.white24,
-                    Size(140, 50),
-                        () {
-                      // Cuando se pulse, se ejecutará la lógica relativa a la
-                      // creación de la bicicleta:
-                      _crearBicicleta();
-                    }
-                ),
-
-                SizedBox(width: 60), // Separación
-
-                // Selector para el tipo de decoración:
-                Padding(
-                  // Añadir margen alrededor del botón:
-                  padding: EdgeInsets.all(8.0),
-                  child: DropdownButton<String>(
-                    value: _decoracionSeleccionada,
-                    items: ['Estampado', 'Funda'].map((String value) {
-                      return DropdownMenuItem<String>(
-                        value: value,
-                        child: Text(value),
-                      );
-                    }).toList(),
-                    // Cuando se produzca un cambio de valor, quiere decir que
-                    // se ha actualizado el tipo de decoración:
-                    onChanged: (String? newValue) {
-                      setState(() {
-                        _decoracionSeleccionada = newValue;
-                      });
-                    },
-                  ),
-                ),
-
-                SizedBox(width: 20), // Separación
-
-                // Botón para añadir la decoración:
-                Padding(
-                  // Añadir margen alrededor del botón:
-                  padding: EdgeInsets.all(8.0),
-                  child: crearBoton(
-                      "",
-                      "Añadir decoración",
-                      Colors.black,
-                      Colors.white24,
-                      Size(170, 50),
-                          () {
-                        _aniadirDecoracion();
-                      }
-                  ),
-                ),
-              ],
-            ),
-
-
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con el contenedor para la bicicleta en construcción ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-            Row(
-              children: [
-                Expanded(
-                  child: Container(
-                    width: 200,
-                    height: 200,
-                    child: Center(
-                      child: /*(_imagenContenedor1 != null)*/
-                      (_bicicleta?.imagenRepresentativa != null)
-                          ? Image.asset(_bicicleta!.imagenRepresentativa!) /*Image.asset(_imagenContenedor1!)*/
-                          : Container(), // Mostrar imagen seleccionada 1
-                    ),
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20), // Separación
-
-
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con el botón para finalizar la bicicleta en         ++ //
-            // ++ construcción                                             ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-            Row(
-              children: [
-                Padding(
-                  padding: EdgeInsets.all(8.0), // Añadir margen alrededor del botón
-                  child: crearBoton(
-                      "",
-                      "Finalizar bicicleta",
-                      Colors.black,
-                      Colors.white24,
-                      Size(160, 50),
-                          () {
-                        _finalizarBicicleta();
-                      }
-                  ),
-                ),
-              ],
-            ),
-
-            SizedBox(height: 20), // Separación
-            Divider(), // Línea divisoria horizontal
-
-
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con la etiqueta del historial de bicicletas         ++ //
-            // ++ construidas                                              ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-            crearEtiquetaTexto(
-                "Historial de bicicletas construidas:",
-                16,
-                FontWeight.bold,
-                Colors.black
-            ),
-
-            Divider(), // Línea divisoria horizontal
-            SizedBox(height: 20), // Separación
-
-
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con el contenedor para el historial de bicicletas   ++ //
-            // ++ construidas                                              ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-            Row(
-              children: [
-
-                // Contenedor para el historial de bicicletas construidas:
-                Expanded(
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 200,
-                        height: 200,
-                        child: Center(
-                          child: (_indiceImagenContenedor2 >= 0 &&
-                              _indiceImagenContenedor2 < _imagenesBicicletasConstruidas.length)
-                              ? Image.asset(_imagenesBicicletasConstruidas[_indiceImagenContenedor2])
-                              : Container(),
+                    Row(
+                      children: [
+                        // Selector para elegir entre los dos tipos de bicicletas:
+                        Tooltip(
+                          message: "Seleccionar el tipo de bicicleta",
+                          child: Padding(
+                            // Añadir margen alrededor del botón:
+                            padding: EdgeInsets.all(8.0),
+                            child: DropdownButton<String>(
+                              value: _tipoBicicleta,
+                              items:
+                                  ['Carretera', 'Montana'].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              // Cuando se produzca un cambio de valor, quiere decir que
+                              // se ha actualizado el tipo de bicicleta:
+                              onChanged: (String? newValue) {
+                                setState(() {
+                                  _tipoBicicleta = newValue;
+                                });
+                              },
+                            ),
+                          ),
                         ),
-                      ),
 
-                      // Flechas de navegación del historial de bicicletas
-                      // construidas:
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                        SizedBox(width: 20), // Separación
 
-                        children: [
-                          // Flecha para moverse hacia atrás en el historial de
-                          // bicicletas construidas:
-                          Tooltip(
-                            message: "Imagen anterior",
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_back),
-                              onPressed: () {
+                        // Botón para crear una bicicleta:
+                        crearBoton("", "Crear bicicleta", Colors.black,
+                            Colors.white24, Size(140, 50), () {
+                          // Cuando se pulse, se ejecutará la lógica relativa a la
+                          // creación de la bicicleta:
+                          _crearBicicleta();
+                        }),
+
+                        SizedBox(width: 60), // Separación
+
+                        // Selector para el tipo de decoración:
+                        Tooltip(
+                          message: "Seleccionar la decoración para la bicicleta",
+                          child: Padding(
+                            // Añadir margen alrededor del botón:
+                            padding: EdgeInsets.all(8.0),
+                            child: DropdownButton<String>(
+                              value: _decoracionSeleccionada,
+                              items: ['Estampado', 'Funda'].map((String value) {
+                                return DropdownMenuItem<String>(
+                                  value: value,
+                                  child: Text(value),
+                                );
+                              }).toList(),
+                              // Cuando se produzca un cambio de valor, quiere decir que
+                              // se ha actualizado el tipo de decoración:
+                              onChanged: (String? newValue) {
                                 setState(() {
-                                  // Lógica para cambiar a la imagen anterior:
-                                  if (_indiceImagenContenedor2 > 0) {
-                                    _indiceImagenContenedor2--;
-                                  } else {
-                                    _indiceImagenContenedor2 =
-                                        _imagenesBicicletasConstruidas.length - 1;
-                                  }
+                                  _decoracionSeleccionada = newValue;
                                 });
                               },
                             ),
                           ),
+                        ),
 
-                          // Flecha para moverse hacia atrás en el historial de
-                          // bicicletas construidas:
-                          Tooltip(
-                            message: "Imagen siguiente",
-                            child: IconButton(
-                              icon: Icon(Icons.arrow_forward),
-                              onPressed: () {
-                                setState(() {
-                                  // Lógica para cambiar a la imagen siguiente:
-                                  _indiceImagenContenedor2 =
-                                      (_indiceImagenContenedor2 + 1) %
-                                          _imagenesBicicletasConstruidas.length;
-                                });
-                              },
+                        SizedBox(width: 20), // Separación
+
+                        // Botón para añadir la decoración:
+                        Padding(
+                          // Añadir margen alrededor del botón:
+                          padding: EdgeInsets.all(8.0),
+                          child: crearBoton("", "Añadir decoración",
+                              Colors.black, Colors.white24, Size(170, 50), () {
+                            _aniadirDecoracion();
+                          }),
+                        ),
+                      ],
+                    ),
+
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con el contenedor para la bicicleta en construcción ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+
+                    Row(
+                      children: [
+                        Expanded(
+                          child: Container(
+                            width: 200,
+                            height: 200,
+                            child: Center(
+                              child: /*(_imagenContenedor1 != null)*/
+                                  (_bicicleta?.imagenRepresentativa != null)
+                                      ? Image.asset(_bicicleta!
+                                          .imagenRepresentativa!) /*Image.asset(_imagenContenedor1!)*/
+                                      : Container(), // Mostrar imagen seleccionada 1
                             ),
                           ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20), // Separación
 
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con el botón para finalizar la bicicleta en         ++ //
+                    // ++ construcción                                             ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
 
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-            // ++ Fila con el botón para eliminar la bicicleta actual del  ++ //
-            // ++ historial                                                ++ //
-            // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    Row(
+                      children: [
+                        Padding(
+                          padding: EdgeInsets.all(
+                              8.0), // Añadir margen alrededor del botón
+                          child: crearBoton("", "Finalizar bicicleta",
+                              Colors.black, Colors.white24, Size(160, 50), () {
+                            _finalizarBicicleta();
+                          }),
+                        ),
+                      ],
+                    ),
+                    SizedBox(height: 20), // Separación
+                    Divider(), // Línea divisoria horizontal
 
-            Row(
-              children: [
-                crearBoton(
-                    "",
-                    "Eliminar bicicleta",
-                    Colors.black,
-                    Colors.white24,
-                    Size(160, 50),
-                        () {
-                      _eliminarBicicleta();
-                    }
-                ),
-              ],
-            )
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con la etiqueta del historial de bicicletas         ++ //
+                    // ++ construidas                                              ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+
+                    crearEtiquetaTexto("Historial de bicicletas construidas:",
+                        16, FontWeight.bold, Colors.black),
+                    Divider(), // Línea divisoria horizontal
+                    SizedBox(height: 20), // Separación
+
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con el contenedor para el historial de bicicletas   ++ //
+                    // ++ construidas                                              ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+
+                    Row(
+                      children: [
+                        // Contenedor para el historial de bicicletas construidas:
+                        Expanded(
+                          child: Column(
+                            children: [
+                              Container(
+                                width: 200,
+                                height: 200,
+                                child: Center(
+                                  child: (_indiceImagenContenedor2 >= 0 &&
+                                          _indiceImagenContenedor2 <
+                                              _imagenesBicicletasConstruidas
+                                                  .length)
+                                      ? Image.asset(
+                                          _imagenesBicicletasConstruidas[
+                                              _indiceImagenContenedor2])
+                                      : Container(),
+                                ),
+                              ),
+
+                              // Flechas de navegación del historial de bicicletas
+                              // construidas:
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.center,
+                                children: [
+                                  // Flecha para moverse hacia atrás en el historial de
+                                  // bicicletas construidas:
+                                  Tooltip(
+                                    message: "Imagen anterior",
+                                    child: IconButton(
+                                      icon: Icon(Icons.arrow_back),
+                                      onPressed: () {
+                                        setState(() {
+                                          // Lógica para cambiar a la imagen anterior:
+                                          if (_indiceImagenContenedor2 > 0) {
+                                            _indiceImagenContenedor2--;
+                                          } else {
+                                            _indiceImagenContenedor2 =
+                                                _imagenesBicicletasConstruidas
+                                                        .length -
+                                                    1;
+                                          }
+                                        });
+                                      },
+                                    ),
+                                  ),
+
+                                  // Flecha para moverse hacia atrás en el historial de
+                                  // bicicletas construidas:
+                                  Tooltip(
+                                    message: "Imagen siguiente",
+                                    child: IconButton(
+                                      icon: Icon(Icons.arrow_forward),
+                                      onPressed: () {
+                                        setState(() {
+                                          // Lógica para cambiar a la imagen siguiente:
+                                          _indiceImagenContenedor2 =
+                                              (_indiceImagenContenedor2 + 1) %
+                                                  _imagenesBicicletasConstruidas
+                                                      .length;
+                                        });
+                                      },
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ],
+                          ),
+                        ),
+                      ],
+                    ),
+
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+                    // ++ Fila con el botón para eliminar la bicicleta actual del  ++ //
+                    // ++ historial                                                ++ //
+                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
+
+                    Row(
+                      children: [
+                        crearBoton("", "Eliminar bicicleta", Colors.black,
+                            Colors.white24, Size(160, 50), () {
+                          _mostrarDialogoDeConfirmacion(context);
+                        }),
+                      ],
+                    ),
+                  ],
+                )),
           ],
         ),
       ),
