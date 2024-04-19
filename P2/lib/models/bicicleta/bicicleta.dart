@@ -1,42 +1,42 @@
 // Clase abstracta que representa una bicicleta de manera general
 abstract class Bicicleta {
   // Tipo de manillar
-  late String tipoManillar;
+  late String _tipoManillar;
 
   // Tipo de frenos
-  late String tipoFrenos;
+  late String _tipoFrenos;
 
   // Número de frenos
-  late int numFrenos;
+  late int _numFrenos;
 
   // Tipo de transmisión
-  late String tipoTransmision;
+  late String _tipoTransmision;
 
   // Tipo de cuadro
-  late String tipoCuadro;
+  late String _tipoCuadro;
 
   // Tipo de sillín
-  late String tipoSillin;
+  late String _tipoSillin;
 
   // Tipo de ruedas
-  late String tipoRuedas;
+  late String _tipoRuedas;
 
   // Número de ruedas
-  late int numRuedas;
+  late int _numRuedas;
 
   /// Imagen representativa de la bicicleta, la cual representará su aspecto
   String? _imagenRepresentativa;
 
   // Constructor de la clase sin parámetros. Inicializa a valores por defecto los componentes de la bicicleta
   Bicicleta() {
-    tipoManillar = "";
-    tipoFrenos = "";
-    numFrenos = 0;
-    tipoTransmision = "";
-    tipoCuadro = "";
-    tipoSillin = "";
-    tipoRuedas = "";
-    numRuedas = 0;
+    _tipoManillar = "";
+    _tipoFrenos = "";
+    _numFrenos = 0;
+    _tipoTransmision = "";
+    _tipoCuadro = "";
+    _tipoSillin = "";
+    _tipoRuedas = "";
+    _numRuedas = 0;
     _imagenRepresentativa = "";
   }
 
@@ -50,34 +50,34 @@ abstract class Bicicleta {
 
   // Modificador del manillar
   void establecerManillar(String tipo) {
-    tipoManillar = tipo;
+    _tipoManillar = tipo;
   }
 
   // Modificador de los frenos
   void establecerFrenos(String tipo, int num) {
-    tipoFrenos = tipo;
-    numFrenos = num;
+    _tipoFrenos = tipo;
+    _numFrenos = num;
   }
 
   // Modificador de la transmisión
   void establecerTransmision(String tipo) {
-    tipoTransmision = tipo;
+    _tipoTransmision = tipo;
   }
 
   // Modificador del cuadro
   void establecerCuadro(String tipo) {
-    tipoCuadro = tipo;
+    _tipoCuadro = tipo;
   }
 
   // Modificador del sillín
   void establecerSillin(String tipo) {
-    tipoSillin = tipo;
+    _tipoSillin = tipo;
   }
 
   // Modificador de las ruedas
   void establecerRuedas(String tipo, int num) {
-    tipoRuedas = tipo;
-    numRuedas = num;
+    _tipoRuedas = tipo;
+    _numRuedas = num;
   }
 
   // Método abstracto para que la bicicleta avance (cada tipo de bicicleta avanzará a su manera)
@@ -87,8 +87,8 @@ abstract class Bicicleta {
   @override
   String toString() {
     return ("\nBicicleta:\n\n\tTipo de manillar: "
-    "$tipoManillar\n\tTipo de frenos: $tipoFrenos\n\tNúmero de frenos: $numFrenos\n\t"
-    "Tipo de transmisión: $tipoTransmision\n\tTipo de cuadro: $tipoCuadro\n\t"
-    "Tipo de sillín: $tipoSillin\n\tTipo de ruedas: $tipoRuedas\n\tNúmero de Ruedas: $numRuedas\n");
+    "$_tipoManillar\n\tTipo de frenos: $_tipoFrenos\n\tNúmero de frenos: $_numFrenos\n\t"
+    "Tipo de transmisión: $_tipoTransmision\n\tTipo de cuadro: $_tipoCuadro\n\t"
+    "Tipo de sillín: $_tipoSillin\n\tTipo de ruedas: $_tipoRuedas\n\tNúmero de Ruedas: $_numRuedas\n");
   }
 }

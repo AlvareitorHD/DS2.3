@@ -6,26 +6,26 @@ import 'package:flutter/material.dart';
 /// por lo tanto, no cambia su apariencia o comportamiento una vez creado
 class Boton extends StatelessWidget {
   /// Texto autodescriptivo para cuando se sitúa el cursor encima
-  final String _textCursor;
+  final String _textoCursor;
 
   /// Texto del botón
-  final String _text;
+  final String _texto;
 
   /// Color del texto del botón
-  final Color _foregroundColor;
+  final Color _colorTexto;
 
   /// Color de fondo del botón
-  final Color _backgroundColor;
+  final Color _colorFondo;
 
   /// Dimensión del botón
-  final Size _fixedSize;
+  final Size _tamanio;
 
   /// Función que ejecutará el botón al ser presionado
   final Function _onPressed;
 
   /// Constructor de la clase
-  const Boton(this._textCursor, this._text, this._foregroundColor, this._backgroundColor,
-      this._fixedSize, this._onPressed, {super.key});
+  const Boton(this._textoCursor, this._texto, this._colorTexto, this._colorFondo,
+      this._tamanio, this._onPressed, {super.key});
 
   /// Método sobreescrito para construir la representación visual del widget
   /// (se define la interfaz de usuario del widget)
@@ -34,14 +34,14 @@ class Boton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Tooltip(
-      message: _textCursor,
+      message: _textoCursor,
       child: ElevatedButton(
         onPressed: () => _onPressed(),
-        child: Text(_text),
+        child: Text(_texto),
         style: ElevatedButton.styleFrom(
-          foregroundColor: _foregroundColor,
-          backgroundColor: _backgroundColor,
-          fixedSize: _fixedSize,
+          foregroundColor: _colorTexto,
+          backgroundColor: _colorFondo,
+          fixedSize: _tamanio,
         ),
       ),
     );

@@ -21,8 +21,8 @@ abstract class DecoradorBicicleta extends Bicicleta {
   }
 
   /// Setter del añadido especial para que las clases que extiendan de esta puedan darle valor a este atributo
-  set extra(String? value) {
-    _extra = value;
+  set extra(String? valor) {
+    _extra = valor;
   }
 
   /// Sobreescritura del método 'toString' para representar la información de la bicicleta. Llama al de la superclase

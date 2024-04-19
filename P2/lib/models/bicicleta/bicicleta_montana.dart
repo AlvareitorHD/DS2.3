@@ -3,10 +3,10 @@ import 'bicicleta.dart';
 // Clase hija de Bicicleta. Esta representa a una bicicleta de montaña
 class BicicletaMontana extends Bicicleta {
   // Tipo de suspensión
-  late String tipoSuspension;
+  late String _tipoSuspension;
 
   // Número de suspensiones
-  late int numSuspensiones;
+  late int _numSuspensiones;
 
   // Constructor de la clase sin parámetros. Llama al constructor de la superclase para que esta inicialice a valores
   // por defecto los componentes de la bicicleta, además de inicializar los propios a valores por defecto
@@ -14,8 +14,8 @@ class BicicletaMontana extends Bicicleta {
 
   // Modificador de la suspensión
   void establecerSuspension(String tipo, int num) {
-    tipoSuspension = tipo;
-    numSuspensiones = num;
+    _tipoSuspension = tipo;
+    _numSuspensiones = num;
   }
 
   // Implementación del método abstracto 'avanzar'. Imprime la forma en la que la bicicleta de montaña está
@@ -31,8 +31,8 @@ class BicicletaMontana extends Bicicleta {
   @override
   String toString() {
     return (super.toString() +
-        "\tTipo de suspensión: $tipoSuspension\n" +
-        "\tNúmero de suspensiones: $numSuspensiones\n" +
+        "\tTipo de suspensión: $_tipoSuspension\n" +
+        "\tNúmero de suspensiones: $_numSuspensiones\n" +
         "\tTIPO DE BICICLETA: montaña\n");
   }
 }

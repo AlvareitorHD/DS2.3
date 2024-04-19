@@ -18,37 +18,59 @@ class PantallaFactoriaBicicletas extends StatefulWidget {
   const PantallaFactoriaBicicletas({super.key});
 
   @override
-  _FactoriaBicicletasEstado createState() => _FactoriaBicicletasEstado();
+  State<PantallaFactoriaBicicletas> createState() =>
+      _PantallaFactoriaBicicletasEstado(
+          0,
+          [],
+          'Estampado',
+          'Carretera',
+          false,
+          Director(),
+          null,
+          null);
 }
 
 /// Clase para gestionar el estado de la vista de la app
-class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
+class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
   // Variables que representan el estado de la aplicación:
 
   /// Índice de la imagen seleccionada del contenedor 2 (historial de bicicletas
   /// construidas)
-  int _indiceImagenContenedor2 = 0;
+  int _indiceImagenContenedor2;
 
   /// Lista con las imágenes de las bicicletas construidas (historial)
-  List<String> _imagenesBicicletasConstruidas = [];
+  List<String> _imagenesBicicletasConstruidas;
 
   /// Tipo de decoración seleccionada
-  String? _decoracionSeleccionada = 'Estampado';
+  String? _decoracionSeleccionada;
 
   /// Tipo de bicicleta seleccionada
-  String? _tipoBicicleta = 'Carretera';
+  String? _tipoBicicleta;
 
   /// Bandera para saber si se ha creado una bicicleta en un momento dado
-  bool _bicicletaCreada = false;
+  bool _bicicletaCreada;
 
   /// Director para orquestar las construcciones de las bicicletas
-  Director _director = Director();
+  Director _director;
 
   /// Constructor para las construcciones
   Constructor? _constructor;
 
   /// Bicicleta que se irá manejando para las construcciones
   Bicicleta? _bicicleta;
+
+
+  /// Constructor de la clase
+  _PantallaFactoriaBicicletasEstado(
+      this._indiceImagenContenedor2,
+      this._imagenesBicicletasConstruidas,
+      this._decoracionSeleccionada,
+      this._tipoBicicleta,
+      this._bicicletaCreada,
+      this._director,
+      this._constructor,
+      this._bicicleta
+  );
 
   /// Crea una bicicleta, actualizando la vista para presentar la bicicleta que
   /// se ha mandado construir
@@ -108,23 +130,24 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
     }
   }
 
-// Dialogo de comfirmación para eliminar una bicicleta del historial de bicicletas construidas
-  void _mostrarDialogoDeConfirmacion(BuildContext context) {
+  /// Dialogo de confirmación para eliminar una bicicleta del historial de
+  /// bicicletas construidas
+  void _mostrarDialogoConfirmacionEliminacion(BuildContext context) {
     showDialog(
       context: context,
       barrierDismissible:
-          false, // El usuario debe tocar un botÃ³n para cerrar el diÃ¡logo
+          false, // El usuario debe tocar un botón para cerrar el diálogo
       builder: (BuildContext context) {
         return AlertDialog(
           title: const Text('Confirmación de eliminación'),
           content: const Text(
-              '¿Seguro que quieres eliminar la bicicleta construida?'),
+              '¿Seguro que quiere eliminar la bicicleta construida?'),
           actions: <Widget>[
             TextButton(
               child: const Text('Cancelar'),
               onPressed: () {
                 Navigator.of(context)
-                    .pop(); // Cierra el diÃ¡logo sin hacer nada mÃ¡s
+                    .pop(); // Cierra el diálogo sin hacer nada más
               },
             ),
             TextButton(
@@ -444,7 +467,7 @@ class _FactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
                         crearBoton("", "Eliminar bicicleta", Colors.black,
                             Colors.white24, Size(160, 50), () {
                           if (!_imagenesBicicletasConstruidas.isEmpty) {
-                            _mostrarDialogoDeConfirmacion(context);
+                            _mostrarDialogoConfirmacionEliminacion(context);
                           }
                         }),
                       ],
