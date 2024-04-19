@@ -229,7 +229,8 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
           children: <Widget>[
             Padding(
                 // Añadir margen arriba y a los lados:
-                padding: const EdgeInsets.symmetric(horizontal: 10.0, vertical: 10.0),
+                padding: const EdgeInsets.symmetric(
+                    horizontal: 10.0, vertical: 10.0),
                 child: Column(
                   children: [
                     // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
@@ -249,79 +250,84 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
 
                     Row(
                       children: [
-                        // Selector para elegir entre los dos tipos de bicicletas:
-                        Tooltip(
-                          message: "Seleccionar el tipo de bicicleta",
-                          child: Padding(
-                            // Añadir margen alrededor del botón:
-                            padding: EdgeInsets.all(8.0),
-                            child: DropdownButton<String>(
-                              value: _tipoBicicleta,
-                              items:
-                                  ['Carretera', 'Montana'].map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              // Cuando se produzca un cambio de valor, quiere decir que
-                              // se ha actualizado el tipo de bicicleta:
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  _tipoBicicleta = newValue;
-                                });
-                              },
+                        Expanded(
+                          child: Tooltip(
+                            message: "Seleccionar el tipo de bicicleta",
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: DropdownButton<String>(
+                                value: _tipoBicicleta,
+                                items: ['Carretera', 'Montana']
+                                    .map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    _tipoBicicleta = newValue;
+                                  });
+                                },
+                              ),
                             ),
                           ),
                         ),
 
                         SizedBox(width: 20), // Separación
 
-                        // Botón para crear una bicicleta:
-                        crearBoton("", "Crear bicicleta", Colors.black,
-                            Colors.white24, Size(140, 50), () {
-                          // Cuando se pulse, se ejecutará la lógica relativa a la
-                          // creación de la bicicleta:
-                          _crearBicicleta();
-                        }),
-
-                        SizedBox(width: 60), // Separación
-
-                        // Selector para el tipo de decoración:
-                        Tooltip(
-                          message: "Seleccionar la decoración para la bicicleta",
-                          child: Padding(
-                            // Añadir margen alrededor del botón:
-                            padding: EdgeInsets.all(8.0),
-                            child: DropdownButton<String>(
-                              value: _decoracionSeleccionada,
-                              items: ['Estampado', 'Funda'].map((String value) {
-                                return DropdownMenuItem<String>(
-                                  value: value,
-                                  child: Text(value),
-                                );
-                              }).toList(),
-                              // Cuando se produzca un cambio de valor, quiere decir que
-                              // se ha actualizado el tipo de decoración:
-                              onChanged: (String? newValue) {
-                                setState(() {
-                                  _decoracionSeleccionada = newValue;
-                                });
-                              },
-                            ),
-                          ),
-                        ),
-
-                        SizedBox(width: 20), // Separación
-
-                        // Botón para añadir la decoración:
-                        Padding(
-                          // Añadir margen alrededor del botón:
-                          padding: EdgeInsets.all(8.0),
-                          child: crearBoton("", "Añadir decoración",
-                              Colors.black, Colors.white24, Size(170, 50), () {
-                            _aniadirDecoracion();
+                        // Este botón debe estar envuelto en un widget que controle su tamaño o posición,
+                        // dependiendo de cómo quieras que se vea en tu UI. Aquí lo envolveré con un Flexible
+                        // como ejemplo, pero ajusta según necesites.
+                        Flexible(
+                          child: crearBoton("", "Crear bicicleta", Colors.black,
+                              Colors.white24, Size(140, 50), () {
+                            _crearBicicleta();
                           }),
+                        ),
+
+                        SizedBox(width: 20), // Separación
+
+                        Expanded(
+                          child: Tooltip(
+                            message:
+                                "Seleccionar la decoración para la bicicleta",
+                            child: Padding(
+                              padding: EdgeInsets.all(8.0),
+                              child: DropdownButton<String>(
+                                value: _decoracionSeleccionada,
+                                items:
+                                    ['Estampado', 'Funda'].map((String value) {
+                                  return DropdownMenuItem<String>(
+                                    value: value,
+                                    child: Text(value),
+                                  );
+                                }).toList(),
+                                onChanged: (String? newValue) {
+                                  setState(() {
+                                    _decoracionSeleccionada = newValue;
+                                  });
+                                },
+                              ),
+                            ),
+                          ),
+                        ),
+
+                        SizedBox(width: 20), // Separación
+
+                        // Similar al botón anterior, debes controlar el tamaño o posición del botón de decoración.
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: crearBoton(
+                                "",
+                                "Añadir decoración",
+                                Colors.black,
+                                Colors.white24,
+                                Size(170, 50), () {
+                              _aniadirDecoracion();
+                            }),
+                          ),
                         ),
                       ],
                     ),
