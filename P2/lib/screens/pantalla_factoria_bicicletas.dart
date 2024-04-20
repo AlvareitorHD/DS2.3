@@ -20,18 +20,12 @@ class PantallaFactoriaBicicletas extends StatefulWidget {
   @override
   State<PantallaFactoriaBicicletas> createState() =>
       _PantallaFactoriaBicicletasEstado(
-          0,
-          [],
-          'Estampado',
-          'Carretera',
-          false,
-          Director(),
-          null,
-          null);
+          0, [], 'Estampado', 'Carretera', false, Director(), null, null);
 }
 
 /// Clase para gestionar el estado de la vista de la app
-class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas> {
+class _PantallaFactoriaBicicletasEstado
+    extends State<PantallaFactoriaBicicletas> {
   // Variables que representan el estado de la aplicación:
 
   /// Índice de la imagen seleccionada del contenedor 2 (historial de bicicletas
@@ -59,7 +53,6 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
   /// Bicicleta que se irá manejando para las construcciones
   Bicicleta? _bicicleta;
 
-
   /// Constructor de la clase
   _PantallaFactoriaBicicletasEstado(
       this._indiceImagenContenedor2,
@@ -69,8 +62,7 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
       this._bicicletaCreada,
       this._director,
       this._constructor,
-      this._bicicleta
-  );
+      this._bicicleta);
 
   /// Crea una bicicleta, actualizando la vista para presentar la bicicleta que
   /// se ha mandado construir
@@ -427,7 +419,7 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
                                           // Lógica para cambiar a la imagen anterior:
                                           if (_indiceImagenContenedor2 > 0) {
                                             _indiceImagenContenedor2--;
-                                          } else {
+                                          } else if (_imagenesBicicletasConstruidas.isNotEmpty) {
                                             _indiceImagenContenedor2 =
                                                 _imagenesBicicletasConstruidas
                                                         .length -
@@ -437,7 +429,6 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
                                       },
                                     ),
                                   ),
-
                                   // Flecha para moverse hacia atrás en el historial de
                                   // bicicletas construidas:
                                   Tooltip(
@@ -447,10 +438,12 @@ class _PantallaFactoriaBicicletasEstado extends State<PantallaFactoriaBicicletas
                                       onPressed: () {
                                         setState(() {
                                           // Lógica para cambiar a la imagen siguiente:
-                                          _indiceImagenContenedor2 =
-                                              (_indiceImagenContenedor2 + 1) %
-                                                  _imagenesBicicletasConstruidas
-                                                      .length;
+                                          if (_imagenesBicicletasConstruidas.isNotEmpty){
+                                            _indiceImagenContenedor2 =
+                                                (_indiceImagenContenedor2 + 1) %
+                                                    _imagenesBicicletasConstruidas
+                                                        .length;
+                                          }
                                         });
                                       },
                                     ),
