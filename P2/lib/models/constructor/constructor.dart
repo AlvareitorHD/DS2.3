@@ -9,13 +9,16 @@ abstract class Constructor {
 
   /// La bicicleta en construcción. Puede ser `null` si la construcción no ha empezado.
   @protected
-  Bicicleta? bicicleta;
+  late Bicicleta? bicicleta;
 
   /// Constructor base para [Constructor].
   Constructor();
 
   /// Método abstracto para recomponer la bicicleta.
   void recomponer();
+
+  /// Metodo para asociar la imagen con la bicicleta
+  void asociarImagenBicicleta();
 
   /// Construye el manillar de la bicicleta con el [tipo] especificado.
   void construirManillar(String tipo) {

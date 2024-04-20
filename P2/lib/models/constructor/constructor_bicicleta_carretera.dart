@@ -5,7 +5,6 @@ import 'package:ejercicio3/models/nombres_imagenes_bicicletas.dart';
 /// Clase que extiende [Constructor] para especializarse en la construcción
 /// de bicicletas de carretera.
 class ConstructorBicicletaCarretera extends Constructor {
-  
   /// Crea una instancia de [ConstructorBicicletaCarretera] e inicializa
   /// la bicicleta como una nueva [BicicletaCarretera].
   ConstructorBicicletaCarretera() : super() {
@@ -14,7 +13,8 @@ class ConstructorBicicletaCarretera extends Constructor {
 
   /// Asocia una imagen con la representación interna de la bicicleta de
   /// carretera
-  void asociarImagenBicicletaCarretera() {
+  @override
+  void asociarImagenBicicleta() {
     bicicleta?.asociarImagen(BICI_CAR);
   }
 

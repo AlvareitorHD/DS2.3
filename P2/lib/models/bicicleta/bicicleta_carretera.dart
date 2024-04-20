@@ -4,7 +4,9 @@ import 'bicicleta.dart';
 class BicicletaCarretera extends Bicicleta {
   // Constructor de la clase sin parámetros. Llama al constructor de la superclase para que esta inicialice a valores
   // por defecto los componentes de la bicicleta
-  BicicletaCarretera() : super();
+  BicicletaCarretera() { 
+    tipoBicicleta= "carretera";
+  }
 
   // Implementación del método abstracto 'avanzar'. Imprime la forma en la que la bicicleta de carretera está
   // avanzando

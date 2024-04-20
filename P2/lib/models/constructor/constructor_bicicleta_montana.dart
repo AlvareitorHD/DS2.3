@@ -13,7 +13,8 @@ class ConstructorBicicletaMontana extends Constructor {
 
   /// Asocia una imagen con la representación interna de la bicicleta de montaña.
   /// Utiliza una constante predefinida `BICI_MON` para esta asociación.
-  void asociarImagenBicicletaMontana() {
+  @override
+  void asociarImagenBicicleta() {
     bicicleta?.asociarImagen(BICI_MON);
   }
 

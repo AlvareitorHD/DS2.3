@@ -1,3 +1,6 @@
+import 'package:ejercicio3/models/bicicleta/bicicleta.dart';
+import 'package:ejercicio3/models/decorador/decorador_bicicleta_con_funda.dart';
+
 import '../constructor/constructor.dart';
 import '../constructor/constructor_bicicleta_carretera.dart';
 import '../constructor/constructor_bicicleta_decorada.dart';
@@ -16,7 +19,7 @@ class Director {
       constructor.construirCuadro("ALUMINIO");
       constructor.construirSillin("SEMIRREDONDEADO");
       constructor.construirRuedas("OFF-ROAD", 2);
-      constructor.asociarImagenBicicletaMontana();
+      constructor.asociarImagenBicicleta();
     }
   }
 
@@ -30,7 +33,7 @@ class Director {
       constructor.construirCuadro("FIBRA CARBONO");
       constructor.construirSillin("ESTRECHO");
       constructor.construirRuedas("ESCALADORAS", 2);
-      constructor.asociarImagenBicicletaCarretera();
+      constructor.asociarImagenBicicleta();
     }
   }
 
@@ -38,6 +41,7 @@ class Director {
   void hacerBicicletaDecoradaConEstampado(Constructor? constructor) {
     if (constructor is ConstructorBicicletaDecorada) {
       constructor.agregarEstampado();
+      constructor.asociarImagenBicicleta();
     }
   }
 
@@ -45,6 +49,7 @@ class Director {
   void hacerBicicletaDecoradaConFunda(Constructor? constructor) {
     if (constructor is ConstructorBicicletaDecorada) {
       constructor.agregarFunda();
+      constructor.asociarImagenBicicleta();
     }
   }
 }

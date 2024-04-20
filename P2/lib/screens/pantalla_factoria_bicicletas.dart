@@ -19,8 +19,8 @@ class PantallaFactoriaBicicletas extends StatefulWidget {
 
   @override
   State<PantallaFactoriaBicicletas> createState() =>
-      _PantallaFactoriaBicicletasEstado(
-          0, [], 'Estampado', 'Carretera', false, Director(), null, null);
+      _PantallaFactoriaBicicletasEstado(0, [], 'Estampado', 'Carretera', false,
+          Director(), null, null, [], []);
 }
 
 /// Clase para gestionar el estado de la vista de la app
@@ -53,6 +53,10 @@ class _PantallaFactoriaBicicletasEstado
   /// Bicicleta que se irá manejando para las construcciones
   Bicicleta? _bicicleta;
 
+  List<Bicicleta> listaBicicletas;
+
+  List<String> listaExtras;
+
   /// Constructor de la clase
   _PantallaFactoriaBicicletasEstado(
       this._indiceImagenContenedor2,
@@ -62,7 +66,9 @@ class _PantallaFactoriaBicicletasEstado
       this._bicicletaCreada,
       this._director,
       this._constructor,
-      this._bicicleta);
+      this._bicicleta,
+      this.listaBicicletas,
+      this.listaExtras);
 
   /// Crea una bicicleta, actualizando la vista para presentar la bicicleta que
   /// se ha mandado construir
@@ -80,16 +86,17 @@ class _PantallaFactoriaBicicletasEstado
       // Actualizar variables necesarias:
       _bicicleta = _constructor!.obtenerResultado();
       _bicicletaCreada = true;
+      listaBicicletas.add(_bicicleta!);
     });
   }
 
   /// Añade una decoración a la bicicleta que está actualmente en construcción,
   /// actualizando la vista con el resultado de la aplicación de la decoración
   /// seleccionada
-  void _aniadirDecoracion() {
+  void _anadirDecoracion() {
     setState(() {
       // Actualizar el tipo de constructor necesario:
-      _constructor = ConstructorBicicletaDecorada(_bicicleta);
+      _constructor = ConstructorBicicletaDecorada(_bicicleta!);
 
       // Mandar a construir la bicicleta correspondiente en función del tipo de
       // decoración que se ha seleccionado:
@@ -101,7 +108,37 @@ class _PantallaFactoriaBicicletasEstado
 
       // Actualizar la bicicleta con la nueva construida:
       _bicicleta = _constructor!.obtenerResultado();
+      listaBicicletas.add(_bicicleta!);
     });
+  }
+
+  void _eliminarDecoracion() {
+    setState(() {
+      if (listaBicicletas.isNotEmpty) {
+        listaBicicletas.removeLast();
+        if (listaBicicletas.isNotEmpty) {
+          _bicicleta = listaBicicletas.last;
+        } else {
+          _bicicleta = null;
+        }
+      }
+    });
+  }
+
+  String _obtenerExtras() {
+    List<String> lineas = _bicicleta.toString().split('\n');
+    List<String> resultado = [];
+// Iterar sobre las líneas
+    for (String linea in lineas) {
+      // Buscar líneas que comiencen con "Extra"
+      if (linea.contains('Extra: ')) {
+        // Extraer el valor después de "Extra: " y agregarlo a la lista
+        String valorExtra = linea.substring('Extra: '.length);
+        resultado.add(
+            valorExtra.trim()); // Usamos trim() para eliminar espacios extra
+      }
+    }
+    return resultado.join(' - ');
   }
 
   /// Finaliza la construcción de la bicicleta, añadiendo esta al historial
@@ -110,7 +147,9 @@ class _PantallaFactoriaBicicletasEstado
     if (_bicicletaCreada) {
       setState(() {
         // Añadir la bicicleta recién terminada al historial de construcciones:
-        _aniadirImagenBicicletaConstruida(_bicicleta!.imagenRepresentativa!);
+        _aniadirImagenBicicletaConstruida(_bicicleta!.imagenRepresentativa);
+        listaExtras.add(_obtenerExtras());
+        //print(listaExtras);
 
         // Reseteo de valores del estado:
         _tipoBicicleta = 'Carretera';
@@ -118,6 +157,7 @@ class _PantallaFactoriaBicicletasEstado
         _bicicletaCreada = false;
         _bicicleta = null;
         _constructor = null;
+        listaBicicletas = [];
       });
     }
   }
@@ -165,6 +205,7 @@ class _PantallaFactoriaBicicletasEstado
           _indiceImagenContenedor2 < _imagenesBicicletasConstruidas.length) {
         // Eliminar la bicicleta del historial:
         _imagenesBicicletasConstruidas.removeAt(_indiceImagenContenedor2);
+        listaBicicletas.removeAt(_indiceImagenContenedor2);
 
         // Actualizar el índice actual del contenedor tras el borrado anterior
         if (_indiceImagenContenedor2 > 0) {
@@ -268,9 +309,6 @@ class _PantallaFactoriaBicicletasEstado
 
                         SizedBox(width: 20), // Separación
 
-                        // Este botón debe estar envuelto en un widget que controle su tamaño o posición,
-                        // dependiendo de cómo quieras que se vea en tu UI. Aquí lo envolveré con un Flexible
-                        // como ejemplo, pero ajusta según necesites.
                         Flexible(
                           child: crearBoton("", "Crear bicicleta", Colors.black,
                               Colors.white24, Size(140, 50), () {
@@ -307,7 +345,6 @@ class _PantallaFactoriaBicicletasEstado
 
                         SizedBox(width: 20), // Separación
 
-                        // Similar al botón anterior, debes controlar el tamaño o posición del botón de decoración.
                         Flexible(
                           child: Padding(
                             padding: EdgeInsets.all(8.0),
@@ -317,7 +354,23 @@ class _PantallaFactoriaBicicletasEstado
                                 Colors.black,
                                 Colors.white24,
                                 Size(170, 50), () {
-                              _aniadirDecoracion();
+                              if (_bicicleta != null) _anadirDecoracion();
+                            }),
+                          ),
+                        ),
+
+                        SizedBox(width: 20), // Separación
+
+                        Flexible(
+                          child: Padding(
+                            padding: EdgeInsets.all(8.0),
+                            child: crearBoton(
+                                "",
+                                "Eliminar decoración",
+                                Colors.black,
+                                Colors.white24,
+                                Size(190, 50), () {
+                              _eliminarDecoracion();
                             }),
                           ),
                         ),
@@ -342,6 +395,10 @@ class _PantallaFactoriaBicicletasEstado
                                       : Container(), // Mostrar imagen seleccionada 1
                             ),
                           ),
+                        ),
+                        Expanded(
+                          child: Text(
+                              _bicicleta == null ? '' : _bicicleta.toString()),
                         ),
                       ],
                     ),
@@ -419,7 +476,8 @@ class _PantallaFactoriaBicicletasEstado
                                           // Lógica para cambiar a la imagen anterior:
                                           if (_indiceImagenContenedor2 > 0) {
                                             _indiceImagenContenedor2--;
-                                          } else if (_imagenesBicicletasConstruidas.isNotEmpty) {
+                                          } else if (_imagenesBicicletasConstruidas
+                                              .isNotEmpty) {
                                             _indiceImagenContenedor2 =
                                                 _imagenesBicicletasConstruidas
                                                         .length -
@@ -438,7 +496,8 @@ class _PantallaFactoriaBicicletasEstado
                                       onPressed: () {
                                         setState(() {
                                           // Lógica para cambiar a la imagen siguiente:
-                                          if (_imagenesBicicletasConstruidas.isNotEmpty){
+                                          if (_imagenesBicicletasConstruidas
+                                              .isNotEmpty) {
                                             _indiceImagenContenedor2 =
                                                 (_indiceImagenContenedor2 + 1) %
                                                     _imagenesBicicletasConstruidas
@@ -449,6 +508,14 @@ class _PantallaFactoriaBicicletasEstado
                                     ),
                                   ),
                                 ],
+                              ),
+                              Visibility(
+                                visible: listaExtras.isNotEmpty &&
+                                    _indiceImagenContenedor2 <
+                                        listaExtras.length,
+                                child: Text(listaExtras.isNotEmpty
+                                    ? listaExtras[_indiceImagenContenedor2]
+                                    : ''),
                               ),
                             ],
                           ),

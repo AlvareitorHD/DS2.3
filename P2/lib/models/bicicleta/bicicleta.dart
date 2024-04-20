@@ -25,7 +25,10 @@ abstract class Bicicleta {
   late int _numRuedas;
 
   /// Imagen representativa de la bicicleta, la cual representará su aspecto
-  String? _imagenRepresentativa;
+  late String imagenRepresentativa;
+
+  /// Tipo de Bicicleta
+  late String _tipoBicicleta;
 
   // Constructor de la clase sin parámetros. Inicializa a valores por defecto los componentes de la bicicleta
   Bicicleta() {
@@ -37,15 +40,21 @@ abstract class Bicicleta {
     _tipoSillin = "";
     _tipoRuedas = "";
     _numRuedas = 0;
-    _imagenRepresentativa = "";
+    imagenRepresentativa = "";
+    _tipoBicicleta = "";
   }
 
-  /// Consultor de la imagen representativa
-  String? get imagenRepresentativa => _imagenRepresentativa;
+// Getter para tipoBicicleta
+  String get tipoBicicleta => _tipoBicicleta;
+
+  // Setter para tipoBicicleta
+  set tipoBicicleta(String tipo) {
+  _tipoBicicleta = tipo;
+}
 
   /// Asocia una imagen con la representación interna de la bicicleta
-  void asociarImagen(String? imagen) {
-    _imagenRepresentativa = imagen;
+  void asociarImagen(String imagen) {
+    imagenRepresentativa = imagen;
   }
 
   // Modificador del manillar
@@ -87,8 +96,9 @@ abstract class Bicicleta {
   @override
   String toString() {
     return ("\nBicicleta:\n\n\tTipo de manillar: "
-    "$_tipoManillar\n\tTipo de frenos: $_tipoFrenos\n\tNúmero de frenos: $_numFrenos\n\t"
-    "Tipo de transmisión: $_tipoTransmision\n\tTipo de cuadro: $_tipoCuadro\n\t"
-    "Tipo de sillín: $_tipoSillin\n\tTipo de ruedas: $_tipoRuedas\n\tNúmero de Ruedas: $_numRuedas\n");
+        "$_tipoManillar\n\tTipo de frenos: $_tipoFrenos\n\tNúmero de frenos: $_numFrenos\n\t"
+        "Tipo de transmisión: $_tipoTransmision\n\tTipo de cuadro: $_tipoCuadro\n\t"
+        "Tipo de sillín: $_tipoSillin\n\tTipo de ruedas: $_tipoRuedas\n\tNúmero de Ruedas: $_numRuedas\n"
+        "\tImagen representativa: $imagenRepresentativa\n");
   }
 }
