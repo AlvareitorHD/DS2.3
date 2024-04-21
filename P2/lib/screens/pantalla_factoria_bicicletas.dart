@@ -206,6 +206,7 @@ class _PantallaFactoriaBicicletasEstado
         // Eliminar la bicicleta del historial:
         _imagenesBicicletasConstruidas.removeAt(_indiceImagenContenedor2);
         // listaBicicletas.removeAt(_indiceImagenContenedor2);
+        listaExtras.removeAt(_indiceImagenContenedor2);
 
         // Actualizar el índice actual del contenedor tras el borrado anterior
         if (_indiceImagenContenedor2 > 0) {
@@ -213,8 +214,6 @@ class _PantallaFactoriaBicicletasEstado
         } else {
           _indiceImagenContenedor2 = 0;
         }
-
-        listaExtras.clear();
       }
     });
   }
