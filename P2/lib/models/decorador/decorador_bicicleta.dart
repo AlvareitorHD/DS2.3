@@ -5,7 +5,7 @@ import '../bicicleta/bicicleta.dart';
 /// capas encima de la bicicleta primaria
 abstract class DecoradorBicicleta extends Bicicleta {
   /// Instancia de la bicicleta a la que se le aplicarán los diferentes tipos de decoraciones
-  Bicicleta? _bicicletaDecorada;
+  Bicicleta _bicicletaDecorada;
 
   /// Añadido especial a la bicicleta (almacenará la decoración específica)
   String? _extra;
@@ -15,9 +15,7 @@ abstract class DecoradorBicicleta extends Bicicleta {
   ///
   /// @param [bicicletaDecorada] Bicicleta de base sobre la que aplicar las decoraciones
   ///
-  DecoradorBicicleta(Bicicleta? bicicletaDecorada) {
-    _bicicletaDecorada = bicicletaDecorada;
-  }
+  DecoradorBicicleta(this._bicicletaDecorada);
 
   /// Setter del añadido especial para que las clases que extiendan de esta puedan darle valor a este atributo
   set extra(String? valor) {

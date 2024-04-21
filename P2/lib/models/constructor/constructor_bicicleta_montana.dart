@@ -15,7 +15,7 @@ class ConstructorBicicletaMontana extends Constructor {
   /// Utiliza una constante predefinida `BICI_MON` para esta asociación.
   @override
   void asociarImagenBicicleta() {
-    bicicleta?.asociarImagen(BICI_MON);
+    bicicleta.asociarImagen(BICI_MON);
   }
 
   /// Construye la suspensión de la bicicleta de montaña con el [tipo] y

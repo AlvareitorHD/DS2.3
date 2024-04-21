@@ -49,8 +49,8 @@ abstract class Bicicleta {
 
   // Setter para tipoBicicleta
   set tipoBicicleta(String tipo) {
-  _tipoBicicleta = tipo;
-}
+    _tipoBicicleta = tipo;
+  }
 
   /// Asocia una imagen con la representación interna de la bicicleta
   void asociarImagen(String imagen) {
