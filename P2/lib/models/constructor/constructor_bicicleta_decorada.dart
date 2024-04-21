@@ -10,6 +10,8 @@ import '../bicicleta/bicicleta.dart';
 /// Clase que extiende [Constructor] para especializarse en la construcción
 /// de bicicletas decoradas.
 class ConstructorBicicletaDecorada extends Constructor {
+  //Solución al tipo de bicicleta
+  String tipoAntes = "";
   /// Crea una instancia de [ConstructorBicicletaDecorada] e inicializa
   /// la bicicleta con el valor proporcionado, que puede ser `null`.
   ConstructorBicicletaDecorada(Bicicleta bicicleta) : super() {
@@ -19,13 +21,17 @@ class ConstructorBicicletaDecorada extends Constructor {
   /// Agrega un estampado a la bicicleta, seleccionando la imagen apropiada
   /// basada en el tipo de bicicleta (montaña o carretera).
   void agregarEstampado() {
+    tipoAntes = bicicleta!.tipoBicicleta;
     bicicleta = DecoradorBicicletaConEstampado(bicicleta);
+    bicicleta?.tipoBicicleta = tipoAntes;
   }
 
   /// Agrega una funda a la bicicleta, seleccionando la imagen apropiada
   /// basada en el tipo de bicicleta (montaña o carretera).
   void agregarFunda() {
+    tipoAntes = bicicleta!.tipoBicicleta;
     bicicleta = DecoradorBicicletaConFunda(bicicleta);
+    bicicleta?.tipoBicicleta = tipoAntes;
   }
 
   /// Metodo para asociar la imagen de la bicicleta decorada dando prioridad a la funda sobre
