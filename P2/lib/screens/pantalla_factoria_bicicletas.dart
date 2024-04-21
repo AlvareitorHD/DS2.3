@@ -205,7 +205,7 @@ class _PantallaFactoriaBicicletasEstado
           _indiceImagenContenedor2 < _imagenesBicicletasConstruidas.length) {
         // Eliminar la bicicleta del historial:
         _imagenesBicicletasConstruidas.removeAt(_indiceImagenContenedor2);
-        listaBicicletas.removeAt(_indiceImagenContenedor2);
+        // listaBicicletas.removeAt(_indiceImagenContenedor2);
 
         // Actualizar el índice actual del contenedor tras el borrado anterior
         if (_indiceImagenContenedor2 > 0) {
