@@ -1,8 +1,6 @@
 import 'package:ejercicio3/models/decorador/decorador_bicicleta_con_estampado.dart';
 import 'package:ejercicio3/models/decorador/decorador_bicicleta_con_funda.dart';
-import 'package:ejercicio3/models/decorador/decorador_bicicleta.dart';
 import 'package:ejercicio3/models/nombres_imagenes_bicicletas.dart';
-import 'package:flutter/material.dart';
 
 import 'constructor.dart';
 import '../bicicleta/bicicleta.dart';
