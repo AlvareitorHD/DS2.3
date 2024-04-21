@@ -37,3 +37,7 @@ Se desea scrapear de la página anterior los siguientes elementos:
 - Toda esta información se guardará en un fichero .json, de forma que cada vez que se ejecute el código se borre el contenido anterior y se mostrará el nuevo.
 
 ## Práctica 2
+Mantenimiento y evolución del software en el contexto de la fábrica de bicicletas utilizando patrones de diseño Builder y Decorator del ejercicio 3 de la Práctica 1 en Flutter/Dart. Tratamos los siguientes apartados:
+- Desarrollo de Software: Se describe la evolución del programa Java original a una nueva implementación en Flutter/Dart, aplicando mantenimiento perfectivo, adaptativo, correctivo y preventivo.
+- Widgets Utilizados: Se detallan los widgets específicos utilizados en la aplicación, como botones y etiquetas de texto.
+- Gestión del Estado: Se explica cómo se maneja el estado interno de la aplicación y la actualización de la vista.
