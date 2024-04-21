@@ -1,6 +1,3 @@
-import 'package:ejercicio3/models/bicicleta/bicicleta.dart';
-import 'package:ejercicio3/models/decorador/decorador_bicicleta_con_funda.dart';
-
 import '../constructor/constructor.dart';
 import '../constructor/constructor_bicicleta_carretera.dart';
 import '../constructor/constructor_bicicleta_decorada.dart';
