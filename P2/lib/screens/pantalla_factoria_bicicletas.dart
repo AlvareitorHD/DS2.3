@@ -89,6 +89,7 @@ class _PantallaFactoriaBicicletasEstado
       // Actualizar variables necesarias:
       _bicicleta = _constructor!.obtenerResultado();
       _bicicletaCreada = true;
+      listaBicicletas = [];
       listaBicicletas.add(_bicicleta!);
     });
   }
@@ -117,7 +118,7 @@ class _PantallaFactoriaBicicletasEstado
 
   void _eliminarDecoracion() {
     setState(() {
-      if (listaBicicletas.isNotEmpty) {
+      if (listaBicicletas.length > 1) {
         listaBicicletas.removeLast();
         if (listaBicicletas.isNotEmpty) {
           _bicicleta = listaBicicletas.last;
