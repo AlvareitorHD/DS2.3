@@ -53,8 +53,11 @@ class _PantallaFactoriaBicicletasEstado
   /// Bicicleta que se irá manejando para las construcciones
   Bicicleta? _bicicleta;
 
+  /// Lista con las bicicletas que se van construyendo
   List<Bicicleta> listaBicicletas;
 
+  /// Lista con los extras (decoraciones) que se les va añadiendo a las
+  /// bicicletas
   List<String> listaExtras;
 
   /// Constructor de la clase
