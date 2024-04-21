@@ -213,6 +213,8 @@ class _PantallaFactoriaBicicletasEstado
         } else {
           _indiceImagenContenedor2 = 0;
         }
+
+        listaExtras.clear();
       }
     });
   }
