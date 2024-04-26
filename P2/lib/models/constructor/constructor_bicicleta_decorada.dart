@@ -38,13 +38,8 @@ class ConstructorBicicletaDecorada extends Constructor {
   void asociarImagenBicicleta() {
     // Verifica primero si la bicicleta es de montaña o carretera.
     bool esMontana = bicicleta?.tipoBicicleta == "montana";
-    // Intenta hacer cast de la bicicleta a DecoradorBicicletaConFunda y verifica si tiene funda.
-    if (bicicleta?.imagenRepresentativa == BICI_MON_FUN ||
-        bicicleta?.imagenRepresentativa == BICI_CAR_FUN) {
-      bicicleta?.asociarImagen(esMontana ? BICI_MON_FUN : BICI_CAR_FUN);
-    }
-    // Si no tiene funda, verifica si tiene estampado.
-    else if ((bicicleta is DecoradorBicicletaConEstampado)) {
+    // verifica si tiene estampado.
+    if ((bicicleta is DecoradorBicicletaConEstampado)) {
       bicicleta?.asociarImagen(esMontana ? BICI_MON_EST : BICI_CAR_EST);
     } // Si no tiene funda, verifica si tiene estampado.
     else if ((bicicleta is DecoradorBicicletaConFunda)) {
