@@ -10,11 +10,15 @@ class BicicletaMontana extends Bicicleta {
 
   // Constructor de la clase sin parámetros. Llama al constructor de la superclase para que esta inicialice a valores
   // por defecto los componentes de la bicicleta, además de inicializar los propios a valores por defecto
-BicicletaMontana({String tipoSuspension = '', int numSuspensiones = 0}) { 
-  _tipoSuspension = tipoSuspension;
-  _numSuspensiones = numSuspensiones;
-  tipoBicicleta= "montana";
+  BicicletaMontana({String tipoSuspension = '', int numSuspensiones = 0}) {
+    _tipoSuspension = tipoSuspension;
+    _numSuspensiones = numSuspensiones;
+    tipoBicicleta= "montana";
   }
+
+  // Getters:
+  String get tipoSuspension => _tipoSuspension; // Getters:
+  int get numSuspensiones => _numSuspensiones;
 
   // Modificador de la suspensión
   void establecerSuspension(String tipo, int num) {

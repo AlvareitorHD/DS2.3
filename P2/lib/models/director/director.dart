@@ -27,7 +27,7 @@ class Director {
       constructor.construirManillar("ERGONÓMICO");
       constructor.construirFrenos("DISCO", 2);
       constructor.construirTransmision("SHIMANO");
-      constructor.construirCuadro("FIBRA CARBONO");
+      constructor.construirCuadro("FIBRA_CARBONO");
       constructor.construirSillin("ESTRECHO");
       constructor.construirRuedas("ESCALADORAS", 2);
       constructor.asociarImagenBicicleta();

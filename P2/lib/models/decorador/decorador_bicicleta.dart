@@ -25,6 +25,9 @@ abstract class DecoradorBicicleta extends Bicicleta {
   // Getter del añadido especial
   String? get extra => _extra;
 
+  // Getter de la bicicleta primaria
+  Bicicleta get bicicletaDecorada => _bicicletaDecorada;
+
   /// Sobreescritura del método 'toString' para representar la información de la bicicleta. Llama al de la superclase
   /// para contar con la información general de la bicicleta y, además, le añade información específica sobre ese
   /// extra decorativo

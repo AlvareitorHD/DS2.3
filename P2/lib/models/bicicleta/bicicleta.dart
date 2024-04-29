@@ -44,10 +44,18 @@ abstract class Bicicleta {
     _tipoBicicleta = "";
   }
 
-// Getter para tipoBicicleta
+  // Getters para tipoBicicleta
   String get tipoBicicleta => _tipoBicicleta;
+  String get tipoFrenos => _tipoFrenos;
+  int get numFrenos => _numFrenos;
+  String get tipoTransmision => _tipoTransmision;
+  String get tipoCuadro => _tipoCuadro;
+  String get tipoSillin => _tipoSillin;
+  String get tipoRuedas => _tipoRuedas;
+  int get numRuedas => _numRuedas;
 
-  // Setter para tipoBicicleta
+
+  String get tipoManillar => _tipoManillar; // Setter para tipoBicicleta
   set tipoBicicleta(String tipo) {
     _tipoBicicleta = tipo;
   }
