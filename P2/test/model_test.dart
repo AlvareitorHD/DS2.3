@@ -3,10 +3,9 @@ import 'package:ejercicio3/models/bicicleta/bicicleta_carretera.dart';
 import 'package:ejercicio3/models/bicicleta/bicicleta_montana.dart';
 import 'package:ejercicio3/models/decorador/decorador_bicicleta.dart';
 import 'package:ejercicio3/models/decorador/decorador_bicicleta_con_estampado.dart';
+import 'package:ejercicio3/models/decorador/decorador_bicicleta_con_funda.dart';
 import 'package:ejercicio3/models/nombres_imagenes_bicicletas.dart';
 import 'package:flutter_test/flutter_test.dart';
-
-
 
 void main() {
   /// Agrupación de las pruebas relacionadas con las bicicletas de montaña:
@@ -49,6 +48,25 @@ void main() {
           equals(BICI_MON_EST));
       expect(biciMonEst.bicicletaDecorada.tipoBicicleta, "montana");
     });
+
+    test('\nPrueba 6: Decorar una bicicleta de montaña con varias fundas',
+        () {
+      DecoradorBicicleta biciMonFun = DecoradorBicicletaConFunda(biciMon);
+      DecoradorBicicleta biciMonFun1 =
+          DecoradorBicicletaConFunda(biciMonFun);
+      DecoradorBicicleta biciMonFun2 =
+          DecoradorBicicletaConFunda(biciMonFun1);
+      biciMonFun2.bicicletaDecorada.asociarImagen(BICI_MON_FUN);
+
+      // Utilizando RegExp para contar las ocurrencias de 'ESTAMPADO'
+      var resultString = biciMonFun2.toString();
+      var estampadoCount = RegExp('FUNDA').allMatches(resultString).length;
+
+      expect(estampadoCount, equals(3));
+      expect(biciMonFun2.extra, equals("FUNDA"));
+      expect(biciMonFun2.bicicletaDecorada.imagenRepresentativa,
+          equals(BICI_MON_FUN));
+    });
   });
 
   /// Agrupación de las pruebas relacionadas con las bicicletas de carretera:
@@ -77,6 +95,35 @@ void main() {
       expect(biciCar.tipoRuedas, equals("ESCALADORAS"));
       expect(biciCar.numRuedas, equals(2));
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
+    });
+
+    test('\nPrueba 4: Decorar una bicicleta de carretera con una funda', () {
+      DecoradorBicicleta biciCarFun = DecoradorBicicletaConFunda(biciCar);
+      biciCarFun.bicicletaDecorada.asociarImagen(BICI_CAR_FUN);
+
+      expect(biciCarFun.extra, equals("FUNDA"));
+      expect(biciCarFun.bicicletaDecorada.imagenRepresentativa,
+          equals(BICI_CAR_FUN));
+      expect(biciCarFun.bicicletaDecorada.tipoBicicleta, "carretera");
+    });
+
+    test('\nPrueba 5: Decorar una bicicleta de carretera con varios estampados',
+        () {
+      DecoradorBicicleta biciCarEst = DecoradorBicicletaConEstampado(biciCar);
+      DecoradorBicicleta biciCarEst1 =
+          DecoradorBicicletaConEstampado(biciCarEst);
+      DecoradorBicicleta biciCarEst2 =
+          DecoradorBicicletaConEstampado(biciCarEst1);
+      biciCarEst2.bicicletaDecorada.asociarImagen(BICI_CAR_EST);
+
+      // Utilizando RegExp para contar las ocurrencias de 'ESTAMPADO'
+      var resultString = biciCarEst2.toString();
+      var estampadoCount = RegExp('ESTAMPADO').allMatches(resultString).length;
+
+      expect(estampadoCount, equals(3));
+      expect(biciCarEst2.extra, equals("ESTAMPADO"));
+      expect(biciCarEst2.bicicletaDecorada.imagenRepresentativa,
+          equals(BICI_CAR_EST));
     });
   });
 }
