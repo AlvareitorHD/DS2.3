@@ -67,6 +67,46 @@ void main() {
       expect(biciMonFun2.bicicletaDecorada.imagenRepresentativa,
           equals(BICI_MON_FUN));
     });
+
+    test("Prueba 7: Decorar una bicicleta de montaña alternando entre estampado y funda", () {
+      DecoradorBicicleta biciMonDec = DecoradorBicicletaConEstampado(biciMon);
+      biciMonDec = DecoradorBicicletaConFunda(biciMonDec);
+      biciMonDec = DecoradorBicicletaConEstampado(biciMonDec);
+      biciMonDec = DecoradorBicicletaConFunda(biciMonDec);
+
+      var resultString = biciMonDec.toString();
+      var estampadoCount = RegExp('ESTAMPADO').allMatches(resultString).length;
+      var fundaCount = RegExp('FUNDA').allMatches(resultString).length;
+
+      expect(estampadoCount, equals(2));
+      expect(fundaCount, equals(2));
+      expect(biciMonDec.extra, equals('FUNDA'));
+    });
+
+    test("Prueba 8: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas", () {
+      expect(biciMon.imagenRepresentativa, equals(BICI_MON));
+
+      DecoradorBicicleta biciFun = DecoradorBicicletaConFunda(biciMon);
+      biciFun.asociarImagen(BICI_MON_FUN);
+      expect(biciFun.imagenRepresentativa, equals(BICI_MON_FUN));
+
+      biciFun = DecoradorBicicletaConFunda(biciFun);
+      biciFun.asociarImagen(BICI_MON_FUN);
+      expect(biciFun.imagenRepresentativa, equals(BICI_MON_FUN));
+    });
+
+    test("Prueba 9: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados", () {
+      expect(biciMon.imagenRepresentativa, equals(BICI_MON));
+
+      DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
+      biciEst.asociarImagen(BICI_MON_FUN);
+      expect(biciEst.imagenRepresentativa, equals(BICI_MON_FUN));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      biciEst.asociarImagen(BICI_MON_FUN);
+      expect(biciEst.imagenRepresentativa, equals(BICI_MON_FUN));
+    });
+
   });
 
   /// Agrupación de las pruebas relacionadas con las bicicletas de carretera:
@@ -125,5 +165,48 @@ void main() {
       expect(biciCarEst2.bicicletaDecorada.imagenRepresentativa,
           equals(BICI_CAR_EST));
     });
+
+    test("Prueba 7: Decorar una bicicleta de carretera alternando entre estampado y funda", () {
+      DecoradorBicicleta biciCarDec = DecoradorBicicletaConEstampado(biciCar);
+      biciCarDec = DecoradorBicicletaConFunda(biciCarDec);
+      biciCarDec = DecoradorBicicletaConEstampado(biciCarDec);
+      biciCarDec = DecoradorBicicletaConFunda(biciCarDec);
+
+      var resultString = biciCarDec.toString();
+      var estampadoCount = RegExp('ESTAMPADO').allMatches(resultString).length;
+      var fundaCount = RegExp('FUNDA').allMatches(resultString).length;
+
+      expect(estampadoCount, equals(2));
+      expect(fundaCount, equals(2));
+      expect(biciCarDec.extra, equals('FUNDA'));
+    });
+
+    test("Prueba 8: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas", () {
+
+      expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
+
+      DecoradorBicicleta biciFun = DecoradorBicicletaConFunda(biciCar);
+      biciFun.asociarImagen(BICI_CAR_FUN);
+      expect(biciFun.imagenRepresentativa, equals(BICI_CAR_FUN));
+
+      biciFun = DecoradorBicicletaConFunda(biciFun);
+      biciFun.asociarImagen(BICI_CAR_FUN);
+      expect(biciFun.imagenRepresentativa, equals(BICI_CAR_FUN));
+
+    });
+
+    test("Prueba 9: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados", () {
+      expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
+
+      DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciCar);
+      biciEst.asociarImagen(BICI_CAR_FUN);
+      expect(biciEst.imagenRepresentativa, equals(BICI_CAR_FUN));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      biciEst.asociarImagen(BICI_CAR_FUN);
+      expect(biciEst.imagenRepresentativa, equals(BICI_CAR_FUN));
+    });
+
   });
+
 }
