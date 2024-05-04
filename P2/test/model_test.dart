@@ -226,20 +226,7 @@ void main() {
       (biciMon as BicicletaMontana).asociarImagen(BICI_MON);
     });
 
-    test('Prueba 10:toString() muestra correctamente varios estampados', () {
-      DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
-      expect(biciEst.toString(),contains("Extra: ESTAMPADO"));
-
-      biciEst = DecoradorBicicletaConEstampado(biciEst);
-      RegExp regex = RegExp("Extra: ESTAMPADO");
-      expect(regex.allMatches(biciEst.toString()), hasLength(2));
-
-      biciEst = DecoradorBicicletaConEstampado(biciEst);
-      expect(regex.allMatches(biciEst.toString()), hasLength(3));
-
-    });
-
-    test('Prueba 11:toString() muestra correctamente varias fundas', () {
+    test('Prueba 13:toString() muestra correctamente varias fundas', () {
       DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
       expect(biciEst.toString(),contains("Extra: FUNDA"));
 
@@ -252,7 +239,21 @@ void main() {
 
     });
 
-    test('Prueba 12:toString() muestra correctamente varias fundas y estampados', () {
+    test('Prueba 14:toString() muestra correctamente varios estampados', () {
+      DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
+      expect(biciEst.toString(),contains("Extra: ESTAMPADO"));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      RegExp regex = RegExp("Extra: ESTAMPADO");
+      expect(regex.allMatches(biciEst.toString()), hasLength(2));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      expect(regex.allMatches(biciEst.toString()), hasLength(3));
+
+    });
+
+
+    test('Prueba 15:toString() muestra correctamente varias fundas y estampados', () {
       DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
       expect(biciEst.toString(),contains("Extra: FUNDA"));
 
