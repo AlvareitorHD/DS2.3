@@ -53,13 +53,10 @@ void main() {
       expect(biciMonEst.bicicletaDecorada.tipoBicicleta, "montana");
     });
 
-    test('\nPrueba 6: Decorar una bicicleta de montaña con varias fundas',
-        () {
+    test('\nPrueba 6: Decorar una bicicleta de montaña con varias fundas', () {
       DecoradorBicicleta biciMonFun = DecoradorBicicletaConFunda(biciMon);
-      DecoradorBicicleta biciMonFun1 =
-          DecoradorBicicletaConFunda(biciMonFun);
-      DecoradorBicicleta biciMonFun2 =
-          DecoradorBicicletaConFunda(biciMonFun1);
+      DecoradorBicicleta biciMonFun1 = DecoradorBicicletaConFunda(biciMonFun);
+      DecoradorBicicleta biciMonFun2 = DecoradorBicicletaConFunda(biciMonFun1);
       biciMonFun2.bicicletaDecorada.asociarImagen(BICI_MON_FUN);
 
       // Utilizando RegExp para contar las ocurrencias de 'ESTAMPADO'
@@ -72,7 +69,9 @@ void main() {
           equals(BICI_MON_FUN));
     });
 
-    test("Prueba 7: Decorar una bicicleta de montaña alternando entre estampado y funda", () {
+    test(
+        "Prueba 7.1: Decorar una bicicleta de montaña alternando entre estampado y funda",
+        () {
       DecoradorBicicleta biciMonDec = DecoradorBicicletaConEstampado(biciMon);
       biciMonDec = DecoradorBicicletaConFunda(biciMonDec);
       biciMonDec = DecoradorBicicletaConEstampado(biciMonDec);
@@ -87,7 +86,9 @@ void main() {
       expect(biciMonDec.extra, equals('FUNDA'));
     });
 
-    test("Prueba 8: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas", () {
+    test(
+        "Prueba 8.1: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas",
+        () {
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
       DecoradorBicicleta biciFun = DecoradorBicicletaConFunda(biciMon);
@@ -99,7 +100,9 @@ void main() {
       expect(biciFun.imagenRepresentativa, equals(BICI_MON_FUN));
     });
 
-    test("Prueba 9: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados", () {
+    test(
+        "Prueba 9.1: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados",
+        () {
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
       DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
@@ -111,6 +114,53 @@ void main() {
       expect(biciEst.imagenRepresentativa, equals(BICI_MON_FUN));
     });
 
+    test('Prueba 13: toString() muestra correctamente varias fundas', () {
+      DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
+      expect(biciEst.toString(), contains("Extra: FUNDA"));
+
+      biciEst = DecoradorBicicletaConFunda(biciEst);
+      RegExp regex = RegExp("Extra: FUNDA");
+      expect(regex.allMatches(biciEst.toString()), hasLength(2));
+
+      biciEst = DecoradorBicicletaConFunda(biciEst);
+      expect(regex.allMatches(biciEst.toString()), hasLength(3));
+    });
+
+    test('Prueba 14: toString() muestra correctamente varios estampados', () {
+      DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
+      expect(biciEst.toString(), contains("Extra: ESTAMPADO"));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      RegExp regex = RegExp("Extra: ESTAMPADO");
+      expect(regex.allMatches(biciEst.toString()), hasLength(2));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      expect(regex.allMatches(biciEst.toString()), hasLength(3));
+    });
+
+    test(
+        'Prueba 15: toString() muestra correctamente varias fundas y estampados',
+        () {
+      DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
+      expect(biciEst.toString(), contains("Extra: FUNDA"));
+
+      biciEst = DecoradorBicicletaConFunda(biciEst);
+      RegExp regex = RegExp("Extra: FUNDA");
+      expect(regex.allMatches(biciEst.toString()), hasLength(2));
+
+      biciEst = DecoradorBicicletaConFunda(biciEst);
+      expect(regex.allMatches(biciEst.toString()), hasLength(3));
+
+      RegExp regex2 = RegExp("Extra: ESTAMPADO");
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      expect(regex2.allMatches(biciEst.toString()), hasLength(1));
+      expect(regex.allMatches(biciEst.toString()), hasLength(3));
+
+      biciEst = DecoradorBicicletaConEstampado(biciEst);
+      expect(regex2.allMatches(biciEst.toString()), hasLength(2));
+      expect(regex.allMatches(biciEst.toString()), hasLength(3));
+    });
   });
 
   /// Agrupación de las pruebas relacionadas con las bicicletas de carretera:
@@ -170,7 +220,9 @@ void main() {
           equals(BICI_CAR_EST));
     });
 
-    test("Prueba 7: Decorar una bicicleta de carretera alternando entre estampado y funda", () {
+    test(
+        "Prueba 7.2: Decorar una bicicleta de carretera alternando entre estampado y funda",
+        () {
       DecoradorBicicleta biciCarDec = DecoradorBicicletaConEstampado(biciCar);
       biciCarDec = DecoradorBicicletaConFunda(biciCarDec);
       biciCarDec = DecoradorBicicletaConEstampado(biciCarDec);
@@ -185,8 +237,9 @@ void main() {
       expect(biciCarDec.extra, equals('FUNDA'));
     });
 
-    test("Prueba 8: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas", () {
-
+    test(
+        "Prueba 8.2: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas",
+        () {
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
 
       DecoradorBicicleta biciFun = DecoradorBicicletaConFunda(biciCar);
@@ -196,10 +249,11 @@ void main() {
       biciFun = DecoradorBicicletaConFunda(biciFun);
       biciFun.asociarImagen(BICI_CAR_FUN);
       expect(biciFun.imagenRepresentativa, equals(BICI_CAR_FUN));
-
     });
 
-    test("Prueba 9: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados", () {
+    test(
+        "Prueba 9.2: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados",
+        () {
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
 
       DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciCar);
@@ -210,13 +264,12 @@ void main() {
       biciEst.asociarImagen(BICI_CAR_FUN);
       expect(biciEst.imagenRepresentativa, equals(BICI_CAR_FUN));
     });
-
-
   });
 
-  group('Pruebas a bicicleta decorada',(){
-    late ConstructorBicicletaCarretera car = ConstructorBicicletaCarretera();;
-    late ConstructorBicicletaMontana mon =  ConstructorBicicletaMontana();
+  group('Pruebas a bicicleta decorada', () {
+    late ConstructorBicicletaCarretera car = ConstructorBicicletaCarretera();
+    ;
+    late ConstructorBicicletaMontana mon = ConstructorBicicletaMontana();
     late Director director = Director();
 
     //Creamos las bicicletas con sus atributos
@@ -225,8 +278,9 @@ void main() {
     Bicicleta bicicar = car.obtenerResultado() as Bicicleta;
     Bicicleta bicimon = mon.obtenerResultado() as Bicicleta;
 
-    test("Prueba 10: Comprobar que una bicicleta decorada tenga bien asociada su imagen según la última decoración añadida",(){
-
+    test(
+        "Prueba 10: Comprobar que una bicicleta decorada tenga bien asociada su imagen según la última decoración añadida",
+        () {
       //Agregamos funda
       ConstructorBicicletaDecorada c1 = ConstructorBicicletaDecorada(bicicar);
       ConstructorBicicletaDecorada c2 = ConstructorBicicletaDecorada(bicimon);
@@ -261,7 +315,9 @@ void main() {
       expect(bicimon.imagenRepresentativa, 'bici_mon_fun.png');
     });
 
-    test("Prueba 11: Comprobar que una bicicleta con funda tenga el EXTRA en el método toString",(){
+    test(
+        "Prueba 11: Comprobar que una bicicleta con funda tenga el EXTRA en el método toString",
+        () {
       // Reiniciamos las bicis
       bicicar = car.obtenerResultado() as Bicicleta;
       bicimon = mon.obtenerResultado() as Bicicleta;
@@ -277,7 +333,9 @@ void main() {
       expect(bicimon.toString(), contains("Extra: FUNDA"));
     });
 
-    test("Prueba 12: Comprobar que una bicicleta con estampado tenga el EXTRA en el método toString",(){
+    test(
+        "Prueba 12: Comprobar que una bicicleta con estampado tenga el EXTRA en el método toString",
+        () {
       // Reiniciamos las bicis
       bicicar = car.obtenerResultado() as Bicicleta;
       bicimon = mon.obtenerResultado() as Bicicleta;
@@ -292,77 +350,5 @@ void main() {
       expect(bicicar.toString(), contains("Extra: ESTAMPADO"));
       expect(bicimon.toString(), contains("Extra: ESTAMPADO"));
     });
-  });
-
-  group('Pruebas sobre el metodo toString',(){
-    late Bicicleta biciMon;
-
-
-    setUp(() {
-      biciMon = BicicletaMontana();
-
-      biciMon.establecerManillar("RECTO");
-      (biciMon as BicicletaMontana).establecerSuspension("ROSCADA", 1);
-      biciMon.establecerFrenos("DISCO", 2);
-      biciMon.establecerTransmision("SHIMANO");
-      biciMon.establecerCuadro("ALUMINIO");
-      biciMon.establecerSillin("SEMIRREDONDEADO");
-      biciMon.establecerRuedas("OFF-ROAD", 2);
-      (biciMon as BicicletaMontana).asociarImagen(BICI_MON);
-    });
-
-    test('Prueba 13:toString() muestra correctamente varias fundas', () {
-      DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
-      expect(biciEst.toString(),contains("Extra: FUNDA"));
-
-      biciEst = DecoradorBicicletaConFunda(biciEst);
-      RegExp regex = RegExp("Extra: FUNDA");
-      expect(regex.allMatches(biciEst.toString()), hasLength(2));
-
-      biciEst = DecoradorBicicletaConFunda(biciEst);
-      expect(regex.allMatches(biciEst.toString()), hasLength(3));
-
-    });
-
-    test('Prueba 14:toString() muestra correctamente varios estampados', () {
-      DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
-      expect(biciEst.toString(),contains("Extra: ESTAMPADO"));
-
-      biciEst = DecoradorBicicletaConEstampado(biciEst);
-      RegExp regex = RegExp("Extra: ESTAMPADO");
-      expect(regex.allMatches(biciEst.toString()), hasLength(2));
-
-      biciEst = DecoradorBicicletaConEstampado(biciEst);
-      expect(regex.allMatches(biciEst.toString()), hasLength(3));
-
-    });
-
-
-    test('Prueba 15:toString() muestra correctamente varias fundas y estampados', () {
-      DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
-      expect(biciEst.toString(),contains("Extra: FUNDA"));
-
-      biciEst = DecoradorBicicletaConFunda(biciEst);
-      RegExp regex = RegExp("Extra: FUNDA");
-      expect(regex.allMatches(biciEst.toString()), hasLength(2));
-
-      biciEst = DecoradorBicicletaConFunda(biciEst);
-      expect(regex.allMatches(biciEst.toString()), hasLength(3));
-
-      RegExp regex2 = RegExp("Extra: ESTAMPADO");
-
-      biciEst = DecoradorBicicletaConEstampado(biciEst);
-      expect(regex2.allMatches(biciEst.toString()), hasLength(1));
-      expect(regex.allMatches(biciEst.toString()), hasLength(3));
-
-      biciEst = DecoradorBicicletaConEstampado(biciEst);
-      expect(regex2.allMatches(biciEst.toString()), hasLength(2));
-      expect(regex.allMatches(biciEst.toString()), hasLength(3));
-
-    });
-
-
-
-
   });
 }
