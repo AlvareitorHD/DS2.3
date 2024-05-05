@@ -215,22 +215,18 @@ void main() {
   });
 
   group('Pruebas a bicicleta decorada',(){
-    late ConstructorBicicletaCarretera car;
-    late ConstructorBicicletaMontana mon;
-    late Director director;
+    late ConstructorBicicletaCarretera car = ConstructorBicicletaCarretera();;
+    late ConstructorBicicletaMontana mon =  ConstructorBicicletaMontana();
+    late Director director = Director();
 
-    setUp(() {
-      car = ConstructorBicicletaCarretera();
-      mon = ConstructorBicicletaMontana();
-      director = Director();
-    });
+    //Creamos las bicicletas con sus atributos
+    director.hacerBicicletaCarretera(car);
+    director.hacerBicicletaMontana(mon);
+    Bicicleta bicicar = car.obtenerResultado() as Bicicleta;
+    Bicicleta bicimon = mon.obtenerResultado() as Bicicleta;
 
     test("Prueba 10: Comprobar que una bicicleta decorada tenga bien asociada su imagen según la última decoración añadida",(){
-      //Creamos las bicicletas con sus atributos
-      director.hacerBicicletaCarretera(car);
-      director.hacerBicicletaMontana(mon);
-      Bicicleta bicicar = car.obtenerResultado() as Bicicleta;
-      Bicicleta bicimon = mon.obtenerResultado() as Bicicleta;
+
       //Agregamos funda
       ConstructorBicicletaDecorada c1 = ConstructorBicicletaDecorada(bicicar);
       ConstructorBicicletaDecorada c2 = ConstructorBicicletaDecorada(bicimon);
@@ -244,6 +240,7 @@ void main() {
       expect(bicicar.imagenRepresentativa, 'bici_car_fun.png');
       expect(bicimon.imagenRepresentativa, 'bici_mon_fun.png');
 
+      //Agregamos estampado encima
       director.hacerBicicletaDecoradaConEstampado(c1);
       director.hacerBicicletaDecoradaConEstampado(c2);
 
@@ -253,6 +250,7 @@ void main() {
       expect(bicicar.imagenRepresentativa, 'bici_car_est.png');
       expect(bicimon.imagenRepresentativa, 'bici_mon_est.png');
 
+      //Agregamos otra funda encima
       director.hacerBicicletaDecoradaConFunda(c1);
       director.hacerBicicletaDecoradaConFunda(c2);
 
@@ -264,11 +262,9 @@ void main() {
     });
 
     test("Prueba 11: Comprobar que una bicicleta con funda tenga el EXTRA en el método toString",(){
-      //Creamos las bicicletas con sus atributos
-      director.hacerBicicletaCarretera(car);
-      director.hacerBicicletaMontana(mon);
-      Bicicleta bicicar = car.obtenerResultado() as Bicicleta;
-      Bicicleta bicimon = mon.obtenerResultado() as Bicicleta;
+      // Reiniciamos las bicis
+      bicicar = car.obtenerResultado() as Bicicleta;
+      bicimon = mon.obtenerResultado() as Bicicleta;
       //Agregamos funda
       ConstructorBicicletaDecorada c1 = ConstructorBicicletaDecorada(bicicar);
       ConstructorBicicletaDecorada c2 = ConstructorBicicletaDecorada(bicimon);
@@ -282,11 +278,9 @@ void main() {
     });
 
     test("Prueba 12: Comprobar que una bicicleta con estampado tenga el EXTRA en el método toString",(){
-      //Creamos las bicicletas con sus atributos
-      director.hacerBicicletaCarretera(car);
-      director.hacerBicicletaMontana(mon);
-      Bicicleta bicicar = car.obtenerResultado() as Bicicleta;
-      Bicicleta bicimon = mon.obtenerResultado() as Bicicleta;
+      // Reiniciamos las bicis
+      bicicar = car.obtenerResultado() as Bicicleta;
+      bicimon = mon.obtenerResultado() as Bicicleta;
       //Agregamos estampado
       ConstructorBicicletaDecorada c1 = ConstructorBicicletaDecorada(bicicar);
       ConstructorBicicletaDecorada c2 = ConstructorBicicletaDecorada(bicimon);
