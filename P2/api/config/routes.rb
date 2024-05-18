@@ -9,6 +9,7 @@ Rails.application.routes.draw do
   # root "posts#index"
 
   # Lista de funciones del controlador
+  # localhost:3000/bicicletas
   resources :bicicletas, only: [:index, :create, :update, :destroy]
 
 end

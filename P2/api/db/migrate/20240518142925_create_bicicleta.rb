@@ -11,8 +11,8 @@ class CreateBicicleta < ActiveRecord::Migration[7.1]
       t.integer :num_ruedas
       t.string :imagen_representativa
       t.string :tipo_bicicleta
-      t.string :tipo_suspension
-      t.integer :num_suspensiones
+      t.string :tipo_suspension, null:true
+      t.integer :num_suspensiones, null:true
 
       t.timestamps
     end
