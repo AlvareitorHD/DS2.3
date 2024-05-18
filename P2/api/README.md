@@ -1,24 +1,14 @@
-# README
+# Backend de la aplicacion
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+## API RestFUL usando Ruby On Rails
 
-Things you may want to cover:
+### Modelo Bicicleta
+```
+rails generate model Bicicleta --force-plural tipo_manillar:string tipo_frenos:string num_frenos:integer tipo_transmision:string  tipo_cuadro:string tipo_sillin:string tipo_ruedas:string num_ruedas:integer imagen_representativa:string tipo_bicicleta:string tipo_suspension:string num_suspensiones:integer
+```
+### Modelo Decoracion
+```
+rails generate model Decoracion extra:string decora_a:references{polymorphic}
+```
 
-* Ruby version
-
-* System dependencies
-
-* Configuration
-
-* Database creation
-
-* Database initialization
-
-* How to run the test suite
-
-* Services (job queues, cache servers, search engines, etc.)
-
-* Deployment instructions
-
-* ...
+**IMPORTANTE:** Para generar comandos para crear los modelos podeis usar la siguiente pagina (https://rails-generate.com/)

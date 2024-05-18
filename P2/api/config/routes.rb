@@ -7,4 +7,8 @@ Rails.application.routes.draw do
 
   # Defines the root path route ("/")
   # root "posts#index"
+
+  # Lista de funciones del controlador
+  resources :bicicletas, only: [:index, :create, :update, :destroy]
+
 end

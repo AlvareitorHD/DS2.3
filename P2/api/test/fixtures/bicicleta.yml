@@ -1,0 +1,29 @@
+# Read about fixtures at https://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  tipo_manillar: MyString
+  tipo_frenos: MyString
+  num_frenos: 1
+  tipo_transmision: MyString
+  tipo_cuadro: MyString
+  tipo_sillin: MyString
+  tipo_ruedas: MyString
+  num_ruedas: 1
+  imagen_representativa: MyString
+  tipo_bicicleta: MyString
+  tipo_suspension: MyString
+  num_suspensiones: 1
+
+two:
+  tipo_manillar: MyString
+  tipo_frenos: MyString
+  num_frenos: 1
+  tipo_transmision: MyString
+  tipo_cuadro: MyString
+  tipo_sillin: MyString
+  tipo_ruedas: MyString
+  num_ruedas: 1
+  imagen_representativa: MyString
+  tipo_bicicleta: MyString
+  tipo_suspension: MyString
+  num_suspensiones: 1
