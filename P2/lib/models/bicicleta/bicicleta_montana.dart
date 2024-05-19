@@ -43,4 +43,12 @@ class BicicletaMontana extends Bicicleta {
         "\tNúmero de suspensiones: $_numSuspensiones\n" +
         "\tTIPO DE BICICLETA: montaña\n");
   }
+
+  @override
+  Map<String, dynamic> toJson() {
+    Map<String, dynamic> json = super.toJson();
+    json['tipo_suspension'] = tipoSuspension as String?;
+    json['num_suspensiones'] = numSuspensiones as int?;
+    return json;
+  }
 }

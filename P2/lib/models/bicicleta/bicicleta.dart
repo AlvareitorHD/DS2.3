@@ -109,4 +109,21 @@ abstract class Bicicleta {
         "Tipo de sillín: $_tipoSillin\n\tTipo de ruedas: $_tipoRuedas\n\tNúmero de Ruedas: $_numRuedas\n"
         "\tImagen representativa: $imagenRepresentativa\n");
   }
+
+  // Metodo abstracto para convertir los datos de una bicicleta a JSON
+  Map<String, dynamic> toJson() {
+    return {
+      'tipo_manillar': tipoManillar as String?,
+      'tipo_frenos': tipoFrenos as String?,
+      'num_frenos': numFrenos as int?,
+      'tipo_transmision': tipoTransmision as String?,
+      'tipo_cuadro': tipoCuadro as String?,
+      'tipo_sillin': tipoSillin as String?,
+      'tipo_ruedas': tipoRuedas as String?,
+      'num_ruedas': numRuedas as int?,
+      'imagen_representativa': imagenRepresentativa as String?,
+      'tipo_bicicleta': tipoBicicleta as String?
+    };
+  }
+
 }
