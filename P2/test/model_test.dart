@@ -16,6 +16,7 @@ void main() {
   /// Agrupación de las pruebas relacionadas con las bicicletas de montaña:
   group('Pruebas para bicicleta de montaña', () {
     late Bicicleta biciMon;
+    late ControladorBackend controller;
 
     setUp(() {
       biciMon = BicicletaMontana();
@@ -28,6 +29,8 @@ void main() {
       biciMon.establecerSillin("SEMIRREDONDEADO");
       biciMon.establecerRuedas("OFF-ROAD", 2);
       (biciMon as BicicletaMontana).asociarImagen(BICI_MON);
+
+      controller = ControladorBackend();
     });
 
     test('\nPrueba 1: Crear una bicicleta de montaña', () async {
@@ -43,7 +46,6 @@ void main() {
       expect(biciMon.numRuedas, equals(2));
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
-      ControladorBackend controller = ControladorBackend();
       await controller.crearBicicleta(biciMon);
     });
 
@@ -170,6 +172,7 @@ void main() {
   /// Agrupación de las pruebas relacionadas con las bicicletas de carretera:
   group('Pruebas para bicicleta de carretera', () {
     late Bicicleta biciCar;
+    late ControladorBackend controller;
 
     setUp(() {
       biciCar = BicicletaCarretera();
@@ -181,9 +184,11 @@ void main() {
       biciCar.establecerSillin("ESTRECHO");
       biciCar.establecerRuedas("ESCALADORAS", 2);
       (biciCar as BicicletaCarretera).asociarImagen(BICI_CAR);
+
+      controller = ControladorBackend();
     });
 
-    test('\nPrueba 2: Crear una bicicleta de carretera', () {
+    test('\nPrueba 2: Crear una bicicleta de carretera', () async {
       expect(biciCar.tipoManillar, equals("ERGONÓMICO"));
       expect(biciCar.tipoFrenos, equals("DISCO"));
       expect(biciCar.numFrenos, equals(2));
@@ -193,6 +198,8 @@ void main() {
       expect(biciCar.tipoRuedas, equals("ESCALADORAS"));
       expect(biciCar.numRuedas, equals(2));
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
+
+      await controller.crearBicicleta(biciCar);
     });
 
     test('\nPrueba 4: Decorar una bicicleta de carretera con una funda', () {
