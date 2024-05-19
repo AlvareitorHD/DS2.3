@@ -4,10 +4,9 @@ import 'package:http/http.dart' as http;
 
 class ControladorBackend {
 
-  List<Bicicleta> listaBicicletas = [];
-  final String apiUrl = "https://localhost:3000/bicicletas";
+  final String apiUrl = "http://localhost:3000/bicicletas";
 
-  ControladorBackend(this.listaBicicletas);
+  ControladorBackend();
 
   Future<void> crearBicicleta(Bicicleta bicicleta) async {
 
@@ -18,9 +17,8 @@ class ControladorBackend {
       },
       body: jsonEncode(bicicleta.toJson()) // Duda: si es bicicleta montana, hace llamada a BicicletaMontana.toJson() ???
     );
-    if (response.statusCode == 201) {
-      listaBicicletas.add(bicicleta); // TODO
-    } else {
+
+    if (response.statusCode != 201) {
       throw Exception('Fallo al agregar la bici: ${response.body}');
     }
 

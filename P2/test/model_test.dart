@@ -1,3 +1,4 @@
+import 'package:ejercicio3/controlador_backend.dart';
 import 'package:ejercicio3/models/bicicleta/bicicleta.dart';
 import 'package:ejercicio3/models/bicicleta/bicicleta_carretera.dart';
 import 'package:ejercicio3/models/bicicleta/bicicleta_montana.dart';
@@ -29,7 +30,7 @@ void main() {
       (biciMon as BicicletaMontana).asociarImagen(BICI_MON);
     });
 
-    test('\nPrueba 1: Crear una bicicleta de montaña', () {
+    test('\nPrueba 1: Crear una bicicleta de montaña', () async {
       expect(biciMon.tipoManillar, equals("RECTO"));
       expect((biciMon as BicicletaMontana).tipoSuspension, equals("ROSCADA"));
       expect((biciMon as BicicletaMontana).numSuspensiones, equals(1));
@@ -41,6 +42,9 @@ void main() {
       expect(biciMon.tipoRuedas, equals("OFF-ROAD"));
       expect(biciMon.numRuedas, equals(2));
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
+
+      ControladorBackend controller = ControladorBackend();
+      await controller.crearBicicleta(biciMon);
     });
 
     test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado', () {
