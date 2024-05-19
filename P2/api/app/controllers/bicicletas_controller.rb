@@ -30,16 +30,24 @@ class BicicletasController < ApplicationController
     end
 
     def index
-        # ...
+        @bicis = Bicicleta.all
+        if @bicis
+            render json: @bicis, status: :created
+        else
+            render json: @bicis.errors, status: :unprocessable_entity
+        end
     end
 
     def destroy
-        # ...
+        bici = Bicicleta.find(params[:id])
+        if bici.destroy
+            head :ok
+        else 
+            render json: { error: "Failed to delete" }, status: :unprocessable_entity
+        end
     end
 
-
-
-    def bicicleta_params
+    def bicicleta_carretera_params
         params.require(:bicicleta).permit(:tipo_manillar, 
                                           :tipo_frenos,
                                           :num_frenos,
@@ -50,19 +58,21 @@ class BicicletasController < ApplicationController
                                           :num_ruedas,
                                           :imagen_representativa,
                                           :tipo_bicicleta)
-      end
-    
-      def bicicleta_carretera_params
-        bicicleta_params
-      end
-    
-      def bicicleta_montana_params
-        bicicleta_params.merge(
-          params.require(:bicicleta).permit(
-            :tipo_suspension,
-            :num_suspensiones
-          )
-        )
-      end
+    end
+
+    def bicicleta_montana_params
+        params.require(:bicicleta).permit(:tipo_manillar, 
+                                          :tipo_frenos,
+                                          :num_frenos,
+                                          :tipo_transmision, 
+                                          :tipo_cuadro, 
+                                          :tipo_sillin,
+                                          :tipo_ruedas,
+                                          :num_ruedas,
+                                          :imagen_representativa,
+                                          :tipo_bicicleta,
+                                          :tipo_suspension,
+                                          :num_suspensiones)
+    end
 
 end
