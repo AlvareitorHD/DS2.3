@@ -1,5 +1,3 @@
-# Maneja las solicitudes HTTP enviadas desde la aplicación Flutter y realiza operaciones en la base de datos.
-
 class BicicletasController < ApplicationController
 
     def create
@@ -11,12 +9,11 @@ class BicicletasController < ApplicationController
         when 'carretera'
             @bicicleta = Bicicleta.new(bicicleta_carretera_params)
         end
-        # nil es sinonimo de null
-        # con save, intenta guardar en la base de datos
+
         if @bicicleta != nil && @bicicleta.save
-            render json: @bicicleta, status: :created
+            render json: @tarea, status: :created
         else
-            render json: @bicicleta.errors, status: :unprocessable_entity
+            render json: @tarea.errors, status: :unprocessable_entity
         end
     end
 

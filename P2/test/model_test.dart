@@ -43,8 +43,14 @@ void main() {
       expect(biciMon.numRuedas, equals(2));
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
+      // Provisional pruebas de crear bicicletas en la base de datos
       ControladorBackend controller = ControladorBackend();
       await controller.crearBicicleta(biciMon);
+      await controller.crearBicicleta(biciMon);
+      await controller.crearBicicleta(biciMon);
+
+      // Provisional pruebas de eliminar bicicletas en la base de datos
+      await controller.deleteBicicleta(2);
     });
 
     test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado', () {

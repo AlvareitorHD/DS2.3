@@ -24,5 +24,22 @@ class ControladorBackend {
 
   }
 
-}
+  Future<void> updateBicicleta(int id, Map<String, dynamic> bicicleta) async {
+    final response = await http.put(
+      Uri.parse('$apiUrl/$id'),
+      headers: {"Content-Type": "application/json"},
+      body: json.encode(bicicleta),
+    );
+    if (response.statusCode != 200) {
+      throw Exception('Error actualizando bicicleta');
+    }
+  }
+
+  Future<void> deleteBicicleta(int id) async {
+    final response = await http.delete(Uri.parse('$apiUrl/$id'));
+    if (response.statusCode != 200) {
+      throw Exception('Error eliminando bicicleta');
+    }
+  }
+
 }
