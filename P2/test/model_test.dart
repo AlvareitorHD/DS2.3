@@ -53,7 +53,7 @@ void main() {
       //await controller.deleteBicicleta(2);
     });
 
-    test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado', () {
+    test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado', () async {
       DecoradorBicicleta biciMonEst = DecoradorBicicletaConEstampado(biciMon);
       biciMonEst.bicicletaDecorada.asociarImagen(BICI_MON_EST);
 
@@ -61,6 +61,9 @@ void main() {
       expect(biciMonEst.bicicletaDecorada.imagenRepresentativa,
           equals(BICI_MON_EST));
       expect(biciMonEst.bicicletaDecorada.tipoBicicleta, "montana");
+
+      ControladorBackend controller = ControladorBackend();
+      await controller.updateBicicleta(6, biciMonEst.toJson());
     });
 
     test('\nPrueba 6: Decorar una bicicleta de montaña con varias fundas', () {

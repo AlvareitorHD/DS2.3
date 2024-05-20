@@ -19,10 +19,23 @@ class BicicletasController < ApplicationController
 
     def update
         @bicicleta = Bicicleta.find(params[:id])
-        if @bicicleta.update(bicicleta_params)
-            render json: @bicicleta, status: :ok
+    
+        # Actualizar la lista de decoraciones
+        if params[:decoracion]
+          decoraciones = @bicicleta.decoraciones || []
+          decoraciones << params[:decoracion]
+          @bicicleta.decoraciones = decoraciones
+        end
+
+        # Actualizar la imagen representativa
+        if params[:imagen_representativa]
+            @bicicleta.imagen_representativa = params[:imagen_representativa]
+        end
+    
+        if @bicicleta.save
+          render json: @bicicleta, status: :ok
         else
-            render json: @bicicleta.errors, status: :unprocessable_entity
+          render json: @bicicleta.errors, status: :unprocessable_entity
         end
     end
 

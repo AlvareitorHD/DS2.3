@@ -1,4 +1,5 @@
 import 'decorador_bicicleta.dart';
+import '../nombres_imagenes_bicicletas.dart';
 
 /// Clase que hereda de DecoradorBicicleta, la cual representa el
 /// decorador que añade un estampado a una bicicleta
@@ -15,4 +16,17 @@ class DecoradorBicicletaConEstampado extends DecoradorBicicleta {
   /// estampado está avanzando
   @override
   void avanzar() => print("\nLa bicicleta con estampado está avanzando...");
+
+  /// Método que devuelve la información de la bicicleta en formato JSON
+  @override
+  Map<String, dynamic> toJson() {
+    final json = bicicletaDecorada.toJson();
+    json['decoracion'] = "ESTAMPADO";
+    if (bicicletaDecorada.tipoBicicleta == "montana") {
+      json['imagen_representativa'] = BICI_MON_EST;
+    } else if (bicicletaDecorada.tipoBicicleta == "carretera") {
+      json['imagen_representativa'] = BICI_CAR_EST;
+    }
+    return json;
+  }
 }

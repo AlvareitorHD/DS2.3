@@ -38,4 +38,8 @@ abstract class DecoradorBicicleta extends Bicicleta {
   String toString() {
     return "$_bicicletaDecorada\tExtra: ${_extra!}\n";
   }
+
+  // Método abstracto que devuelve la información de la bicicleta en formato JSON
+  @override
+  Map<String, dynamic> toJson();
 }
