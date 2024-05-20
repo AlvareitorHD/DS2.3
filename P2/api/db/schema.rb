@@ -26,7 +26,7 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_134209) do
     t.integer "num_suspensiones"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "decoraciones"
+    t.text "decoraciones", default: "[]"
   end
 
   create_table "decoracions", force: :cascade do |t|
@@ -36,6 +36,14 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_134209) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["decora_a_type", "decora_a_id"], name: "index_decoracions_on_decora_a"
+  end
+
+  create_table "usuarios", force: :cascade do |t|
+    t.string "name"
+    t.string "email"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+    t.string "nombre"
   end
 
 end
