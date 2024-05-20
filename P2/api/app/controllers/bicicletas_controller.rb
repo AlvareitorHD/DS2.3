@@ -54,7 +54,8 @@ class BicicletasController < ApplicationController
                                           :tipo_ruedas,
                                           :num_ruedas,
                                           :imagen_representativa,
-                                          :tipo_bicicleta)
+                                          :tipo_bicicleta, 
+                                          decoraciones: [])
     end
 
     def bicicleta_montana_params
@@ -69,7 +70,8 @@ class BicicletasController < ApplicationController
                                           :imagen_representativa,
                                           :tipo_bicicleta,
                                           :tipo_suspension,
-                                          :num_suspensiones)
+                                          :num_suspensiones, 
+                                          decoraciones: [])
     end
 
 end

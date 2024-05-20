@@ -122,7 +122,8 @@ abstract class Bicicleta {
       'tipo_ruedas': tipoRuedas as String?,
       'num_ruedas': numRuedas as int?,
       'imagen_representativa': imagenRepresentativa as String?,
-      'tipo_bicicleta': tipoBicicleta as String?
+      'tipo_bicicleta': tipoBicicleta as String?,
+      'decoraciones': [],
     };
   }
 
