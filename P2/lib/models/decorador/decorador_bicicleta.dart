@@ -15,7 +15,7 @@ abstract class DecoradorBicicleta extends Bicicleta {
   ///
   /// @param [bicicletaDecorada] Bicicleta de base sobre la que aplicar las decoraciones
   ///
-  DecoradorBicicleta(this._bicicletaDecorada);
+  DecoradorBicicleta(this._bicicletaDecorada) : super('', '', 0, '', '', '', '', 0, '', '');
 
   /// Setter del añadido especial para que las clases que extiendan de esta puedan darle valor a este atributo
   set extra(String? valor) {

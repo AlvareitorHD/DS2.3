@@ -1,6 +1,8 @@
 // Importaciones de bibliotecas:
 import 'package:flutter/material.dart';
 // Importaciones de ficheros propios:
+import '../controlador_backend.dart';
+import '../models/nombres_imagenes_bicicletas.dart';
 import '../widgets/boton.dart';
 import 'package:ejercicio3/widgets/etiqueta_texto.dart';
 import '../models/bicicleta/bicicleta.dart';
@@ -60,6 +62,11 @@ class _PantallaFactoriaBicicletasEstado
   /// bicicletas
   List<String> listaExtras;
 
+  ///
+  ControladorBackend controladorBackend = new ControladorBackend();
+  String currentUser = "Miguel Angel";
+  List<String> users = ["Miguel Angel", "Miguel", "Alvaro", "Gines", "Luis Miguel"];
+
   /// Constructor de la clase
   _PantallaFactoriaBicicletasEstado(
       this._indiceImagenContenedor2,
@@ -73,16 +80,59 @@ class _PantallaFactoriaBicicletasEstado
       this.listaBicicletas,
       this.listaExtras);
 
+  // NUEVO
+  @override
+  void initState() {
+    super.initState();
+    _cargarBicicletasIniciales();
+  }
+
+  void _cargarBicicletasIniciales() async {
+    try {
+      await controladorBackend.cargarBicicletas(currentUser);
+      print("controladorBackend.listaBicicletas.length: " +
+          controladorBackend.listaBicicletas.length.toString());
+      setState(() {});
+    } catch (e) {
+      print("Error loading bycicles: $e");
+    }
+  }
+  // NUEVO
+
   /// Crea una bicicleta, actualizando la vista para presentar la bicicleta que
   /// se ha mandado construir
   void _crearBicicleta() {
     setState(() {
       // Construir el tipo de bicicleta que corresponda:
       if (_tipoBicicleta == 'Carretera') {
-        _constructor = ConstructorBicicletaCarretera();
+        _constructor = ConstructorBicicletaCarretera(
+            tipoManillar: "ERGONÓMICO",
+            tipoFrenos: "DISCO",
+            numFrenos: 2,
+            tipoTransmision: "SHIMANO",
+            tipoCuadro:"FIBRA_CARBONO",
+            tipoSillin: "ESTRECHO",
+            tipoRuedas: "ESCALADORAS",
+            numRuedas: 2,
+            imagenRepresentativa: BICI_CAR,
+            tipoBicicleta: "carretera"
+        );
         _director.hacerBicicletaCarretera(_constructor);
       } else {
-        _constructor = ConstructorBicicletaMontana();
+        _constructor = ConstructorBicicletaMontana(
+            tipoManillar: "RECTO",
+            tipoFrenos: "DISCO",
+            numFrenos: 2,
+            tipoTransmision: "SHIMANO",
+            tipoCuadro: "ALUMINIO",
+            tipoSillin: "SEMIRREDONDEADO",
+            tipoRuedas: "OFF-ROAD",
+            numRuedas: 2,
+            imagenRepresentativa: BICI_CAR,
+            tipoBicicleta: "montana",
+            tipoSuspension: "ROSCADA",
+            numSuspensiones: 1
+        );
         _director.hacerBicicletaMontana(_constructor);
       }
 
@@ -251,6 +301,29 @@ class _PantallaFactoriaBicicletasEstado
         foregroundColor: Colors.white,
         backgroundColor: Colors.black54,
         title: Text('BikeBuilderPlus'),
+        actions: <Widget>[
+          Container(
+            color: Colors.white,
+            child: DropdownButton<String>(
+              value: currentUser,
+              icon: Icon(Icons.arrow_downward),
+              onChanged: (String? newValue) {
+                if (newValue != null && newValue != currentUser) {
+                  setState(() {
+                    currentUser = newValue;
+                    _cargarBicicletasIniciales();
+                  });
+                }
+              },
+              items: users.map<DropdownMenuItem<String>>((String value) {
+                return DropdownMenuItem<String>(
+                  value: value,
+                  child: Text(value),
+                );
+              }).toList(),
+            ),
+          ),
+        ],
       ),
 
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //

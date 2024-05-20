@@ -4,9 +4,21 @@ import 'package:http/http.dart' as http;
 
 class ControladorBackend {
 
+  late List<Bicicleta> listaBicicletas;
   final String apiUrl = "http://localhost:3000/bicicletas";
 
   ControladorBackend();
+
+  Future<void> cargarBicicletas(String usuario) async {
+    final response = await http.get(Uri.parse('$apiUrl?tipo_bicicleta=montana'));
+    if (response.statusCode == 200) {
+      List<dynamic> bicisJson = json.decode(response.body);
+
+      listaBicicletas.addAll(bicisJson.map((json) => Bicicleta.fromJson(json)).toList());
+    } else {
+      throw Exception('Failed to load bycicles');
+    }
+  }
 
   Future<void> crearBicicleta(Bicicleta bicicleta) async {
 
