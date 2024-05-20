@@ -42,4 +42,13 @@ class ControladorBackend {
     }
   }
 
+  Future<List<dynamic>> mostarBicicletas() async {
+    final response = await http.get(Uri.parse(apiUrl));
+    if (response.statusCode == 200) {
+      return json.decode(response.body);
+    } else {
+      throw Exception('Error cargando bicicletas');
+    }
+  }
+
 }

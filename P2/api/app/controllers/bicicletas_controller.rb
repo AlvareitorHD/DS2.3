@@ -42,7 +42,7 @@ class BicicletasController < ApplicationController
     def index
         @bicis = Bicicleta.all
         if @bicis
-            render json: @bicis, status: :created
+            render json: @bicis, status: :ok
         else
             render json: @bicis.errors, status: :unprocessable_entity
         end

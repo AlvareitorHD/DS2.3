@@ -45,15 +45,20 @@ void main() {
 
       // Provisional pruebas de crear bicicletas en la base de datos
       ControladorBackend controller = ControladorBackend();
-      await controller.crearBicicleta(biciMon);
+      //await controller.crearBicicleta(biciMon);
       //await controller.crearBicicleta(biciMon);
       //await controller.crearBicicleta(biciMon);
 
       // Provisional pruebas de eliminar bicicletas en la base de datos
-      //await controller.deleteBicicleta(2);
+      //await controller.deleteBicicleta(7);
+      List<dynamic> bicicletas = await controller.mostarBicicletas();
+      for (var bicicleta in bicicletas) {
+        print(bicicleta);
+      }
     });
 
-    test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado', () async {
+    test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado',
+        () async {
       DecoradorBicicleta biciMonEst = DecoradorBicicletaConEstampado(biciMon);
       biciMonEst.bicicletaDecorada.asociarImagen(BICI_MON_EST);
 
@@ -62,8 +67,8 @@ void main() {
           equals(BICI_MON_EST));
       expect(biciMonEst.bicicletaDecorada.tipoBicicleta, "montana");
 
-      ControladorBackend controller = ControladorBackend();
-      await controller.updateBicicleta(6, biciMonEst.toJson());
+      //ControladorBackend controller = ControladorBackend();
+      //await controller.updateBicicleta(6, biciMonEst.toJson());
     });
 
     test('\nPrueba 6: Decorar una bicicleta de montaña con varias fundas', () {

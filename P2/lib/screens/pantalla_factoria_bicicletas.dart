@@ -118,6 +118,7 @@ class _PantallaFactoriaBicicletasEstado
 
   void _eliminarDecoracion() {
     setState(() {
+      /*
       if (listaBicicletas.length > 1) {
         listaBicicletas.removeLast();
         if (listaBicicletas.isNotEmpty) {
@@ -126,6 +127,9 @@ class _PantallaFactoriaBicicletasEstado
           _bicicleta = null;
         }
       }
+       */
+      listaBicicletas = [];
+      _bicicleta = null;
     });
   }
 
