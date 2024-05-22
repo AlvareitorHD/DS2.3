@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.1].define(version: 2024_05_20_134209) do
+ActiveRecord::Schema[7.1].define(version: 2024_05_22_090424) do
   create_table "bicicleta", force: :cascade do |t|
     t.string "tipo_manillar"
     t.string "tipo_frenos"
@@ -26,7 +26,12 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_20_134209) do
     t.integer "num_suspensiones"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.text "decoraciones", default: "[]"
+<<<<<<< HEAD
+
+=======
+    t.text "decoraciones"
+    t.string "nombre_usuario"
+>>>>>>> b13ce411e889af8b22396a80d325f61aaf6f160b
   end
 
   create_table "decoracions", force: :cascade do |t|

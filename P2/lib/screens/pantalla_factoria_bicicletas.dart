@@ -9,6 +9,7 @@ import '../models/constructor/constructor_bicicleta_carretera.dart';
 import '../models/constructor/constructor_bicicleta_montana.dart';
 import '../models/constructor/constructor_bicicleta_decorada.dart';
 import '../models/director/director.dart';
+import 'package:ejercicio3/controlador_backend.dart';
 
 /// Clase que representa la vista de la app. Hereda de 'StatefulWidget', por lo
 /// que puede cambiar su estado interno durante la ejecución de la aplicación.
@@ -73,17 +74,35 @@ class _PantallaFactoriaBicicletasEstado
       this.listaBicicletas,
       this.listaExtras);
 
+  /// Usuario actual
+  String currentUser = "Alvaro";
+
+  /// Lista de usuarios
+  List<String> users = ["Alvaro", "Luis", "MiguelB", "Miguel", "Gines"];
+
+  /// Controlador de la base de datos
+  final ControladorBackend _controladorBackend = ControladorBackend();
+
+  /// Identificador bicicleta
+  int? _id_bicicleta_fabricacion;
+
+  @override
+  void initState() {
+    super.initState();
+    _procesarBicicletasPorUsuario(currentUser);
+  }
+
   /// Crea una bicicleta, actualizando la vista para presentar la bicicleta que
   /// se ha mandado construir
-  void _crearBicicleta() {
+  void _crearBicicleta() async {
     setState(() {
       // Construir el tipo de bicicleta que corresponda:
       if (_tipoBicicleta == 'Carretera') {
         _constructor = ConstructorBicicletaCarretera();
-        _director.hacerBicicletaCarretera(_constructor);
+        _director.hacerBicicletaCarretera(_constructor, currentUser);
       } else {
         _constructor = ConstructorBicicletaMontana();
-        _director.hacerBicicletaMontana(_constructor);
+        _director.hacerBicicletaMontana(_constructor, currentUser);
       }
 
       // Actualizar variables necesarias:
@@ -92,12 +111,20 @@ class _PantallaFactoriaBicicletasEstado
       listaBicicletas = [];
       listaBicicletas.add(_bicicleta!);
     });
+
+    // Actualizamos base de datos
+    int id = await _controladorBackend.crearBicicleta(_bicicleta!);
+    _procesarBicicletasPorUsuario(currentUser);
+
+    setState(() {
+      _id_bicicleta_fabricacion = id;
+    });
   }
 
   /// Añade una decoración a la bicicleta que está actualmente en construcción,
   /// actualizando la vista con el resultado de la aplicación de la decoración
   /// seleccionada
-  void _anadirDecoracion() {
+  void _anadirDecoracion() async {
     setState(() {
       // Actualizar el tipo de constructor necesario:
       _constructor = ConstructorBicicletaDecorada(_bicicleta!);
@@ -114,23 +141,21 @@ class _PantallaFactoriaBicicletasEstado
       _bicicleta = _constructor!.obtenerResultado();
       listaBicicletas.add(_bicicleta!);
     });
+    // Actualizamos base de datos
+    await _controladorBackend.updateBicicleta(
+        _id_bicicleta_fabricacion!, _bicicleta!.toJson());
+    _procesarBicicletasPorUsuario(currentUser);
   }
 
-  void _eliminarDecoracion() {
+  void _eliminarBicicleta() async {
     setState(() {
-      /*
-      if (listaBicicletas.length > 1) {
-        listaBicicletas.removeLast();
-        if (listaBicicletas.isNotEmpty) {
-          _bicicleta = listaBicicletas.last;
-        } else {
-          _bicicleta = null;
-        }
-      }
-       */
       listaBicicletas = [];
       _bicicleta = null;
     });
+
+    // Actualizamos base de datos
+    await _controladorBackend.deleteBicicleta(_id_bicicleta_fabricacion!);
+    _procesarBicicletasPorUsuario(currentUser);
   }
 
   String _obtenerExtras() {
@@ -155,8 +180,8 @@ class _PantallaFactoriaBicicletasEstado
     if (_bicicletaCreada) {
       setState(() {
         // Añadir la bicicleta recién terminada al historial de construcciones:
-        _aniadirImagenBicicletaConstruida(_bicicleta!.imagenRepresentativa);
-        listaExtras.add(_obtenerExtras());
+        //_aniadirImagenBicicletaConstruida(_bicicleta!.imagenRepresentativa);
+        //listaExtras.add(_obtenerExtras());
         //print(listaExtras);
 
         // Reseteo de valores del estado:
@@ -168,6 +193,39 @@ class _PantallaFactoriaBicicletasEstado
         listaBicicletas = [];
       });
     }
+  }
+
+  /// Procesa las bicicletas por usuario
+  Future<void> _procesarBicicletasPorUsuario(String usuario) async {
+    List<List<String>> bicicletas =
+        await _controladorBackend.mostarBicicletasPorUsuario(usuario);
+    setState(() {
+      _imagenesBicicletasConstruidas = [];
+      listaExtras = [];
+      int _indiceImagenContenedor2 = 0;
+
+      for (var bicicleta in bicicletas) {
+        List<String> decoraciones = [];
+        String imagenRepresentativa = "";
+
+        for (var elemento in bicicleta) {
+          if (elemento == "FIN") {
+            break;
+          }
+          decoraciones.add(elemento);
+        }
+
+        if (bicicleta.isNotEmpty) {
+          imagenRepresentativa = bicicleta.last;
+        }
+
+        listaExtras.add(decoraciones.join(","));
+        _imagenesBicicletasConstruidas.add(imagenRepresentativa);
+      }
+    });
+
+    print(listaExtras);
+    print(_imagenesBicicletasConstruidas);
   }
 
   /// Dialogo de confirmación para eliminar una bicicleta del historial de
@@ -203,29 +261,6 @@ class _PantallaFactoriaBicicletasEstado
     );
   }
 
-  /// Elimina del historial de bicicletas construidas aquella que se encuentra
-  /// en pantalla, actualizando la vista consecuentemente
-  void _eliminarBicicleta() {
-    setState(() {
-      // Solo se elimina del historial si el índice actual del contenedor es
-      // válido:
-      if (_indiceImagenContenedor2 >= 0 &&
-          _indiceImagenContenedor2 < _imagenesBicicletasConstruidas.length) {
-        // Eliminar la bicicleta del historial:
-        _imagenesBicicletasConstruidas.removeAt(_indiceImagenContenedor2);
-        // listaBicicletas.removeAt(_indiceImagenContenedor2);
-        listaExtras.removeAt(_indiceImagenContenedor2);
-
-        // Actualizar el índice actual del contenedor tras el borrado anterior
-        if (_indiceImagenContenedor2 > 0) {
-          _indiceImagenContenedor2--;
-        } else {
-          _indiceImagenContenedor2 = 0;
-        }
-      }
-    });
-  }
-
   /// Añade una imagen de una bicicleta recién construida al hisotrial de imágenes
   /// construidas
   /// @param imagen Imagen a añadir a la lista
@@ -234,6 +269,15 @@ class _PantallaFactoriaBicicletasEstado
       _imagenesBicicletasConstruidas.add(imagen);
       _indiceImagenContenedor2 = _imagenesBicicletasConstruidas.length - 1;
     });
+  }
+
+  void _onUserChanged(String? newValue) async {
+    if (newValue != null && newValue != currentUser) {
+      setState(() {
+        currentUser = newValue;
+      });
+      await _procesarBicicletasPorUsuario(currentUser);
+    }
   }
 
   /// Método sobreescrito para construir la representación visual del widget
@@ -255,6 +299,19 @@ class _PantallaFactoriaBicicletasEstado
         foregroundColor: Colors.white,
         backgroundColor: Colors.black54,
         title: Text('BikeBuilderPlus'),
+        actions: <Widget>[
+          DropdownButton<String>(
+            value: currentUser,
+            icon: Icon(Icons.arrow_downward),
+            onChanged: _onUserChanged,
+            items: users.map<DropdownMenuItem<String>>((String value) {
+              return DropdownMenuItem<String>(
+                value: value,
+                child: Text(value),
+              );
+            }).toList(),
+          ),
+        ],
       ),
 
       // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
@@ -375,11 +432,11 @@ class _PantallaFactoriaBicicletasEstado
                             padding: EdgeInsets.all(8.0),
                             child: crearBoton(
                                 "",
-                                "Eliminar decoración",
+                                "Eliminar Bicicleta",
                                 Colors.black,
                                 Colors.white24,
                                 Size(190, 50), () {
-                              _eliminarDecoracion();
+                              _mostrarDialogoConfirmacionEliminacion(context);
                             }),
                           ),
                         ),
@@ -423,7 +480,7 @@ class _PantallaFactoriaBicicletasEstado
                         Padding(
                           padding: EdgeInsets.all(
                               8.0), // Añadir margen alrededor del botón
-                          child: crearBoton("", "Finalizar bicicleta",
+                          child: crearBoton("", "Siguiente bicicleta",
                               Colors.black, Colors.white24, Size(160, 50), () {
                             _finalizarBicicleta();
                           }),
@@ -529,22 +586,6 @@ class _PantallaFactoriaBicicletasEstado
                             ],
                           ),
                         ),
-                      ],
-                    ),
-
-                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-                    // ++ Fila con el botón para eliminar la bicicleta actual del  ++ //
-                    // ++ historial                                                ++ //
-                    // ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++ //
-
-                    Row(
-                      children: [
-                        crearBoton("", "Eliminar bicicleta", Colors.black,
-                            Colors.white24, Size(160, 50), () {
-                          if (!_imagenesBicicletasConstruidas.isEmpty) {
-                            _mostrarDialogoConfirmacionEliminacion(context);
-                          }
-                        }),
                       ],
                     ),
                   ],

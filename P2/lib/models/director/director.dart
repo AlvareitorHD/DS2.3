@@ -6,7 +6,7 @@ import '../constructor/constructor_bicicleta_montana.dart';
 /// Clase Director que se encarga de construir las bicicletas con los constructores
 class Director {
   /// Método que construye una bicicleta de montaña
-  void hacerBicicletaMontana(Constructor? constructor) {
+  void hacerBicicletaMontana(Constructor? constructor, String usuario) {
     if (constructor is ConstructorBicicletaMontana) {
       constructor.recomponer();
       constructor.construirManillar("RECTO");
@@ -17,11 +17,12 @@ class Director {
       constructor.construirSillin("SEMIRREDONDEADO");
       constructor.construirRuedas("OFF-ROAD", 2);
       constructor.asociarImagenBicicleta();
+      constructor.construirUsuario(usuario);
     }
   }
 
   /// Método que construye una bicicleta de montaña
-  void hacerBicicletaCarretera(Constructor? constructor) {
+  void hacerBicicletaCarretera(Constructor? constructor, String usuario) {
     if (constructor is ConstructorBicicletaCarretera) {
       constructor.recomponer();
       constructor.construirManillar("ERGONÓMICO");
@@ -31,6 +32,7 @@ class Director {
       constructor.construirSillin("ESTRECHO");
       constructor.construirRuedas("ESCALADORAS", 2);
       constructor.asociarImagenBicicleta();
+      constructor.construirUsuario(usuario);
     }
   }
 

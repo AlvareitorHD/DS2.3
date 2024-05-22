@@ -50,6 +50,11 @@ abstract class Constructor {
     bicicleta.establecerRuedas(tipo, cantidad);
   }
 
+  /// Construye el propietario de la bicicleta con el [usuario] especificado.
+  void construirUsuario(String usuario) {
+    bicicleta.establecerUsuario(usuario);
+  }
+
   /// Obtiene la bicicleta construida. Retorna `null` si la construcción no ha empezado.
   Bicicleta? obtenerResultado() => bicicleta;
 }
