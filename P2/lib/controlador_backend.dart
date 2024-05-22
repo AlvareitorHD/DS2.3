@@ -3,9 +3,13 @@ import 'dart:convert';
 import 'package:http/http.dart' as http;
 
 class ControladorBackend {
+  var test = 0;
   final String apiUrl = "http://localhost:3000/bicicletas";
 
   ControladorBackend();
+  int get_test(){
+    return test;
+  }
 
   Future<int> crearBicicleta(Bicicleta bicicleta) async {
     final response = await http.post(Uri.parse(apiUrl),
@@ -13,6 +17,8 @@ class ControladorBackend {
           'Content-Type': 'application/json; charset=UTF-8'
         },
         body: jsonEncode(bicicleta.toJson()));
+
+    test = response.statusCode;
 
     if (response.statusCode == 201) {
       final respondeData = json.decode(response.body);
@@ -28,6 +34,7 @@ class ControladorBackend {
       headers: {"Content-Type": "application/json"},
       body: json.encode(bicicleta),
     );
+    test = response.statusCode;
     if (response.statusCode != 200) {
       throw Exception('Error actualizando bicicleta');
     }
@@ -35,6 +42,7 @@ class ControladorBackend {
 
   Future<void> deleteBicicleta(int id) async {
     final response = await http.delete(Uri.parse('$apiUrl/$id'));
+    test = response.statusCode;
     if (response.statusCode != 200) {
       throw Exception('Error eliminando bicicleta');
     }
@@ -47,6 +55,7 @@ class ControladorBackend {
         headers: <String, String>{
           'Content-Type': 'application/json; charset=UTF-8'
         });
+    test = response.statusCode;
     if (response.statusCode == 200) {
       List<dynamic> bicicletas = json.decode(response.body);
       print("Datos de bicicletas recibidos: $bicicletas");
