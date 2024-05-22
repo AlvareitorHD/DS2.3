@@ -1,4 +1,3 @@
-// Importaciones de bibliotecas:
 import 'package:flutter/material.dart';
 // Importaciones de ficheros propios:
 import '../widgets/boton.dart';
@@ -84,7 +83,10 @@ class _PantallaFactoriaBicicletasEstado
   final ControladorBackend _controladorBackend = ControladorBackend();
 
   /// Identificador bicicleta
-  int? _id_bicicleta_fabricacion;
+  int? _id_bicicleta_fabricacion = 0;
+
+  /// Cambio de usuario
+  bool cambioUsuario = false;
 
   @override
   void initState() {
@@ -110,6 +112,7 @@ class _PantallaFactoriaBicicletasEstado
       _bicicletaCreada = true;
       listaBicicletas = [];
       listaBicicletas.add(_bicicleta!);
+      cambioUsuario = false;
     });
 
     // Actualizamos base de datos
@@ -140,6 +143,7 @@ class _PantallaFactoriaBicicletasEstado
       // Actualizar la bicicleta con la nueva construida:
       _bicicleta = _constructor!.obtenerResultado();
       listaBicicletas.add(_bicicleta!);
+      cambioUsuario = false;
     });
     // Actualizamos base de datos
     await _controladorBackend.updateBicicleta(
@@ -151,10 +155,11 @@ class _PantallaFactoriaBicicletasEstado
     setState(() {
       listaBicicletas = [];
       _bicicleta = null;
+      cambioUsuario = false;
     });
 
     // Actualizamos base de datos
-    if (_id_bicicleta_fabricacion != -1) {
+    if (_id_bicicleta_fabricacion != 0) {
       await _controladorBackend.deleteBicicleta(_id_bicicleta_fabricacion!);
       _procesarBicicletasPorUsuario(currentUser);
     }
@@ -193,7 +198,7 @@ class _PantallaFactoriaBicicletasEstado
         _bicicleta = null;
         _constructor = null;
         listaBicicletas = [];
-        _id_bicicleta_fabricacion = -1;
+        _id_bicicleta_fabricacion = 0;
       });
     }
   }
@@ -202,6 +207,11 @@ class _PantallaFactoriaBicicletasEstado
   Future<void> _procesarBicicletasPorUsuario(String usuario) async {
     List<List<String>> bicicletas =
         await _controladorBackend.mostarBicicletasPorUsuario(usuario);
+
+    if (cambioUsuario) {
+      _finalizarBicicleta();
+    }
+
     setState(() {
       _imagenesBicicletasConstruidas = [];
       listaExtras = [];
@@ -225,10 +235,8 @@ class _PantallaFactoriaBicicletasEstado
         listaExtras.add(decoraciones.join(","));
         _imagenesBicicletasConstruidas.add(imagenRepresentativa);
       }
+      cambioUsuario = false;
     });
-
-    print(listaExtras);
-    print(_imagenesBicicletasConstruidas);
   }
 
   /// Dialogo de confirmación para eliminar una bicicleta del historial de
@@ -278,6 +286,7 @@ class _PantallaFactoriaBicicletasEstado
     if (newValue != null && newValue != currentUser) {
       setState(() {
         currentUser = newValue;
+        cambioUsuario = true;
       });
       await _procesarBicicletasPorUsuario(currentUser);
     }
