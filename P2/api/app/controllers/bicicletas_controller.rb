@@ -3,6 +3,8 @@ class BicicletasController < ApplicationController
     def create
         @tipo = params[:tipo_bicicleta]
         @bicicleta = nil
+        puts "Parametros recibidos: #{params.inspect}" # Añadir para depurar
+
         case @tipo.downcase
         when 'montana'
             @bicicleta = Bicicleta.new(bicicleta_montana_params)
@@ -11,9 +13,9 @@ class BicicletasController < ApplicationController
         end
 
         if @bicicleta != nil && @bicicleta.save
-            render json: @tarea, status: :created
+            render json: @bicicleta, status: :created
         else
-            render json: @tarea.errors, status: :unprocessable_entity
+            render json: @bicicleta.errors, status: :unprocessable_entity
         end
     end
 
@@ -40,12 +42,13 @@ class BicicletasController < ApplicationController
     end
 
     def index
-        @bicis = Bicicleta.all
-        if @bicis
-            render json: @bicis, status: :ok
-        else
-            render json: @bicis.errors, status: :unprocessable_entity
-        end
+        if params[:nombre_usuario].present?
+            @bicis = Bicicleta.where(nombre_usuario: params[:nombre_usuario])
+          else
+            @bicis = Bicicleta.all
+          end
+        
+        render json: @bicis, status: :ok
     end
 
     def destroy
@@ -68,6 +71,7 @@ class BicicletasController < ApplicationController
                                           :num_ruedas,
                                           :imagen_representativa,
                                           :tipo_bicicleta, 
+                                          :nombre_usuario, 
                                           decoraciones: [])
     end
 
@@ -84,6 +88,7 @@ class BicicletasController < ApplicationController
                                           :tipo_bicicleta,
                                           :tipo_suspension,
                                           :num_suspensiones, 
+                                          :nombre_usuario, 
                                           decoraciones: [])
     end
 

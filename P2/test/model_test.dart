@@ -28,6 +28,7 @@ void main() {
       biciMon.establecerSillin("SEMIRREDONDEADO");
       biciMon.establecerRuedas("OFF-ROAD", 2);
       (biciMon as BicicletaMontana).asociarImagen(BICI_MON);
+      biciMon.establecerUsuario("Miguel");
     });
 
     test('\nPrueba 1: Crear una bicicleta de montaña', () async {
@@ -50,11 +51,10 @@ void main() {
       //await controller.crearBicicleta(biciMon);
 
       // Provisional pruebas de eliminar bicicletas en la base de datos
-      //await controller.deleteBicicleta(7);
-      List<dynamic> bicicletas = await controller.mostarBicicletas();
-      for (var bicicleta in bicicletas) {
-        print(bicicleta);
-      }
+      //List<dynamic> bicicletas = await controller.mostarBicicletasPorUsuario("Miguel");
+      //for (var bicicleta in bicicletas) {
+      //  print(bicicleta);
+      //}
     });
 
     test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado',
@@ -291,8 +291,8 @@ void main() {
     late Director director = Director();
 
     //Creamos las bicicletas con sus atributos
-    director.hacerBicicletaCarretera(car);
-    director.hacerBicicletaMontana(mon);
+    director.hacerBicicletaCarretera(car, "Miguel");
+    director.hacerBicicletaMontana(mon, "Miguel");
     Bicicleta bicicar = car.obtenerResultado() as Bicicleta;
     Bicicleta bicimon = mon.obtenerResultado() as Bicicleta;
 

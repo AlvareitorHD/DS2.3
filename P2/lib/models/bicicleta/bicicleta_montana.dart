@@ -13,7 +13,7 @@ class BicicletaMontana extends Bicicleta {
   BicicletaMontana({String tipoSuspension = '', int numSuspensiones = 0}) {
     _tipoSuspension = tipoSuspension;
     _numSuspensiones = numSuspensiones;
-    tipoBicicleta= "montana";
+    tipoBicicleta = "montana";
   }
 
   // Getters:

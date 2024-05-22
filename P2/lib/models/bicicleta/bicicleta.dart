@@ -1,4 +1,6 @@
 // Clase abstracta que representa una bicicleta de manera general
+import 'package:ejercicio3/models/bicicleta/bicicleta_montana.dart';
+
 abstract class Bicicleta {
   // Tipo de manillar
   late String _tipoManillar;
@@ -30,6 +32,9 @@ abstract class Bicicleta {
   /// Tipo de Bicicleta
   late String _tipoBicicleta;
 
+  /// Propietario de la bicicleta
+  late String _usuario;
+
   // Constructor de la clase sin parámetros. Inicializa a valores por defecto los componentes de la bicicleta
   Bicicleta() {
     _tipoManillar = "";
@@ -42,6 +47,7 @@ abstract class Bicicleta {
     _numRuedas = 0;
     imagenRepresentativa = "";
     _tipoBicicleta = "";
+    _usuario = "";
   }
 
   // Getters para tipoBicicleta
@@ -53,7 +59,7 @@ abstract class Bicicleta {
   String get tipoSillin => _tipoSillin;
   String get tipoRuedas => _tipoRuedas;
   int get numRuedas => _numRuedas;
-
+  String get usuario => _usuario;
 
   String get tipoManillar => _tipoManillar; // Setter para tipoBicicleta
   set tipoBicicleta(String tipo) {
@@ -97,6 +103,11 @@ abstract class Bicicleta {
     _numRuedas = num;
   }
 
+  // Modificador del id
+  void establecerUsuario(String usuario) {
+    _usuario = usuario;
+  }
+
   // Método abstracto para que la bicicleta avance (cada tipo de bicicleta avanzará a su manera)
   void avanzar();
 
@@ -123,8 +134,31 @@ abstract class Bicicleta {
       'num_ruedas': numRuedas as int?,
       'imagen_representativa': imagenRepresentativa as String?,
       'tipo_bicicleta': tipoBicicleta as String?,
+      'nombre_usuario': _usuario,
       'decoraciones': [],
     };
   }
 
+  static List<String> fromJsonDelimited(Map<String, dynamic> json) {
+    List<String> data = [];
+    
+    if (json['decoraciones'] is List) {
+      List<dynamic> decoracionesDynamic = json['decoraciones'] ?? [];
+      List<String> decoraciones =
+          decoracionesDynamic.map((item) => item.toString()).toList();
+
+      // Marca de fin de decoraciones.
+      decoraciones.add("FIN");
+
+      for (String decoracion in decoraciones) {
+        data.add(decoracion);
+      }
+    } else {
+      // Si no hay decoraciones, aún así agrega "FIN"
+      data.add("FIN");
+    }
+    data.add(json['imagen_representativa'] as String);
+
+    return data;
+  }
 }
