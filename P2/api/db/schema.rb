@@ -26,12 +26,8 @@ ActiveRecord::Schema[7.1].define(version: 2024_05_22_090424) do
     t.integer "num_suspensiones"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-<<<<<<< HEAD
-
-=======
-    t.text "decoraciones"
+    t.text "decoraciones", default: "[]"
     t.string "nombre_usuario"
->>>>>>> b13ce411e889af8b22396a80d325f61aaf6f160b
   end
 
   create_table "decoracions", force: :cascade do |t|

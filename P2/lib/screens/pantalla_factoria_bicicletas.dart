@@ -154,8 +154,10 @@ class _PantallaFactoriaBicicletasEstado
     });
 
     // Actualizamos base de datos
-    await _controladorBackend.deleteBicicleta(_id_bicicleta_fabricacion!);
-    _procesarBicicletasPorUsuario(currentUser);
+    if (_id_bicicleta_fabricacion != -1) {
+      await _controladorBackend.deleteBicicleta(_id_bicicleta_fabricacion!);
+      _procesarBicicletasPorUsuario(currentUser);
+    }
   }
 
   String _obtenerExtras() {
@@ -191,6 +193,7 @@ class _PantallaFactoriaBicicletasEstado
         _bicicleta = null;
         _constructor = null;
         listaBicicletas = [];
+        _id_bicicleta_fabricacion = -1;
       });
     }
   }
@@ -202,7 +205,7 @@ class _PantallaFactoriaBicicletasEstado
     setState(() {
       _imagenesBicicletasConstruidas = [];
       listaExtras = [];
-      int _indiceImagenContenedor2 = 0;
+      _indiceImagenContenedor2 = 0;
 
       for (var bicicleta in bicicletas) {
         List<String> decoraciones = [];
