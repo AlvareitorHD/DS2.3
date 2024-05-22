@@ -16,6 +16,7 @@ void main() {
   /// Agrupación de las pruebas relacionadas con las bicicletas de montaña:
   group('Pruebas para bicicleta de montaña', () {
     late Bicicleta biciMon;
+    late ControladorBackend controller;
 
     setUp(() {
       biciMon = BicicletaMontana();
@@ -29,6 +30,8 @@ void main() {
       biciMon.establecerRuedas("OFF-ROAD", 2);
       (biciMon as BicicletaMontana).asociarImagen(BICI_MON);
       biciMon.establecerUsuario("Miguel");
+
+      controller = ControladorBackend();
     });
 
     test('\nPrueba 1: Crear una bicicleta de montaña', () async {
@@ -45,10 +48,8 @@ void main() {
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
       // Provisional pruebas de crear bicicletas en la base de datos
-      ControladorBackend controller = ControladorBackend();
       await controller.crearBicicleta(biciMon);
       expect(controller.get_test(), equals(201));
-
     });
 
     test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado',
@@ -373,7 +374,6 @@ void main() {
 
   group('Pruebas a bicicleta decorada', () {
     late ConstructorBicicletaCarretera car = ConstructorBicicletaCarretera();
-    ;
     late ConstructorBicicletaMontana mon = ConstructorBicicletaMontana();
     late Director director = Director();
 
