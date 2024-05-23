@@ -67,4 +67,14 @@ class ControladorBackend {
       throw Exception('Error cargando bicicletas');
     }
   }
+
+  Future<List<String>> obtenerInfoBicicleta(int id) async {
+    final response = await http.patch(Uri.parse('$apiUrl/$id'));
+
+    if (response.statusCode == 200) {
+      return Bicicleta.fromJsonDelimited(json.decode(response.body));
+    } else {
+      throw Exception('Error al obtener la bicicleta ' + id.toString());
+    }
+  }
 }
