@@ -22,9 +22,9 @@ class DecoradorBicicletaConEstampado extends DecoradorBicicleta {
   Map<String, dynamic> toJson() {
     final json = bicicletaDecorada.toJson();
     json['decoracion'] = "ESTAMPADO";
-    if (bicicletaDecorada.tipoBicicleta == "montana") {
+    if (json['tipo_bicicleta'] == "montana") {
       json['imagen_representativa'] = BICI_MON_EST;
-    } else if (bicicletaDecorada.tipoBicicleta == "carretera") {
+    } else if (json['tipo_bicicleta'] == "carretera") {
       json['imagen_representativa'] = BICI_CAR_EST;
     }
     return json;

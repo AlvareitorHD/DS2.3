@@ -10,6 +10,6 @@ Rails.application.routes.draw do
 
   # Lista de funciones del controlador
   # localhost:3000/bicicletas
-  resources :bicicletas, only: [:index, :create, :update, :destroy]
+  resources :bicicletas, only: [:index, :create, :update, :destroy, :show]
 
 end

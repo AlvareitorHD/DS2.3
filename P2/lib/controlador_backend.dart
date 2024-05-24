@@ -7,7 +7,7 @@ class ControladorBackend {
   final String apiUrl = "http://localhost:3000/bicicletas";
 
   ControladorBackend();
-  int get_test(){
+  int get_test() {
     return test;
   }
 
@@ -58,8 +58,6 @@ class ControladorBackend {
     test = response.statusCode;
     if (response.statusCode == 200) {
       List<dynamic> bicicletas = json.decode(response.body);
-      print("Datos de bicicletas recibidos: $bicicletas");
-
       return (bicicletas
           .map((json) => Bicicleta.fromJsonDelimited(json))
           .toList());
@@ -69,8 +67,12 @@ class ControladorBackend {
   }
 
   Future<List<String>> obtenerInfoBicicleta(int id) async {
-    final response = await http.patch(Uri.parse('$apiUrl/$id'));
+    final response = await http.get(Uri.parse('$apiUrl/$id'),
+        headers: <String, String>{
+          'Content-Type': 'application/json; charset=UTF-8'
+        });
 
+    test = response.statusCode;
     if (response.statusCode == 200) {
       return Bicicleta.fromJsonDelimited(json.decode(response.body));
     } else {

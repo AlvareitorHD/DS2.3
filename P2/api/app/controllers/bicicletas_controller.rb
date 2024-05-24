@@ -60,6 +60,11 @@ class BicicletasController < ApplicationController
         end
     end
 
+    def show
+        @bicicleta = Bicicleta.find(params[:id])
+        render json: @bicicleta
+    end
+
     def bicicleta_carretera_params
         params.require(:bicicleta).permit(:tipo_manillar, 
                                           :tipo_frenos,

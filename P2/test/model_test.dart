@@ -47,9 +47,10 @@ void main() {
       expect(biciMon.numRuedas, equals(2));
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
-      // Provisional pruebas de crear bicicletas en la base de datos
       await controller.crearBicicleta(biciMon);
       expect(controller.get_test(), equals(201));
+      await controller.mostarBicicletasPorUsuario("Miguel");
+      expect(controller.get_test(), equals(200));
     });
 
     test('\nPrueba 3: Decorar una bicicleta de montaña con un estampado',
@@ -65,13 +66,14 @@ void main() {
       var id = await controller.crearBicicleta(biciMon);
       await controller.updateBicicleta(id, biciMonEst.toJson());
       expect(controller.get_test(), equals(200));
+
       List<String> datos = await controller.obtenerInfoBicicleta(id);
       expect(biciMonEst.extra, equals(datos[0]));
       expect(biciMonEst.bicicletaDecorada.imagenRepresentativa, datos[2]);
     });
 
     test('\nPrueba 6: Decorar una bicicleta de montaña con varias fundas',
-            () async {
+        () async {
       DecoradorBicicleta biciMonFun = DecoradorBicicletaConFunda(biciMon);
       DecoradorBicicleta biciMonFun1 = DecoradorBicicletaConFunda(biciMonFun);
       DecoradorBicicleta biciMonFun2 = DecoradorBicicletaConFunda(biciMonFun1);
@@ -115,7 +117,7 @@ void main() {
 
     test(
         "Prueba 7.1: Decorar una bicicleta de montaña alternando entre estampado y funda",
-        () async{
+        () async {
       var id = await controller.crearBicicleta(biciMon);
       List<String> datos;
 
@@ -148,11 +150,12 @@ void main() {
       expect("FUNDA", equals(datos[1]));
       expect("ESTAMPADO", equals(datos[2]));
       expect("FUNDA", equals(datos[3]));
+      expect(BICI_MON_FUN, datos[5]);
     });
 
     test(
         "Prueba 8.1: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas",
-        () async{
+        () async {
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
       DecoradorBicicleta biciFun = DecoradorBicicletaConFunda(biciMon);
@@ -166,12 +169,11 @@ void main() {
       var id = await controller.crearBicicleta(biciMon);
       await controller.updateBicicleta(id, biciFun.toJson());
       expect(controller.get_test(), equals(200));
-
     });
 
     test(
         "Prueba 9.1: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados",
-        () async{
+        () async {
       expect(biciMon.imagenRepresentativa, equals(BICI_MON));
 
       DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
@@ -182,13 +184,12 @@ void main() {
       biciEst.asociarImagen(BICI_MON_FUN);
       expect(biciEst.imagenRepresentativa, equals(BICI_MON_FUN));
 
-      var id =  await controller.crearBicicleta(biciMon);
+      var id = await controller.crearBicicleta(biciMon);
       await controller.updateBicicleta(id, biciEst.toJson());
       expect(controller.get_test(), equals(200));
-
     });
 
-    test('Prueba 13: toString() muestra correctamente varias fundas', () async{
+    test('Prueba 13: toString() muestra correctamente varias fundas', () async {
       DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
       expect(biciEst.toString(), contains("Extra: FUNDA"));
 
@@ -199,13 +200,13 @@ void main() {
       biciEst = DecoradorBicicletaConFunda(biciEst);
       expect(regex.allMatches(biciEst.toString()), hasLength(3));
 
-      var id =  await controller.crearBicicleta(biciMon);
+      var id = await controller.crearBicicleta(biciMon);
       await controller.updateBicicleta(id, biciEst.toJson());
       expect(controller.get_test(), equals(200));
-
     });
 
-    test('Prueba 14: toString() muestra correctamente varios estampados', () async{
+    test('Prueba 14: toString() muestra correctamente varios estampados',
+        () async {
       DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciMon);
       expect(biciEst.toString(), contains("Extra: ESTAMPADO"));
 
@@ -216,15 +217,14 @@ void main() {
       biciEst = DecoradorBicicletaConEstampado(biciEst);
       expect(regex.allMatches(biciEst.toString()), hasLength(3));
 
-      var id =  await controller.crearBicicleta(biciMon);
+      var id = await controller.crearBicicleta(biciMon);
       await controller.updateBicicleta(id, biciEst.toJson());
       expect(controller.get_test(), equals(200));
-
     });
 
     test(
         'Prueba 15: toString() muestra correctamente varias fundas y estampados',
-        () async{
+        () async {
       DecoradorBicicleta biciEst = DecoradorBicicletaConFunda(biciMon);
       expect(biciEst.toString(), contains("Extra: FUNDA"));
 
@@ -245,11 +245,9 @@ void main() {
       expect(regex2.allMatches(biciEst.toString()), hasLength(2));
       expect(regex.allMatches(biciEst.toString()), hasLength(3));
 
-      ControladorBackend controller = ControladorBackend();
-      var id =  await controller.crearBicicleta(biciMon);
+      var id = await controller.crearBicicleta(biciMon);
       await controller.updateBicicleta(id, biciEst.toJson());
       expect(controller.get_test(), equals(200));
-
     });
   });
 
@@ -268,11 +266,12 @@ void main() {
       biciCar.establecerSillin("ESTRECHO");
       biciCar.establecerRuedas("ESCALADORAS", 2);
       (biciCar as BicicletaCarretera).asociarImagen(BICI_CAR);
+      biciCar.establecerUsuario("Alvaro");
 
       controller = ControladorBackend();
     });
 
-    test('\nPrueba 2: Crear una bicicleta de carretera', () async{
+    test('\nPrueba 2: Crear una bicicleta de carretera', () async {
       expect(biciCar.tipoManillar, equals("ERGONÓMICO"));
       expect(biciCar.tipoFrenos, equals("DISCO"));
       expect(biciCar.numFrenos, equals(2));
@@ -283,13 +282,14 @@ void main() {
       expect(biciCar.numRuedas, equals(2));
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
 
-      ControladorBackend controller = ControladorBackend();
       await controller.crearBicicleta(biciCar);
       expect(controller.get_test(), equals(201));
-
+      await controller.mostarBicicletasPorUsuario("Alvaro");
+      expect(controller.get_test(), equals(200));
     });
 
-    test('\nPrueba 4: Decorar una bicicleta de carretera con una funda', () async{
+    test('\nPrueba 4: Decorar una bicicleta de carretera con una funda',
+        () async {
       DecoradorBicicleta biciCarFun = DecoradorBicicletaConFunda(biciCar);
       biciCarFun.bicicletaDecorada.asociarImagen(BICI_CAR_FUN);
 
@@ -301,14 +301,14 @@ void main() {
       var id = await controller.crearBicicleta(biciCar);
       await controller.updateBicicleta(id, biciCarFun.toJson());
       expect(controller.get_test(), equals(200));
+
       List<String> datos = await controller.obtenerInfoBicicleta(id);
       expect(biciCarFun.extra, equals(datos[0]));
       expect(biciCarFun.bicicletaDecorada.imagenRepresentativa, datos[2]);
-
     });
 
     test('\nPrueba 5: Decorar una bicicleta de carretera con varios estampados',
-        () async{
+        () async {
       DecoradorBicicleta biciCarEst = DecoradorBicicletaConEstampado(biciCar);
       DecoradorBicicleta biciCarEst1 =
           DecoradorBicicletaConEstampado(biciCarEst);
@@ -325,34 +325,50 @@ void main() {
       expect(biciCarEst2.bicicletaDecorada.imagenRepresentativa,
           equals(BICI_CAR_EST));
 
+      List<String> datos;
       var id = await controller.crearBicicleta(biciCar);
+      // biciCarEst:
       await controller.updateBicicleta(id, biciCarEst.toJson());
+      datos = await controller.obtenerInfoBicicleta(id);
       expect(controller.get_test(), equals(200));
+      expect(biciCarEst.extra, equals(datos[0]));
+      expect(BICI_CAR_EST, datos[2]);
+
+      // biciCarEst1:
       await controller.updateBicicleta(id, biciCarEst1.toJson());
+      datos = await controller.obtenerInfoBicicleta(id);
       expect(controller.get_test(), equals(200));
+      expect("ESTAMPADO", equals(datos[0]));
+      expect("ESTAMPADO", equals(datos[1]));
+      expect(BICI_CAR_EST, datos[3]);
+
+      // biciCarEst2:
       await controller.updateBicicleta(id, biciCarEst2.toJson());
+      datos = await controller.obtenerInfoBicicleta(id);
       expect(controller.get_test(), equals(200));
-      List<String> datos = await controller.obtenerInfoBicicleta(id);
       expect("ESTAMPADO", equals(datos[0]));
       expect("ESTAMPADO", equals(datos[1]));
       expect("ESTAMPADO", equals(datos[2]));
-
+      expect(BICI_CAR_EST, datos[4]);
     });
 
     test(
         "Prueba 7.2: Decorar una bicicleta de carretera alternando entre estampado y funda",
-        () async{
+        () async {
       var id = await controller.crearBicicleta(biciCar);
 
       DecoradorBicicleta biciCarDec = DecoradorBicicletaConEstampado(biciCar);
       await controller.updateBicicleta(id, biciCarDec.toJson());
       expect(controller.get_test(), equals(200));
+
       biciCarDec = DecoradorBicicletaConFunda(biciCarDec);
       await controller.updateBicicleta(id, biciCarDec.toJson());
       expect(controller.get_test(), equals(200));
+
       biciCarDec = DecoradorBicicletaConEstampado(biciCarDec);
       await controller.updateBicicleta(id, biciCarDec.toJson());
       expect(controller.get_test(), equals(200));
+      
       biciCarDec = DecoradorBicicletaConFunda(biciCarDec);
       await controller.updateBicicleta(id, biciCarDec.toJson());
       expect(controller.get_test(), equals(200));
@@ -371,11 +387,12 @@ void main() {
       expect("FUNDA", equals(datos[1]));
       expect("ESTAMPADO", equals(datos[2]));
       expect("FUNDA", equals(datos[3]));
+      expect(BICI_CAR_FUN, datos[5]);
     });
 
     test(
         "Prueba 8.2: Asociar una imagen de bicicleta a una bicicleta decorada con varias fundas",
-        () async{
+        () async {
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
 
       DecoradorBicicleta biciFun = DecoradorBicicletaConFunda(biciCar);
@@ -386,15 +403,14 @@ void main() {
       biciFun.asociarImagen(BICI_CAR_FUN);
       expect(biciFun.imagenRepresentativa, equals(BICI_CAR_FUN));
 
-      var id =  await controller.crearBicicleta(biciCar);
+      var id = await controller.crearBicicleta(biciCar);
       await controller.updateBicicleta(id, biciFun.toJson());
       expect(controller.get_test(), equals(200));
-
     });
 
     test(
         "Prueba 9.2: Asociar una imagen de bicicleta a una bicicleta decorada con varios estampados",
-        () async{
+        () async {
       expect(biciCar.imagenRepresentativa, equals(BICI_CAR));
 
       DecoradorBicicleta biciEst = DecoradorBicicletaConEstampado(biciCar);
@@ -408,7 +424,6 @@ void main() {
       var id = await controller.crearBicicleta(biciCar);
       await controller.updateBicicleta(id, biciEst.toJson());
       expect(controller.get_test(), equals(200));
-
     });
   });
 
@@ -426,7 +441,7 @@ void main() {
 
     test(
         "Prueba 10: Comprobar que una bicicleta decorada tenga bien asociada su imagen según la última decoración añadida",
-        () async{
+        () async {
       //Agregamos funda
       ConstructorBicicletaDecorada c1 = ConstructorBicicletaDecorada(bicicar);
       ConstructorBicicletaDecorada c2 = ConstructorBicicletaDecorada(bicimon);
@@ -479,7 +494,7 @@ void main() {
 
     test(
         "Prueba 11: Comprobar que una bicicleta con funda tenga el EXTRA en el método toString",
-        () async{
+        () async {
       // Reiniciamos las bicis
       bicicar = car.obtenerResultado() as Bicicleta;
       bicimon = mon.obtenerResultado() as Bicicleta;
@@ -494,18 +509,17 @@ void main() {
       expect(bicicar.toString(), contains("Extra: FUNDA"));
       expect(bicimon.toString(), contains("Extra: FUNDA"));
 
-      var id =  await controller.crearBicicleta(bicicar);
-      var id2 =  await controller.crearBicicleta(bicimon);
+      var id = await controller.crearBicicleta(bicicar);
+      var id2 = await controller.crearBicicleta(bicimon);
       await controller.updateBicicleta(id, bicicar.toJson());
       expect(controller.get_test(), equals(200));
       await controller.updateBicicleta(id2, bicimon.toJson());
       expect(controller.get_test(), equals(200));
-
     });
 
     test(
         "Prueba 12: Comprobar que una bicicleta con estampado tenga el EXTRA en el método toString",
-        () async{
+        () async {
       // Reiniciamos las bicis
       bicicar = car.obtenerResultado() as Bicicleta;
       bicimon = mon.obtenerResultado() as Bicicleta;
@@ -520,13 +534,12 @@ void main() {
       expect(bicicar.toString(), contains("Extra: ESTAMPADO"));
       expect(bicimon.toString(), contains("Extra: ESTAMPADO"));
 
-      var id =  await controller.crearBicicleta(bicicar);
-      var id2 =  await controller.crearBicicleta(bicimon);
+      var id = await controller.crearBicicleta(bicicar);
+      var id2 = await controller.crearBicicleta(bicimon);
       await controller.updateBicicleta(id, bicicar.toJson());
       expect(controller.get_test(), equals(200));
       await controller.updateBicicleta(id2, bicimon.toJson());
       expect(controller.get_test(), equals(200));
-
     });
   });
 }

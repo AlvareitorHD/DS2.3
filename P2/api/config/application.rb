@@ -28,5 +28,10 @@ module Api
     # Middleware like session, flash, cookies can be added back manually.
     # Skip views, helpers and assets when generating a new resource.
     config.api_only = true
+
+    # Cargar seeds.rb en cada inicio
+    config.after_initialize do
+      Rails.application.load_seed
+    end
   end
 end
