@@ -14,7 +14,6 @@ fastjsonschema==2.19.1
 idna==3.7
 ipython==8.12.3
 jedi==0.19.1
-Jinja2==3.1.4
 jsonschema==4.21.1
 jsonschema-specifications==2023.12.1
 jupyter_client==8.6.1
@@ -46,7 +45,6 @@ six==1.16.0
 soupsieve==2.5
 stack-data==0.6.3
 tinycss2==1.2.1
-tornado==6.4.1
 traitlets==5.14.2
 ttkbootstrap==1.10.1
 urllib3==2.2.2
